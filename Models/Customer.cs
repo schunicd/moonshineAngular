@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TheMoonshineCafe.Models
 {
     public class Customer : Person {
-        public bool onMailingList { get; set; }
+        public bool OnMailingList { get; set; }
 
 
     }
