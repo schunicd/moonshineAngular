@@ -12,9 +12,8 @@ namespace TheMoonshineCafe.Data
         {
             context.Database.EnsureCreated();
 
-            if (context.Admins.Any())
+            if (context.Events.Any())
             {
-                Console.WriteLine("I'm here");
                 return;
             }
 
