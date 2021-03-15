@@ -9,6 +9,10 @@ import { HttpClient } from '@angular/common/http';
 export class ReservationsComponent implements OnInit {
 
   date: Date;
+  name: string;
+  email: string;
+  seats: number;
+  eventName: string;
   event: Event[];
   band: Band[];
 
@@ -46,6 +50,11 @@ export class ReservationsComponent implements OnInit {
 
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
+
+  tentativeBooking(){}
+
+  paidBooking(){}
+
 }
 
 interface Band {
