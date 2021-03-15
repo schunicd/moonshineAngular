@@ -30,6 +30,22 @@ export class ReservationsComponent implements OnInit {
 
   }
 
+  filterEvents(){
+
+    let day = this.date.getDate().toString();
+    let month = (this.date.getMonth() + 1).toString();
+    if(parseInt(month) < 10)
+      month = "0" + month;
+
+    if(parseInt(day) < 10)
+      day = "0" + day;
+
+    let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
+
+    console.log(filterDate);
+
+    return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
+  }
 }
 
 interface Band {

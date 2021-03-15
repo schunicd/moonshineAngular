@@ -17,14 +17,13 @@
 
     <br>
     Date: <b>{{date}}</b>
-    Display Date: <b>{{displayDate}}</b>
     <br>
 
     <div class="row">
-      <div class="col" *ngIf="date != null">
+      <div class="col">
         <label>Events:</label>
-        <select ng-model="selectedEvent">
-          <option *ngFor="let e of event" value="{{e.id}}">{{e.eventDate}}</option>
+        <select ng-model="selectedEvent"  *ngIf="date != null">
+          <option *ngFor="let e of filterEvents()" value="{{e.id}}">{{e.eventDate}}</option>
           </select>
       </div>
     </div>
