@@ -15,6 +15,7 @@ namespace TheMoonshineCafe.Models
         public int MaxNumberOfSeats { get; set; }
         public int CurrentNumberOfSeats { get; set; }
         public double TicketPrice { get; set; }
+        public string Description { get; set; }
         public Band Band { get; set; }
         
     }

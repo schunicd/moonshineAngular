@@ -6,54 +6,52 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
-using TheMoonshineCafe.Models;
 
-namespace TheMoonshineCafe.Controllers
+namespace TheMoonshineCafe.Models
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EventsController : ControllerBase
+    public class BandsController : ControllerBase
     {
-
         private readonly MoonshineCafeContext _context;
 
-        public EventsController( MoonshineCafeContext context)
+        public BandsController(MoonshineCafeContext context)
         {
             _context = context;
         }
 
-        // GET: api/Events
+        // GET: api/Bands
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Event>>> GetEvents()
+        public async Task<ActionResult<IEnumerable<Band>>> GetBands()
         {
-            return await _context.Events.ToListAsync();
+            return await _context.Bands.ToListAsync();
         }
 
-        // GET: api/Events/5
+        // GET: api/Bands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Event>> GetEvent(int id)
+        public async Task<ActionResult<Band>> GetBand(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
+            var band = await _context.Bands.FindAsync(id);
 
-            if (@event == null)
+            if (band == null)
             {
                 return NotFound();
             }
 
-            return @event;
+            return band;
         }
 
-        // PUT: api/Events/5
+        // PUT: api/Bands/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(int id, Event @event)
+        public async Task<IActionResult> PutBand(int id, Band band)
         {
-            if (id != @event.ID)
+            if (id != band.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@event).State = EntityState.Modified;
+            _context.Entry(band).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +59,7 @@ namespace TheMoonshineCafe.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(id))
+                if (!BandExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +72,36 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
-        // POST: api/Events
+        // POST: api/Bands
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<ActionResult<Band>> PostBand(Band band)
         {
-            _context.Events.Add(@event);
+            _context.Bands.Add(band);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = @event.ID }, @event);
+            return CreatedAtAction("GetBand", new { id = band.ID }, band);
         }
 
-        // DELETE: api/Events/5
+        // DELETE: api/Bands/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEvent(int id)
+        public async Task<IActionResult> DeleteBand(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
+            var band = await _context.Bands.FindAsync(id);
+            if (band == null)
             {
                 return NotFound();
             }
 
-            _context.Events.Remove(@event);
+            _context.Bands.Remove(band);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EventExists(int id)
+        private bool BandExists(int id)
         {
-            return _context.Events.Any(e => e.ID == id);
+            return _context.Bands.Any(e => e.ID == id);
         }
     }
 }
