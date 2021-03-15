@@ -1,6 +1,6 @@
 <h4>Select an Event:</h4>
 <mat-form-field style="float: right;">
-    <input matInput [(ngModel)]="date" [matDatepicker]="picker">
+    <input matInput [min]="minDate" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
@@ -8,29 +8,43 @@
 
 
 <form novalidate>
-    <label>Name:</label>
-    <input style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name"><br>
-    <label>Email:</label>
-    <input style="margin-left: 10px;" type="text" [(ngModel)]="email" name="email"><br>
-    <label>Number of seats:</label>
-    <input style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats"><br>
-
-    <br>
+  <br>
     Date: <b>{{date}}</b>
     <br>
 
     <div class="row">
       <div class="col">
         <label>Events:</label>
-        <select ng-model="selectedEvent"  *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-          <option *ngFor="let e of filterEvents()" value="{{e.id}}">{{e.eventDate}}</option>
+        <select ng-model="selectedEvent" *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
+          <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
         </select>
       </div>
     </div>
 
+    <label id="warning" *ngIf="eventName == null;">Please Select an Event First!</label>
+    <br>
+
+    <label>Name:</label>
+    <input style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled">
+    <ng-template #nameDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+    <br>
+
+    <label>Email:</label>
+    <input style="margin-left: 10px;" type="text" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled">
+    <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+    <br>
+
+    <label>Number of seats:</label>
+    <div *ngIf="eventName != null; else seatsDisabled">
+      <input style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}}">
+    </div>
+    <ng-template #seatsDisabled><input disabled="true" style="margin-left: 10px;" type="text"></ng-template>
+    <br>
+
     <button (click)="tentativeBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else tentativeDisabled">Tentative Booking</button>
     <ng-template #tentativeDisabled><button disabled="true">Tentative Booking</button></ng-template>
     <br>
+
     <button (click)="paidBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else paidDisabled">Paid Booking</button>
     <ng-template #paidDisabled><button disabled="true">Paid Booking</button></ng-template>
 </form>
