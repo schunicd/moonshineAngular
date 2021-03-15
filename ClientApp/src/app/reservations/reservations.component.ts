@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReservationsComponent implements OnInit {
 
+  minDate: Date;
   date: Date;
   name: string;
   email: string;
@@ -17,6 +18,10 @@ export class ReservationsComponent implements OnInit {
   band: Band[];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+
+    this.minDate = new Date();
+
+    console.log(this.minDate);
 
     http.get<Event[]>(baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
@@ -46,14 +51,25 @@ export class ReservationsComponent implements OnInit {
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
 
-    console.log(filterDate);
+    //console.log(filterDate);
 
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
 
+  filterSeats(){
+    console.log(this.event.filter(x => x.eventDate.toString() == this.eventName));
+    return this.event.filter(x => x.eventDate.toString() == this.eventName);
+  }
+
   tentativeBooking(){}
 
-  paidBooking(){}
+  resetEventName(){
+    this.eventName = null;
+  }
+
+  paidBooking(){
+    console.log(this.eventName);
+  }
 
 }
 
