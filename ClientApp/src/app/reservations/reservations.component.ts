@@ -20,6 +20,8 @@ export class ReservationsComponent implements OnInit {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
 
     this.minDate = new Date();
+    this.name = "";
+    this.email = "";
 
     console.log(this.minDate);
 
@@ -51,21 +53,32 @@ export class ReservationsComponent implements OnInit {
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
 
-    //console.log(filterDate);
-
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
 
   filterSeats(){
-    console.log(this.event.filter(x => x.eventDate.toString() == this.eventName));
     return this.event.filter(x => x.eventDate.toString() == this.eventName);
   }
 
-  tentativeBooking(){}
+  validateName(){
+    if(this.name.replace(/[a-zA-Z]+[a-zA-Z- ]*[a-zA-Z]+/g,'').length == 0)
+      return false;
+
+    return true;
+  }
+
+  validateEmail(){
+    if(this.email.replace(/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi, '').length == 0)
+      return false;
+
+    return true;
+  }
 
   resetEventName(){
     this.eventName = null;
   }
+
+  tentativeBooking(){}
 
   paidBooking(){
     console.log(this.eventName);

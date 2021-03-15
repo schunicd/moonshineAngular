@@ -25,12 +25,17 @@
     <br>
 
     <label>Name:</label>
-    <input style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled">
+    <br>
+    <label *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name.</label>
+    <label *ngIf="validateName()"> Must be 2 letters minimum.</label>
+    <br>
+    <input style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
     <ng-template #nameDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
     <br>
 
     <label>Email:</label>
-    <input style="margin-left: 10px;" type="text" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled">
+    <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+    <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
     <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
     <br>
 
