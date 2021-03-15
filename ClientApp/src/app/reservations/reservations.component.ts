@@ -8,10 +8,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReservationsComponent implements OnInit {
 
-  date: any;
+  date: Date;
   event: Event[];
   band: Band[];
-  
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
 
     http.get<Event[]>(baseUrl + 'api/Events').subscribe(result => {
@@ -24,8 +24,6 @@ export class ReservationsComponent implements OnInit {
       console.log(this.band);
     }, error => console.error(error));
 
-
-
   }
 
   ngOnInit() {
@@ -36,9 +34,9 @@ export class ReservationsComponent implements OnInit {
 
 interface Band {
   ID: number,
-  BandName: string 
-  Website: string  
-  BandInfo: string  
+  BandName: string
+  Website: string
+  BandInfo: string
 }
 
 interface Event {

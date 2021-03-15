@@ -1,36 +1,31 @@
-<h4>Select a date:</h4>
+<h4>Select an Event:</h4>
 <mat-form-field style="float: right;">
     <input matInput [(ngModel)]="date" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
-<b>{{date}}</b>
 
-<div class="row">
-    <div class="col">
-      <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <div *ngFor="let e of event">
-                    <button ngbDropdownItem>{{e.id}}</button>
-            </div>
-        </div>
-      </div>
-    </div>
-</div>
 
 <form novalidate>
     <label>Name:</label>
     <input style="margin-left: 10px;" type="text"><br>
     <label>Email:</label>
     <input style="margin-left: 10px;" type="text"><br>
-    <label>Number of seats</label>
+    <label>Number of seats:</label>
     <input style="margin-left: 10px;" type="number"><br>
 
-    
-    <label>Events</label>
-    <option *ngFor="let e of event"
-        [value]="e">{{e.eventDate}}
-    </option>
+    <br>
+    Date: <b>{{date}}</b>
+    Display Date: <b>{{displayDate}}</b>
+    <br>
+
+    <div class="row">
+      <div class="col" *ngIf="date != null">
+        <label>Events:</label>
+        <select ng-model="selectedEvent">
+          <option *ngFor="let e of event" value="{{e.id}}">{{e.eventDate}}</option>
+          </select>
+      </div>
+    </div>
 </form>
