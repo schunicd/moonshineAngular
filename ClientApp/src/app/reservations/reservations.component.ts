@@ -14,6 +14,7 @@ export class ReservationsComponent implements OnInit {
   name: string;
   email: string;
   seats: number;
+  eventMaxSeats: number;
   eventName: string;
   event: Event[];
   band: Band[];
@@ -98,6 +99,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   paidBooking(){
+    let maxseats =this.filterSeats();
     if(confirm("Confirm Paid Booking On: " + this.eventName)){
       console.log("Paid Booking Confirmed!");
 
@@ -123,6 +125,8 @@ export class ReservationsComponent implements OnInit {
       this.eventName = "";
       return;
     }
+
+
     console.log("Paid Booking Canceled!");
   }
 

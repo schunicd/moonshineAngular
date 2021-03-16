@@ -10,9 +10,10 @@
 <form novalidate>
   <br>
     Date: <b>{{date}}</b>
-    <br>
+  <br>
+  <br>
 
-    <div class="row">
+    <div id="" class="row">
       <div class="col">
         <label>Events:</label>
         <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
@@ -20,34 +21,49 @@
         </select>
       </div>
     </div>
-
-    <label id="warning" *ngIf="eventName == null;">Please Select an Event First!</label>
     <br>
 
-    <label>Name:</label>
+    <label id="warning" *ngIf="eventName == null;">Please Select a Date on the right first!</label>
     <br>
-    <label *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name.</label>
-    <label *ngIf="validateName()"> Must be 2 letters minimum.</label>
-    <br>
-    <input style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
-    <ng-template #nameDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+
+    <div id="grid-container">
+
+      <label id="nameLabel">Name:</label>
+
+      <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
+      <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+
+      <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+
+    </div>
+
     <br>
 
     <label>Email:</label>
-    <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+
     <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
     <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+
+    <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+
+    <br>
     <br>
 
-    <label>Number of seats:</label>
     <div *ngIf="eventName != null; else seatsDisabled">
-      <input style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.currentNumberOfSeats}}">
+      <label>Number of seats:</label>
+      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.currentNumberOfSeats}}">
     </div>
-    <ng-template #seatsDisabled><input disabled="true" style="margin-left: 10px;" type="text"></ng-template>
+
+    <ng-template #seatsDisabled>
+      <label>Number of seats:</label>
+      <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
+    </ng-template>
+    <br>
     <br>
 
     <button (click)="tentativeBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else tentativeDisabled">Tentative Booking</button>
     <ng-template #tentativeDisabled><button disabled="true">Tentative Booking</button></ng-template>
+    <br>
     <br>
 
     <button (click)="paidBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else paidDisabled">Paid Booking</button>
