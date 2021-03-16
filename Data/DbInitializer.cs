@@ -35,8 +35,8 @@ namespace TheMoonshineCafe.Data
                 new Event{eventDate=DateTime.Parse("02/22/2021"), bandId=1, maxNumberOfSeats = 23, currentNumberOfSeats=0, ticketPrice=3.50},
                 new Event{eventDate=DateTime.Parse("03/04/2021"), bandId=2, maxNumberOfSeats = 50, currentNumberOfSeats=15, ticketPrice=7.50},
                 new Event{eventDate=DateTime.Parse("04/04/2021"), bandId=1, maxNumberOfSeats = 100, currentNumberOfSeats=100, ticketPrice=10f},
-                new Event{eventDate=DateTime.Parse("20/05/2021 01:30"), bandId=3, maxNumberOfSeats = 100, currentNumberOfSeats=100, description="testing 5", ticketPrice=10f},
-                new Event{eventDate=DateTime.Parse("20/05/2021 05:30"), bandId=1, maxNumberOfSeats = 20, currentNumberOfSeats=0, description="testing 6", ticketPrice=10f}
+                new Event{eventDate=DateTime.Parse("05/20/2021 01:30"), bandId=3, maxNumberOfSeats = 100, currentNumberOfSeats=100, description="testing 5", ticketPrice=10f},
+                new Event{eventDate=DateTime.Parse("05/20/2021 05:30"), bandId=1, maxNumberOfSeats = 20, currentNumberOfSeats=0, description="testing 6", ticketPrice=10f}
             };
             foreach(Event e in events)
             {
