@@ -9,14 +9,14 @@ namespace TheMoonshineCafe.Models
     public class Event
     {
         
-        public int ID {get; set; }
-        public DateTime EventDate { get; set; }
-        public int BandID { get; set; }
-        public int MaxNumberOfSeats { get; set; }
-        public int CurrentNumberOfSeats { get; set; }
-        public double TicketPrice { get; set; }
-        public string Description { get; set; }
-        public Band Band { get; set; }
+        public int id {get; set; }
+        public DateTime eventDate { get; set; }
+        public int bandId { get; set; }
+        public int maxNumberOfSeats { get; set; }
+        public int currentNumberOfSeats { get; set; }
+        public double ticketPrice { get; set; }
+        public string description { get; set; }
+        public Band band { get; set; }
         
     }
 }

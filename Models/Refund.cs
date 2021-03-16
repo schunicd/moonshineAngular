@@ -7,7 +7,7 @@ namespace TheMoonshineCafe.Models
 {
     public class Refund
     {
-        public int ID { get; set; }
+        public int id { get; set; }
         public Payment payment { get; set; }
         public DateTime refundDate { get; set; }
         public string reason { get; set; }

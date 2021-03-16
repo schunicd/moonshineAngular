@@ -7,7 +7,7 @@ namespace TheMoonshineCafe.Models
 {
     public class Admin
     {
-        public int ID { get; set; }
+        public int id { get; set; }
         public int accessLevel { get; set; }
     }
 }

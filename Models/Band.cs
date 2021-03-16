@@ -7,10 +7,10 @@ namespace TheMoonshineCafe.Models
 {
     public class Band
     {
-        public int ID { get; set; }
-        public string BandName { get; set; }
-        public string Website { get; set; }
-        public string BandInfo { get; set; }
+        public int id { get; set; }
+        public string bandName { get; set; }
+        public string website { get; set; }
+        public string bandInfo { get; set; }
 
     }
 }

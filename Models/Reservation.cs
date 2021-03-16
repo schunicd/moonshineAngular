@@ -5,12 +5,12 @@ namespace TheMoonshineCafe.Models
     public class Reservation
     {
  
-        public int ID {get;  set; }
-        public bool PaidInAdvance { get; set; }
-        public DateTime TimeResMade { get; set; }
-        public Customer Customer { get; set; }
-        public int NumberOfSeats { get; set; }
-        public Event ResEvent { get; set; }
+        public int id {get;  set; }
+        public bool paidInAdvance { get; set; }
+        public DateTime timeResMade { get; set; }
+        public Customer customer { get; set; }
+        public int numberOfSeats { get; set; }
+        public Event resEvent { get; set; }
 
     }
 }

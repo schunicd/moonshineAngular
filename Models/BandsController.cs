@@ -46,7 +46,7 @@ namespace TheMoonshineCafe.Models
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, Band band)
         {
-            if (id != band.ID)
+            if (id != band.id)
             {
                 return BadRequest();
             }
@@ -80,7 +80,7 @@ namespace TheMoonshineCafe.Models
             _context.Bands.Add(band);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBand", new { id = band.ID }, band);
+            return CreatedAtAction("GetBand", new { id = band.id }, band);
         }
 
         // DELETE: api/Bands/5
@@ -101,7 +101,7 @@ namespace TheMoonshineCafe.Models
 
         private bool BandExists(int id)
         {
-            return _context.Bands.Any(e => e.ID == id);
+            return _context.Bands.Any(e => e.id == id);
         }
     }
 }

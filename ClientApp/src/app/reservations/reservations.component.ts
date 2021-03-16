@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ReservationsComponent implements OnInit {
 
+  resetDate: Date;
   minDate: Date;
   date: Date;
   name: string;
@@ -17,7 +18,7 @@ export class ReservationsComponent implements OnInit {
   event: Event[];
   band: Band[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.minDate = new Date();
     this.name = "";
@@ -25,12 +26,12 @@ export class ReservationsComponent implements OnInit {
 
     console.log(this.minDate);
 
-    http.get<Event[]>(baseUrl + 'api/Events').subscribe(result => {
+    this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       console.log(this.event);
     }, error => console.error(error));
 
-    http.get<Band[]>(baseUrl + 'api/Bands').subscribe(result => {
+    this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
       this.band = result;
       console.log(this.band);
     }, error => console.error(error));
@@ -52,6 +53,11 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
+
+    console.log("FILTER DATE");
+    console.log(filterDate);
+    console.log("FILTER EVENTS RETURN");
+    console.log(this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate));
 
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
@@ -78,10 +84,50 @@ export class ReservationsComponent implements OnInit {
     this.eventName = null;
   }
 
-  tentativeBooking(){}
+  tentativeBooking(){
+    if(confirm("Confirm Tentative Booking On: " + this.eventName)){
+      console.log("Tentative Booking Confirmed!");
+      this.name = "";
+      this.date = this.resetDate;
+      this.email = "";
+      this.seats = 0;
+      this.eventName = "";
+      return;
+    }
+    console.log("Tentative Booking Cancelled!");
+  }
 
   paidBooking(){
-    console.log(this.eventName);
+    if(confirm("Confirm Paid Booking On: " + this.eventName)){
+      console.log("Paid Booking Confirmed!");
+
+      let insertRecord = this.filterSeats();
+
+      let postData;
+
+
+      let reservation = {
+        id: 5,
+        paidInAdvance: true,
+        timeResMade: new Date,
+        customerid: 3,
+        numberOfSeats: this.seats,
+        resEventid: 77
+      }
+
+      console.log("RESERVATION");
+      console.log(reservation);
+      this.http.post<Reservation[]>(this.baseUrl + "api/Events/" + reservation.id , reservation).subscribe(data => postData = data);
+      console.log("POST DATA");
+      console.log(postData);
+      this.name = "";
+      this.date = this.resetDate;
+      this.email = "";
+      this.seats = 0;
+      this.eventName = "";
+      return;
+    }
+    console.log("Paid Booking Canceled!");
   }
 
 }
@@ -102,3 +148,11 @@ interface Event {
   ticketPrice: number;
 }
 
+interface Reservation {
+  id: number,
+  paidInAdvance: boolean,
+  timeResMade: Date,
+  customerid: number,
+  numberOfSeats: number,
+  resEventid: number
+}

@@ -1,6 +1,6 @@
 <h4>Select an Event:</h4>
 <mat-form-field style="float: right;">
-    <input matInput [min]="minDate" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+    <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col">
         <label>Events:</label>
-        <select ng-model="selectedEvent" *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
+        <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
           <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
         </select>
       </div>
@@ -41,7 +41,7 @@
 
     <label>Number of seats:</label>
     <div *ngIf="eventName != null; else seatsDisabled">
-      <input style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}}">
+      <input style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.currentNumberOfSeats}}">
     </div>
     <ng-template #seatsDisabled><input disabled="true" style="margin-left: 10px;" type="text"></ng-template>
     <br>

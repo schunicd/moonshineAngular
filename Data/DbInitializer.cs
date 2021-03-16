@@ -19,9 +19,9 @@ namespace TheMoonshineCafe.Data
 
             var bands = new Band[]
             {
-                new Band{BandName="Test1", Website="testSite", BandInfo="They are a test"},
-                new Band{BandName="Test2", Website="testSite2", BandInfo="They are a test2"},
-                new Band{BandName="Test3", Website="testSite3", BandInfo="They are a test3"}
+                new Band{bandName="Test1", website="testSite", bandInfo="They are a test"},
+                new Band{bandName="Test2", website="testSite2", bandInfo="They are a test2"},
+                new Band{bandName="Test3", website="testSite3", bandInfo="They are a test3"}
             };
             foreach (Band b in bands)
             {
@@ -31,10 +31,10 @@ namespace TheMoonshineCafe.Data
 
             var events = new Event[]
             {
-                new Event{EventDate=DateTime.Parse("02/22/2021 02:20"), BandID=3, MaxNumberOfSeats = 23, CurrentNumberOfSeats=0, Description="testing 1", TicketPrice=3.50},
-                new Event{EventDate=DateTime.Parse("02/22/2021"), BandID=1, MaxNumberOfSeats = 23, CurrentNumberOfSeats=0, TicketPrice=3.50},
-                new Event{EventDate=DateTime.Parse("03/04/2021"), BandID=2, MaxNumberOfSeats = 50, CurrentNumberOfSeats=15, TicketPrice=7.50},
-                new Event{EventDate=DateTime.Parse("04/04/2021"), BandID=1, MaxNumberOfSeats = 100, CurrentNumberOfSeats=100, TicketPrice=10f}
+                new Event{eventDate=DateTime.Parse("02/22/2021 02:20"), bandId=3, maxNumberOfSeats = 23, currentNumberOfSeats=0, description="testing 1", ticketPrice=3.50},
+                new Event{eventDate=DateTime.Parse("02/22/2021"), bandId=1, maxNumberOfSeats = 23, currentNumberOfSeats=0, ticketPrice=3.50},
+                new Event{eventDate=DateTime.Parse("03/04/2021"), bandId=2, maxNumberOfSeats = 50, currentNumberOfSeats=15, ticketPrice=7.50},
+                new Event{eventDate=DateTime.Parse("04/04/2021"), bandId=1, maxNumberOfSeats = 100, currentNumberOfSeats=100, ticketPrice=10f}
             };
             foreach(Event e in events)
             {

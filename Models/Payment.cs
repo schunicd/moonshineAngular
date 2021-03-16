@@ -7,7 +7,7 @@ namespace TheMoonshineCafe.Models
 {
     public class Payment
     {
-        public int ID { get; set; }
+        public int id { get; set; }
         public double price { get; set; }
         public DateTime paymentDate { get; set; }
         public Customer customer { get; set; }

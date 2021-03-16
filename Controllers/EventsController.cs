@@ -48,7 +48,7 @@ namespace TheMoonshineCafe.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-            if (id != @event.ID)
+            if (id != @event.id)
             {
                 return BadRequest();
             }
@@ -82,7 +82,7 @@ namespace TheMoonshineCafe.Controllers
             _context.Events.Add(@event);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEvent", new { id = @event.ID }, @event);
+            return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
 
         // DELETE: api/Events/5
@@ -103,7 +103,7 @@ namespace TheMoonshineCafe.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.ID == id);
+            return _context.Events.Any(e => e.id == id);
         }
     }
 }
