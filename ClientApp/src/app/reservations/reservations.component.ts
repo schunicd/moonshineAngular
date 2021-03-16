@@ -54,10 +54,10 @@ export class ReservationsComponent implements OnInit {
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
 
-    console.log("FILTER DATE");
-    console.log(filterDate);
-    console.log("FILTER EVENTS RETURN");
-    console.log(this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate));
+    //console.log("FILTER DATE");
+    //console.log(filterDate);
+    //console.log("FILTER EVENTS RETURN");
+    //console.log(this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate));
 
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
