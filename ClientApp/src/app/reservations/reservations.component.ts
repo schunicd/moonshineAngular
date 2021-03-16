@@ -101,10 +101,7 @@ export class ReservationsComponent implements OnInit {
     if(confirm("Confirm Paid Booking On: " + this.eventName)){
       console.log("Paid Booking Confirmed!");
 
-      let insertRecord = this.filterSeats();
-
       let postData;
-
 
       let reservation = {
         paidInAdvance: true,
