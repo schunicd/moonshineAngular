@@ -22,6 +22,7 @@ export class ReservationsComponent implements OnInit {
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.minDate = new Date();
+    this.eventName = null;
     this.name = "";
     this.email = "";
 
