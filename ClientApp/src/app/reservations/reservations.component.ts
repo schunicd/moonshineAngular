@@ -107,17 +107,16 @@ export class ReservationsComponent implements OnInit {
 
 
       let reservation = {
-        id: 5,
         paidInAdvance: true,
         timeResMade: new Date,
-        customerid: 3,
+        customerid: 43,
         numberOfSeats: this.seats,
-        resEventid: 77
+        resEventid: 75
       }
 
       console.log("RESERVATION");
       console.log(reservation);
-      this.http.post<Reservation[]>(this.baseUrl + "api/Events/" + reservation.id , reservation).subscribe(data => postData = data);
+      this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
       console.log("POST DATA");
       console.log(postData);
       this.name = "";
