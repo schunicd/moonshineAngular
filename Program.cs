@@ -22,8 +22,8 @@ namespace TheMoonshineCafe
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<MoonshineCafeContext>();
-                    DbInitializer.Initialize(context);
+                    //var context = services.GetRequiredService<MoonshineCafeContext>();
+                    //DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

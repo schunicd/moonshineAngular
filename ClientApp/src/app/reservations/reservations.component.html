@@ -51,7 +51,7 @@
 
     <div *ngIf="eventName != null; else seatsDisabled">
       <label>Number of seats:</label>
-      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.currentNumberOfSeats}}">
+      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxSeats}}" placeholder="1">
     </div>
 
     <ng-template #seatsDisabled>
@@ -61,11 +61,11 @@
     <br>
     <br>
 
-    <button (click)="tentativeBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else tentativeDisabled">Tentative Booking</button>
+    <button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else tentativeDisabled">Tentative Booking</button>
     <ng-template #tentativeDisabled><button disabled="true">Tentative Booking</button></ng-template>
     <br>
     <br>
 
-    <button (click)="paidBooking()" *ngIf="name != null && email != null && seats != null && eventName != null; else paidDisabled">Paid Booking</button>
+    <button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else paidDisabled">Paid Booking</button>
     <ng-template #paidDisabled><button disabled="true">Paid Booking</button></ng-template>
 </form>
