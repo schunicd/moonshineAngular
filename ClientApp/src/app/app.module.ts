@@ -14,6 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatDatepickerModule} from '@angular/material/datepicker'
 import { MatInputModule } from '@angular/material/input'
 import { MatNativeDateModule } from '@angular/material/core';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    ReservationsComponent
+    ReservationsComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,8 @@ import { MatNativeDateModule } from '@angular/material/core';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'reservations', component: ReservationsComponent }
+      { path: 'reservations', component: ReservationsComponent },
+      { path: 'admin', component: AdminComponent }
     ]),
     NoopAnimationsModule,
     MatDatepickerModule,
