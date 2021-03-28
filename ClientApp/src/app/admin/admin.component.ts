@@ -9,6 +9,11 @@ import "firebase/auth";
 })
 export class AdminComponent implements OnInit {
   provider: any;
+  user: any;
+  email: any;
+  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com");
+  isAdmin:boolean = false;
+
 
   constructor(){
 
@@ -17,22 +22,22 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void{
     var provider = new firebase.auth.GoogleAuthProvider(); //declaring provider
     this.provider = provider;
+  
   }
 
   loginWithGmail(){ //function to connect to gmail
-    console.log("Gmail");
     firebase.auth().signInWithPopup(this.provider)
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
         var credential = result.credential;
-
         // This gives you a Google Access Token. You can use it to access the Google API.
         // let a: any;
         // a = result.credential
         // var token = a.accessToken;
         // The signed-in user info.
-        var user = result.user;
-        console.log(user);
+        this.user = result.user;
+        this.email = result.user.email;
+        this.authCheck();
         // ...
       }).catch((error) => {
     // Handle Errors here.
@@ -43,7 +48,17 @@ export class AdminComponent implements OnInit {
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
         // ...
-      }); 
+      });
+      
+  }
+
+  authCheck(){
+    this.authorizedEmails.forEach(item => {
+      console.log(item + " authChecked");
+      if(this.user.email == item){
+        this.isAdmin = true;
+      }
+    });
   }
 
 }

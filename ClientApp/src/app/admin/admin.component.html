@@ -4,4 +4,12 @@
   <button (click)="loginWithGmail()">
     Login with Google
   </button>
+  <div *ngIf="user != null; else disabled;">
+    
+    <br>
+    {{user.email}}
+    <div *ngIf="isAdmin; else disabled;">
+      User is an admin
+    </div>
+  </div>
 </div>
