@@ -11,8 +11,10 @@ export class AdminComponent implements OnInit {
   provider: any;
   user: any;
   email: any;
-  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com");
+  msg: string;
+  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com", "felucas@sheridancollege.ca");
   isAdmin:boolean = false;
+  dbIsConnected:boolean = true;
 
 
   constructor(){
@@ -22,6 +24,8 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void{
     var provider = new firebase.auth.GoogleAuthProvider(); //declaring provider
     this.provider = provider;
+
+    this.checkDBConnect();
   
   }
 
@@ -57,8 +61,19 @@ export class AdminComponent implements OnInit {
       console.log(item + " authChecked");
       if(this.user.email == item){
         this.isAdmin = true;
+        this.msg = "You are an admin!";
+        return;
+      }
+      else{
+        this.msg = "You are not authorized!"
       }
     });
+  }
+
+  checkDBConnect(){
+    if(!this.dbIsConnected){
+      this.msg = "Cannot authorize at this time, please try again later";
+    }
   }
 
 }
