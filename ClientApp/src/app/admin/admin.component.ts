@@ -48,24 +48,14 @@ export class AdminComponent implements OnInit {
   }
 
   authCheck(){
-<<<<<<< HEAD
-    this.msg = "You are not authorized!";
-    this.authorizedEmails.forEach(item => {
-      console.log(this.user.email);
-      console.log(item + " authChecked");
-=======
     this.msg = "You are not authorized!"
     this.authorizedEmails.forEach(item => {
->>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
       if(this.user.email == item){
         this.isAdmin = true;
         this.msg = "You are an admin!";
         return;
       }
-<<<<<<< HEAD
 
-=======
->>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
     });
     return;
   }
