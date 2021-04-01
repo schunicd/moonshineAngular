@@ -23,7 +23,7 @@ namespace TheMoonshineCafe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MoonshineCafeContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("LocalTesting")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

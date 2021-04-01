@@ -18,18 +18,18 @@ namespace TheMoonshineCafe.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Person> Persons { get; set; }
+        //public DbSet<Person> Persons { get; set; }
         public DbSet<Refund> Refunds { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<Person>().ToTable("Person");
             modelBuilder.Entity<Admin>().ToTable("Admin");
             modelBuilder.Entity<Band>().ToTable("Band");
             modelBuilder.Entity<Customer>().ToTable("Customer");
             modelBuilder.Entity<Event>().ToTable("Event");
-            modelBuilder.Entity<Payment>().ToTable("Payment");
-            modelBuilder.Entity<Person>().ToTable("Person");
+            modelBuilder.Entity<Payment>().ToTable("Payment");       
             modelBuilder.Entity<Refund>().ToTable("Refund");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
         }
