@@ -10,9 +10,13 @@ import "firebase/auth";
 export class AdminComponent implements OnInit {
   provider: any;
   user: any;
-  email: any;
+  email: string;
   msg: string;
+<<<<<<< HEAD
   authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com");
+=======
+  authorizedEmails:string[] = new Array("mohammed.a.r.musleh@gmail.com", "schunicd@gmail.com", "preet.ghuman911@gmail.com", "felucas@sheridancollege.ca");
+>>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
   isAdmin:boolean = false;
   dbIsConnected:boolean = true;
 
@@ -29,44 +33,43 @@ export class AdminComponent implements OnInit {
 
   }
 
-  loginWithGmail(){ //function to connect to gmail
+  loginWithGmail(){ 
     firebase.auth().signInWithPopup(this.provider)
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
         var credential = result.credential;
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // let a: any;
-        // a = result.credential
-        // var token = a.accessToken;
-        // The signed-in user info.
+
         this.user = result.user;
         this.email = result.user.email;
         this.authCheck();
-        // ...
       }).catch((error) => {
-    // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
-        // The email of the user's account used.
         var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
-        // ...
       });
 
   }
 
   authCheck(){
+<<<<<<< HEAD
     this.msg = "You are not authorized!";
     this.authorizedEmails.forEach(item => {
       console.log(this.user.email);
       console.log(item + " authChecked");
+=======
+    this.msg = "You are not authorized!"
+    this.authorizedEmails.forEach(item => {
+>>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
       if(this.user.email == item){
         this.isAdmin = true;
         this.msg = "You are an admin!";
         return;
       }
+<<<<<<< HEAD
 
+=======
+>>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
     });
     return;
   }
