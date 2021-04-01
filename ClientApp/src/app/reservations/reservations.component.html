@@ -51,7 +51,7 @@
 
     <div *ngIf="eventName != null; else seatsDisabled">
       <label>Number of seats:</label>
-      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxSeats}}" placeholder="1">
+      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}} - {{e.currentNumberOfSeats}}" placeholder="1">
     </div>
 
     <ng-template #seatsDisabled>

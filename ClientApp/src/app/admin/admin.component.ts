@@ -12,7 +12,7 @@ export class AdminComponent implements OnInit {
   user: any;
   email: any;
   msg: string;
-  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com", "felucas@sheridancollege.ca");
+  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com");
   isAdmin:boolean = false;
   dbIsConnected:boolean = true;
 
@@ -26,7 +26,7 @@ export class AdminComponent implements OnInit {
     this.provider = provider;
 
     this.checkDBConnect();
-  
+
   }
 
   loginWithGmail(){ //function to connect to gmail
@@ -53,21 +53,22 @@ export class AdminComponent implements OnInit {
         var credential = error.credential;
         // ...
       });
-      
+
   }
 
   authCheck(){
+    this.msg = "You are not authorized!";
     this.authorizedEmails.forEach(item => {
+      console.log(this.user.email);
       console.log(item + " authChecked");
       if(this.user.email == item){
         this.isAdmin = true;
         this.msg = "You are an admin!";
         return;
       }
-      else{
-        this.msg = "You are not authorized!"
-      }
+
     });
+    return;
   }
 
   checkDBConnect(){

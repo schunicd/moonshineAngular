@@ -26,21 +26,20 @@ export class ReservationsComponent implements OnInit {
     this.eventName = null;
     this.name = "";
     this.email = "";
-    this.event = this.data.event;
 
     console.log(this.minDate);
 
 
 
-    //this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
-    //  this.event = result;
-    //  console.log(this.event);
-    //}, error => console.error(error));
+    this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
+      this.event = result;
+      console.log(this.event);
+    }, error => console.error(error));
 
-    //this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
-    //  this.band = result;
-    //  console.log(this.band);
-    //}, error => console.error(error));
+    this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
+      this.band = result;
+      console.log(this.band);
+    }, error => console.error(error));
 
   }
 
@@ -59,15 +58,6 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
-
-    console.log("FILTER DATE");
-    console.log(filterDate);
-    console.log("FILTER EVENTS RETURN");
-    console.log(this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate));
-    console.log("THIS.EVENTS");
-    console.log(this.event);
-    console.log('this.event.filter(x => x.eventDate.toString().split("T")[0])');
-    console.log(this.event.filter(x => x.eventDate.toString().split("T")[0]));
 
     return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
   }
@@ -101,14 +91,14 @@ export class ReservationsComponent implements OnInit {
       this.date = this.resetDate;
       this.email = "";
       this.seats = 0;
-      this.eventName = "";
+      this.eventName = null;
       return;
     }
     console.log("Tentative Booking Cancelled!");
   }
 
   paidBooking(){
-    let maxseats =this.filterSeats();
+    let maxseats = this.filterSeats();
     if(confirm("Confirm Paid Booking On: " + this.eventName)){
       console.log("Paid Booking Confirmed!");
 
@@ -124,14 +114,14 @@ export class ReservationsComponent implements OnInit {
 
       console.log("RESERVATION");
       console.log(reservation);
-      //this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
+      this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
       console.log("POST DATA");
       console.log(postData);
       this.name = "";
       this.date = this.resetDate;
       this.email = "";
       this.seats = 0;
-      this.eventName = "";
+      this.eventName = null;
       return;
     }
 
