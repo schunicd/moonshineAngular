@@ -31,7 +31,7 @@ export class AdminComponent implements OnInit {
   
   }
 
-  loginWithGmail(){ 
+  loginWithGmail(){
     firebase.auth().signInWithPopup(this.provider)
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
@@ -61,11 +61,10 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  newAuthCheck(){
-    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email='+this.email).subscribe(result => {
-      this.tempAdmin = result;
-      console.log(this.tempAdmin);
-    }, error => console.error(error));
+=======
+>>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
+    });
+    return;
   }
 
     checkDBConnect(){
