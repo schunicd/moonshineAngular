@@ -12,11 +12,7 @@ export class AdminComponent implements OnInit {
   user: any;
   email: string;
   msg: string;
-<<<<<<< HEAD
-  authorizedEmails:string[] = new Array("schunicd@gmail.com", "preet.ghuman911@gmail.com", "mohammed.a.r.musleh@gmail.com");
-=======
   authorizedEmails:string[] = new Array("mohammed.a.r.musleh@gmail.com", "schunicd@gmail.com", "preet.ghuman911@gmail.com", "felucas@sheridancollege.ca");
->>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
   isAdmin:boolean = false;
   dbIsConnected:boolean = true;
 
@@ -33,7 +29,7 @@ export class AdminComponent implements OnInit {
 
   }
 
-  loginWithGmail(){ 
+  loginWithGmail(){
     firebase.auth().signInWithPopup(this.provider)
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
