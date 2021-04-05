@@ -13,25 +13,25 @@ export class AdminComponent implements OnInit {
   user: any;
   email: string;
   msg: string;
-  authorizedEmails:string[] = new Array("mohammed.a.r.musleh@gmail.com", "schunicd@gmail.com", "preet.ghuman911@gmail.com", "felucas@sheridancollege.ca");
-  isAdmin:boolean = false;
-  dbIsConnected:boolean = true;
+  authorizedEmails: string[] = new Array("mohammed.a.r.musleh@gmail.com", "schunicd@gmail.com", "preet.ghuman911@gmail.com", "felucas@sheridancollege.ca");
+  isAdmin: boolean = false;
+  dbIsConnected: boolean = true;
   tempAdmin: any;
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string){
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     var provider = new firebase.auth.GoogleAuthProvider(); //declaring provider
     this.provider = provider;
 
     this.checkDBConnect();
-  
+
   }
 
-  loginWithGmail(){
+  loginWithGmail() {
     firebase.auth().signInWithPopup(this.provider)
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
@@ -47,13 +47,13 @@ export class AdminComponent implements OnInit {
         var email = error.email;
         var credential = error.credential;
       });
-      
+
   }
 
-  authCheck(){
+  authCheck() {
     this.msg = "You are not authorized!"
     this.authorizedEmails.forEach(item => {
-      if(this.user.email == item){
+      if (this.user.email == item) {
         this.isAdmin = true;
         this.msg = "You are an admin!";
         return;
@@ -61,24 +61,25 @@ export class AdminComponent implements OnInit {
     });
   }
 
-=======
->>>>>>> c0124e81a2a22273249c820448af964cdbe8aac5
-    });
-    return;
+  newAuthCheck() {
+    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + this.email).subscribe(result => {
+      this.tempAdmin = result;
+      console.log(this.tempAdmin);
+    }, error => console.error(error));
   }
 
-    checkDBConnect(){
-      if(!this.dbIsConnected){
-        this.msg = "Cannot authorize at this time, please try again later";
-      }
+  checkDBConnect() {
+    if (!this.dbIsConnected) {
+      this.msg = "Cannot authorize at this time, please try again later";
     }
-  
   }
-  
-  interface Admin {
-    ID: number,
-    name: string,
-    email: string,
-    phoneNumber: string,
-    accessLevel: number
-  }
+
+}
+
+interface Admin {
+  ID: number,
+  name: string,
+  email: string,
+  phoneNumber: string,
+  accessLevel: number
+}
