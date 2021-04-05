@@ -13,7 +13,6 @@ export class AdminComponent implements OnInit {
   user: any;
   email: string;
   msg: string;
-  authorizedEmails: string[] = new Array("mohammed.a.r.musleh@gmail.com", "schunicd@gmail.com", "preet.ghuman911@gmail.com", "felucas@sheridancollege.ca");
   isAdmin: boolean = false;
   dbIsConnected: boolean = true;
   tempAdmin: any;
@@ -39,7 +38,6 @@ export class AdminComponent implements OnInit {
 
         this.user = result.user;
         this.email = result.user.email;
-        this.authCheck();
         this.newAuthCheck();
       }).catch((error) => {
         var errorCode = error.code;
@@ -50,21 +48,13 @@ export class AdminComponent implements OnInit {
 
   }
 
-  authCheck() {
-    this.msg = "You are not authorized!"
-    this.authorizedEmails.forEach(item => {
-      if (this.user.email == item) {
-        this.isAdmin = true;
-        this.msg = "You are an admin!";
-        return;
-      }
-    });
-  }
-
   newAuthCheck() {
+    this.msg = "You are not authorized!";
     this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + this.email).subscribe(result => {
       this.tempAdmin = result;
       console.log(this.tempAdmin);
+      this.isAdmin = true;
+      this.msg = "You are an admin!";
     }, error => console.error(error));
   }
 
