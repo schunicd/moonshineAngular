@@ -1,17 +1,46 @@
-<h1>Hello, world!</h1>
-<p>Welcome to your new single-page application, built with:</p>
-<ul>
-  <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
-  <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
-  <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
-</ul>
-<p>To help you get started, we've also set up:</p>
-<ul>
-  <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
-  <li><strong>Angular CLI integration</strong>. In development mode, there's no need to run <code>ng serve</code>. It runs in the background automatically, so your client-side resources are dynamically built on demand and the page refreshes when you modify any file.</li>
-  <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and your <code>dotnet publish</code> configuration automatically invokes <code>ng build</code> to produce minified, ahead-of-time compiled JavaScript files.</li>
-</ul>
-<p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>
+<div id="homePage" class="container">
+  <mat-grid-list cols="2" rowHeight="100px">
+
+    <mat-grid-tile [colspan]="leftFirstTile.cols" [rowspan]="leftFirstTile.rows">
+      <h3 id="leftTileHeader">Welcome to the <h3 id="leftMoonshineCafeColor">Moonshine Café</h3></h3>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="rightFirstTile.cols" [rowspan]="rightFirstTile.rows">
+      <iframe width="350" height="300" src="https://www.youtube.com/embed/pDOoidfERvQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="leftSecondTile.cols" [rowspan]="leftSecondTile.rows">
+      <img src="../../assets/Images/homePage_inTheSpotlight.jpg">
+    </mat-grid-tile>
 
 
-For more information about The Moonshine Cafe please visit: <a href="http://www.themoonshinecafe.com/">The Moonshine Cafe</a>
+    <mat-grid-tile [colspan]="leftThirdTile.cols" [rowspan]="leftThirdTile.rows">
+
+        <div class="sign-three">
+          <div class="ui">In The Spotlight</div>
+        </div>
+
+      <!--
+      <div class="spotlightGridContainer">
+        <img class="spotlightImages" src="../../assets/Images/homePage_spotlightImageOne.jpg">
+        <p class="spotlightHeaders"><a href="https://www.patreon.com/themoonshinecafe" target="_blank">MOONSHINE CAFE ON PATREON</a> : OPEN</p>
+        <p class="spotlightText">For a modest monthly or annual subscription amount you can support The Moonshine Cafe while enjoying Live Streamed Events as
+          they happen, or watching them at your convenience and access our archived shows. We have invested in hardware, software and
+          the learning curve to be able to provide a polished production to our PATRONS.
+        </p>
+      </div>
+      -->
+    </mat-grid-tile>
+
+
+    <mat-grid-tile [colspan]="rightSecondTile.cols" [rowspan]="rightSecondTile.rows">
+      <iframe src="https://calendar.google.com/calendar/embed?height=400&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FToronto&amp;src=c2NodW5pY2RAZ21haWwuY29t&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGhlbW9vbnNoaW5lY2FmZUBnbWFpbC5jb20&amp;color=%237986CB&amp;color=%233F51B5&amp;color=%23C0CA33&amp;color=%23E4C441&amp;mode=AGENDA&amp;showTitle=0" style="border:solid 1px #777" width="400" height="400" frameborder="0" scrolling="no"></iframe>
+    </mat-grid-tile>
+
+
+    <mat-grid-tile [colspan]="bottomTile.cols" [rowspan]="bottomTile.rows">
+
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>

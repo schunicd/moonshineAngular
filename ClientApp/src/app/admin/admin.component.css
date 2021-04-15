@@ -1,0 +1,42 @@
+#adminBody{
+  margin-top: -16px;
+  background-image: url("../../assets/Images/admin_background.jpg") !important;
+  background-repeat: no-repeat;
+  height: 74vh;
+  width: 100vw;
+  background-size: 100% 100%;
+}
+
+html, body{
+  margin: 0px !important;
+  height: 70vh !important;
+}
+
+#adminFadeBackground{
+  margin: 0;
+  position: fixed;
+  height: 60px;
+  width: 180px;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  animation: loginBtn 5s infinite;
+}
+
+@keyframes loginBtn {
+
+  0%, 100% {background-color: rgba(255, 255, 255, 0);}
+  50% {background-color: rgb(255, 255, 255);}
+}
+
+#center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
