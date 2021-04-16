@@ -3,11 +3,8 @@
 <div>
   <button (click)="loginWithGmail()">
     Login with Google
-  </button>
-  <div *ngIf="user != null; else disabled;">
-    
+  </button>   
     <br>
-    {{user.email}}<br>
+    {{email}}<br>
     {{msg}}
-  </div>
 </div>
