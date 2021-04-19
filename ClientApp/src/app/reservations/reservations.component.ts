@@ -73,6 +73,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   filterSeats(){
+    console.log("FILTER SEATS");
     console.log(this.event.filter(x => x.eventDate.toString() == this.eventName));
     return this.event.filter(x => x.eventDate.toString() == this.eventName);
   }
