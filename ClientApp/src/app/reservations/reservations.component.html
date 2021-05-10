@@ -21,18 +21,22 @@
     <mat-step label="Enter Name">
       <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
         <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+        <br>
+        <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
     </mat-step>
 
     <mat-step label="Enter Email">
       <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
       <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+      <br>
+      <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
     </mat-step>
 
     <mat-step label="Number of Seats">
 
       <div *ngIf="eventName != null; else seatsDisabled">
         <label>Number of seats:</label>
-        <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}} - {{e.currentNumberOfSeats}}" placeholder="1">
+        <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
       </div>
 
       <ng-template #seatsDisabled>
@@ -43,11 +47,11 @@
     </mat-step>
 
     <mat-step label="Booking Type">
-      <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else tentativeDisabled">Tentative Booking</button>
+      <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>
       <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
       <br>
       <br>
-      <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else paidDisabled">Paid Booking</button>
+      <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && eventName != '' && !validateName() && !validateEmail(); else paidDisabled">Paid Booking</button>
       <ng-template #paidDisabled><button mat-raised-button disabled="true">Paid Booking</button></ng-template>
     </mat-step>
 
