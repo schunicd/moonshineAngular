@@ -21,7 +21,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
 import { fromEventPattern } from 'rxjs';
-
+import { MainComponent } from 'src/main';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,8 @@ import { fromEventPattern } from 'rxjs';
     CounterComponent,
     FetchDataComponent,
     ReservationsComponent,
-    AdminComponent
+    AdminComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
