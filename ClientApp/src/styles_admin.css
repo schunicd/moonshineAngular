@@ -21,15 +21,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-#clientBackground{
-  background-image: url("./assets/Images/homePage_background.jpg");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-color: black;
-}
-
-#adminBackground{
-  background-image: url("./assets/Images/admin_background.jpg");
+body{
+  background-image: url("./assets/Images/admin_background.jpg") !important;
   background-repeat: no-repeat;
   background-size: 100% 100%;
   background-color: black;
