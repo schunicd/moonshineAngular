@@ -8,7 +8,6 @@ import { MatGridListModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 
-import { MainComponent } from 'src/main'
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { AdminNavMenuComponent } from './admin-nav-menu/admin-nav-menu.component';
@@ -25,7 +24,6 @@ import { fromEventPattern } from 'rxjs';
 
 @NgModule({
   declarations: [
-    MainComponent,
     AppComponent,
     NavMenuComponent,
     AdminNavMenuComponent,
