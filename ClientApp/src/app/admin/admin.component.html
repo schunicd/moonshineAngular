@@ -1,10 +1,13 @@
-<h3>Test</h3>
-
-<div>
-  <button (click)="loginWithGmail()">
-    Login with Google
-  </button>   
+<div id="adminBody">
+  <div id="adminFadeBackground" class="container">
+    <button mat-raised-button id="center" (click)="loginWithGmail()">
+      Login with Google
+    </button>
     <br>
-    {{email}}<br>
-    {{msg}}
+    <div id="loginStatus" *ngIf="user != null; else disabled;">
+      <br>
+      {{user.email}}<br>
+      {{msg}}
+    </div>
+  </div>
 </div>

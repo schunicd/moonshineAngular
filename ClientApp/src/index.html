@@ -6,11 +6,36 @@
     <base href="/" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" type="text/css" *ngIf="currentPage[0][3] == admin" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCssUrl)'>
+    <link rel="icon" type="image/x-icon" href="assets/Images/favicon.png" />
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-  <body>
+  </head>
+
+  <body id="clientBackground">
     <app-root>Loading...</app-root>
+    <div id="cpyDiv"><h5 id="copyright">&copy; 2020 MoonshineCafe.com Design By: Bootleggers</h5></div>
   </body>
+
 </html>
+
+<!--
+
+  **CODE BELOW IS AN ATTEMPT AT GETTING DIFFERENT CSS LOADING... DIDNT WORK!**
+
+<ng-template *ngIf="!curPageAdmin; else adminBackground">
+  <div id="clientBackground">
+    <body>
+      <app-root>Loading...</app-root>
+      <div id="cpyDiv"><h5 id="copyright">&copy; 2020 MoonshineCafe.com Design By: Bootleggers</h5></div>
+    </body>
+  </div>
+</ng-template>
+
+<ng-template #adminBackground>
+  <div id="adminBackground">
+    <app-root>Loading...</app-root>
+    <div id="cpyDiv"><h5 id="copyright">&copy; 2020 MoonshineCafe.com Design By: Bootleggers</h5></div>
+  </div>
+</ng-template>
+-->
