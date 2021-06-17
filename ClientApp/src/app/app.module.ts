@@ -10,23 +10,20 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { AdminNavMenuComponent } from './admin-nav-menu/admin-nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
+import {MatDatepickerModule} from '@angular/material/datepicker'
+import { MatInputModule } from '@angular/material/input'
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
-import { fromEventPattern } from 'rxjs';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    AdminNavMenuComponent,
     HomeComponent,
     CounterComponent,
     FetchDataComponent,

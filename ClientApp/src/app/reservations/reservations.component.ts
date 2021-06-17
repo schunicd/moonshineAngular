@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reservations',
@@ -21,11 +20,7 @@ export class ReservationsComponent implements OnInit {
   event: Event[];
   band: Band[];
 
-  isLinear = true;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private _formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.minDate = new Date();
     this.eventName = null;
@@ -49,12 +44,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+
   }
 
   filterEvents(){
@@ -73,8 +63,6 @@ export class ReservationsComponent implements OnInit {
   }
 
   filterSeats(){
-    console.log("FILTER SEATS");
-    console.log(this.event.filter(x => x.eventDate.toString() == this.eventName));
     return this.event.filter(x => x.eventDate.toString() == this.eventName);
   }
 

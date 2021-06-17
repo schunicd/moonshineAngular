@@ -1,4 +1,3 @@
-/*
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -32,9 +31,9 @@ header{
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 100vw;
 }
 
 #facebookColor{
   color: rgba(1,121,235,255);
 }
-*/

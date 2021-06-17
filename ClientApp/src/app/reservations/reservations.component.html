@@ -1,131 +1,71 @@
-
-<div id="reservationsBody" class="container">
-
-  <mat-vertical-stepper>
-
-    <mat-step label="Select Date">
-      <mat-form-field>
-        <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </mat-step>
-
-    <mat-step label="Select Event">
-      <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
-      <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-        <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
-      </select>
-    </mat-step>
-
-    <mat-step label="Enter Name">
-      <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
-        <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
-        <br>
-        <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
-    </mat-step>
-
-    <mat-step label="Enter Email">
-      <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
-      <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
-      <br>
-      <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
-    </mat-step>
-
-    <mat-step label="Number of Seats">
-
-      <div *ngIf="eventName != null; else seatsDisabled">
-        <label>Number of seats:</label>
-        <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
-      </div>
-
-      <ng-template #seatsDisabled>
-        <label>Number of seats:</label>
-        <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
-      </ng-template>
-
-    </mat-step>
-
-    <mat-step label="Booking Type">
-      <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>
-      <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
-      <br>
-      <br>
-      <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && eventName != '' && !validateName() && !validateEmail(); else paidDisabled">Paid Booking</button>
-      <ng-template #paidDisabled><button mat-raised-button disabled="true">Paid Booking</button></ng-template>
-    </mat-step>
-
-  </mat-vertical-stepper>
-
-  <!--
-  <h4>Select an Event:</h4>
-  <mat-form-field style="float: right;">
+<h4>Select an Event:</h4>
+<mat-form-field style="float: right;">
     <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+</mat-form-field>
 
-  <form novalidate>
-    <br>
-      Date: <b>{{date}}</b>
-    <br>
-    <br>
 
-      <div id="" class="row">
-        <div class="col">
-          <label>Events:</label>
-          <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-            <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
-          </select>
-        </div>
+
+<form novalidate>
+  <br>
+    Date: <b>{{date}}</b>
+  <br>
+  <br>
+
+    <div id="" class="row">
+      <div class="col">
+        <label>Events:</label>
+        <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
+          <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
+        </select>
       </div>
-      <br>
+    </div>
+    <br>
 
-      <label id="warning" *ngIf="date == null;">Please Select a Date on the right first!</label>
-      <br>
+    <label id="warning" *ngIf="date == null;">Please Select a Date on the right first!</label>
+    <br>
 
-      <div id="grid-container">
+    <div id="grid-container">
 
-        <label id="nameLabel">Name:</label>
+      <label id="nameLabel">Name:</label>
 
-        <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
-        <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+      <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
+      <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
 
-        <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+      <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
 
-      </div>
+    </div>
 
-      <br>
+    <br>
 
-      <label>Email:</label>
+    <label>Email:</label>
 
-      <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
-      <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+    <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
+    <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
 
-      <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+    <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
 
-      <br>
-      <br>
+    <br>
+    <br>
 
-      <div *ngIf="eventName != null; else seatsDisabled">
-        <label>Number of seats:</label>
-        <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}} - {{e.currentNumberOfSeats}}" placeholder="1">
-      </div>
+    <div *ngIf="eventName != null; else seatsDisabled">
+      <label>Number of seats:</label>
+      <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats}} - {{e.currentNumberOfSeats}}" placeholder="1">
+    </div>
 
-      <ng-template #seatsDisabled>
-        <label>Number of seats:</label>
-        <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
-      </ng-template>
-      <br>
-      <br>
+    <ng-template #seatsDisabled>
+      <label>Number of seats:</label>
+      <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
+    </ng-template>
+    <br>
+    <br>
 
-      <button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else tentativeDisabled">Tentative Booking</button>
-      <ng-template #tentativeDisabled><button disabled="true">Tentative Booking</button></ng-template>
-      <br>
-      <br>
+    <button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else tentativeDisabled">Tentative Booking</button>
+    <ng-template #tentativeDisabled><button disabled="true">Tentative Booking</button></ng-template>
+    <br>
+    <br>
 
-      <button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else paidDisabled">Paid Booking</button>
-      <ng-template #paidDisabled><button disabled="true">Paid Booking</button></ng-template>
-  </form>
-</div>
--->
+    <button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != ''; else paidDisabled">Paid Booking</button>
+    <ng-template #paidDisabled><button disabled="true">Paid Booking</button></ng-template>
+</form>
