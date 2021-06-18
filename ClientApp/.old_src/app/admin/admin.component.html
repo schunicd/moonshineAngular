@@ -4,7 +4,7 @@
       Login with Google
     </button>
     <br>
-    <div id="loginStatus" *ngIf="user != null;">
+    <div id="loginStatus" *ngIf="user != null; else disabled;">
       <br>
       {{user.email}}<br>
       {{msg}}
