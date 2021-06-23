@@ -1,13 +1,25 @@
+<head>
+  <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+</head>
+
 <h3>Test</h3>
 
 <div>
   <button (click)="loginWithGmail()">
     Login with Google
-  </button>
-  <div *ngIf="user != null; else disabled;">
-    
+  </button>    
     <br>
-    {{user.email}}<br>
+    {{email}}<br>
     {{msg}}
-  </div>
+
+    <br>
+    <br>
+    <button (click)="CreateTestEvent()">
+      Make Test Event
+    </button>
+    <br>
+    <br>
+    <button (click)="GetCalendarEventIds()">
+      GetCalendarEventIds
+    </button>
 </div>

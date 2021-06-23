@@ -16,6 +16,9 @@ export class AdminComponent implements OnInit {
   isAdmin: boolean = false;
   dbIsConnected: boolean = true;
   tempAdmin: any;
+  testEvent : Event;
+  events: any[];
+  eventIds: any[];
 
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
@@ -25,8 +28,15 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {
     var provider = new firebase.auth.GoogleAuthProvider(); //declaring provider
     this.provider = provider;
+    this.events = this.provider.addScope('https://www.googleapis.com/auth/calendar');
 
     this.checkDBConnect();
+
+    this.testEvent = {
+      cId : "primary",
+      eventStart: new Date("2021-06-26"),
+      eventEnd: new Date("2021-06-27")
+    }
 
   }
 
@@ -38,6 +48,7 @@ export class AdminComponent implements OnInit {
 
         this.user = result.user;
         this.email = result.user.email;
+
         this.newAuthCheck();
       }).catch((error) => {
         var errorCode = error.code;
@@ -46,6 +57,24 @@ export class AdminComponent implements OnInit {
         var credential = error.credential;
       });
 
+  }
+
+  GetCalendarEventIds(){
+    this.http.get<Event[]>(
+      "https://www.googleapis.com/calendar/v3/users/me/calendarList.list"
+      ).subscribe(result => {
+      this.eventIds = result;
+      console.log(this.eventIds);
+    }, error => console.error(error));
+  }
+
+  CreateTestEvent(){
+    this.http.get<Event[]>(
+      "https://www.googleapis.com/calendar/v3/calendars/primary/events.readonly"
+      ).subscribe(result => {
+      this.events = result;
+      console.log(this.events);
+    }, error => console.error(error));
   }
 
   newAuthCheck() {
@@ -72,4 +101,10 @@ interface Admin {
   email: string,
   phoneNumber: string,
   accessLevel: number
+}
+
+interface Event{
+  cId: string,
+  eventStart: Date,
+  eventEnd: Date,
 }
