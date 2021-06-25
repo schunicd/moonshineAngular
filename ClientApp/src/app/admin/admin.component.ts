@@ -59,23 +59,23 @@ export class AdminComponent implements OnInit {
 
   }
 
-  GetCalendarEventIds(){
-    this.http.get<Event[]>(
-      "https://www.googleapis.com/calendar/v3/users/me/calendarList.list"
-      ).subscribe(result => {
-      this.eventIds = result;
-      console.log(this.eventIds);
-    }, error => console.error(error));
-  }
+  // GetCalendarEventIds(){
+  //   this.http.get<Event[]>(
+  //     "https://www.googleapis.com/calendar/v3/users/me/calendarList.list"
+  //     ).subscribe(result => {
+  //     this.eventIds = result;
+  //     console.log(this.eventIds);
+  //   }, error => console.error(error));
+  // }
 
-  CreateTestEvent(){
-    this.http.get<Event[]>(
-      "https://www.googleapis.com/calendar/v3/calendars/primary/events.readonly"
-      ).subscribe(result => {
-      this.events = result;
-      console.log(this.events);
-    }, error => console.error(error));
-  }
+  // CreateTestEvent(){
+  //   this.http.get<Event[]>(
+  //     "https://www.googleapis.com/calendar/v3/calendars/primary/events.readonly"
+  //     ).subscribe(result => {
+  //     this.events = result;
+  //     console.log(this.events);
+  //   }, error => console.error(error));
+  // }
 
   newAuthCheck() {
     this.msg = "You are not authorized!";
