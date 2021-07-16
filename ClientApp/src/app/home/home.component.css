@@ -2,7 +2,48 @@
 
 #homePage{
   background-color: rgba(255, 255, 255, 0.7);
+  margin-left: 20px;
+  margin-right: 20px;
 }
+
+@media screen and (max-width: 768px){
+
+  #leftTileHeader{font-size: 18px;}
+  #leftMoonshineCafeColor{font-size: 20px;}
+  #homePage{text-align: center;}
+  #sptlightHeaderBackground{margin: auto;}
+  #moonshineCalendar{width:350px;}
+
+}
+
+@media screen and (min-width: 769px){
+
+  .grid-container{
+    display: grid;
+    text-align: center;
+    grid-template-areas:
+    'leftTitleGrid leftTitleGrid . .'
+    'spotlightTitleGrid spotlightTitleGrid videoGrid videoGrid'
+    '. . videoGrid videoGrid'
+    '. . calendarGrid calendarGrid'
+    '. . calendarGrid calendarGrid'
+    '. . calendarGrid calendarGrid'
+    /* REPLACE .'s above with spotlightOne etc... as we add spotlight features */
+    ;
+    grid-gap: 10px;
+  }
+
+  #leftTileHeader{grid-area: leftTitleGrid;}
+  #sptlightHeaderBackground{grid-area: spotlightTitleGrid;}
+  #moonshineVideo{grid-area: videoGrid;}
+  #moonshineCalendar{grid-area: calendarGrid;}
+
+}
+
+#leftTileHeader{padding-top: 20px;}
+#sptlightHeaderBackground{margin: auto;}
+
+.center{margin: auto;}
 
 #leftMoonshineCafeColor{
   display: inline;
@@ -29,8 +70,6 @@
   grid-area: 'spotlightText';
 }
 
-
-
 #sptlightHeaderBackground{
   width: 60%;
   height: 100%;
@@ -41,6 +80,7 @@
 
 #spotlightHeaderText{
   padding-top: 23px;
+  padding-bottom: 23px;
   font-size: calc(3vh);
   line-height: calc(20px + 3vh);
   text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 50px #ff0000, 0 0 10px #ff8d00;

@@ -2,6 +2,36 @@
   color: red;
 }
 
+mat-vertical-stepper{
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 45vw;
+}
+
+#reservationsBody{
+  margin: 0%;
+  width: 10vw;
+  float: left;
+}
+
+@media screen and (max-width: 768px){
+
+  #reservationsBody{
+    width: 90vw;
+    margin-bottom: 20px;
+  }
+
+}
+
+#moonshineCalendar{
+  margin-right: 10vw;
+  float: right;
+}
+
+#formAndCalContainer{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 /*
 #nameLabel{grid-area: nameLabel;}
 .nameInput{grid-area: nameInput;}

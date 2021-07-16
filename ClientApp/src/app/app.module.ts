@@ -51,6 +51,7 @@ import { AdminComponent } from './admin/admin.component';
     MatInputModule,
     MatNativeDateModule
   ],
+  exports: [MatStepperModule],
   providers: [],
   bootstrap: [AppComponent]
 })

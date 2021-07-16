@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-reservations',
@@ -20,6 +21,8 @@ export class ReservationsComponent implements OnInit {
   event: Event[];
   band: Band[];
 
+  myGroup;
+
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.minDate = new Date();
@@ -29,7 +32,9 @@ export class ReservationsComponent implements OnInit {
 
     console.log(this.minDate);
 
-
+    this.myGroup = new FormGroup({
+      firstName: new FormControl()
+   });
 
     this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;

@@ -7,9 +7,16 @@ a.navbar-brand {
 html {
   font-size: 14px;
 }
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   html {
     font-size: 16px;
+  }
+
+}
+
+@media screen and (max-width: 769px) {
+  #navbarImage{
+    width: 100vw;
   }
 }
 
@@ -31,7 +38,6 @@ header{
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 100vw;
 }
 
 #facebookColor{
