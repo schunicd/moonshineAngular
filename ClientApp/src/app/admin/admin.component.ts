@@ -1,5 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AdminhomeComponent } from '../adminhome/adminhome.component';
+import { RouterModule, Router } from '@angular/router';
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -8,6 +10,8 @@ import "firebase/auth";
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
+
 export class AdminComponent implements OnInit {
   provider: any;
   user: any;
@@ -16,27 +20,17 @@ export class AdminComponent implements OnInit {
   isAdmin: boolean = false;
   dbIsConnected: boolean = true;
   tempAdmin: any;
-  testEvent : Event;
-  events: any[];
-  eventIds: any[];
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
 
   }
 
   ngOnInit(): void {
     var provider = new firebase.auth.GoogleAuthProvider(); //declaring provider
     this.provider = provider;
-    this.events = this.provider.addScope('https://www.googleapis.com/auth/calendar');
 
     this.checkDBConnect();
-
-    this.testEvent = {
-      cId : "primary",
-      eventStart: new Date("2021-06-26"),
-      eventEnd: new Date("2021-06-27")
-    }
 
   }
 
@@ -48,7 +42,6 @@ export class AdminComponent implements OnInit {
 
         this.user = result.user;
         this.email = result.user.email;
-
         this.newAuthCheck();
       }).catch((error) => {
         var errorCode = error.code;
@@ -59,23 +52,10 @@ export class AdminComponent implements OnInit {
 
   }
 
-  // GetCalendarEventIds(){
-  //   this.http.get<Event[]>(
-  //     "https://www.googleapis.com/calendar/v3/users/me/calendarList.list"
-  //     ).subscribe(result => {
-  //     this.eventIds = result;
-  //     console.log(this.eventIds);
-  //   }, error => console.error(error));
-  // }
-
-  // CreateTestEvent(){
-  //   this.http.get<Event[]>(
-  //     "https://www.googleapis.com/calendar/v3/calendars/primary/events.readonly"
-  //     ).subscribe(result => {
-  //     this.events = result;
-  //     console.log(this.events);
-  //   }, error => console.error(error));
-  // }
+  redirect(){
+    this.router.navigate(['/adminhome']);
+    console.log("Should redirect");
+  }
 
   newAuthCheck() {
     this.msg = "You are not authorized!";
@@ -101,10 +81,4 @@ interface Admin {
   email: string,
   phoneNumber: string,
   accessLevel: number
-}
-
-interface Event{
-  cId: string,
-  eventStart: Date,
-  eventEnd: Date,
 }
