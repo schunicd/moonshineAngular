@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import firebase from "firebase/app";
 import "firebase/auth";
 
@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
   tempAdmin: any;
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -50,7 +50,7 @@ export class AdminComponent implements OnInit {
   }
 
   redirect(){
-    this.router.navigate(['/adminhome']);
+    this.router.navigate(['/adminhome', this.isAdmin]);
   }
 
   newAuthCheck() {
