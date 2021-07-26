@@ -43,12 +43,12 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: '**', redirectTo: '', pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'reservations', component: ReservationsComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'adminhome/:authCheck', component: AdminhomeComponent }
+      { path: 'adminhome/:authCheck', component: AdminhomeComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
     NoopAnimationsModule,
     MatDatepickerModule,

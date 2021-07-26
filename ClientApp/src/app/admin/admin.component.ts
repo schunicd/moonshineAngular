@@ -60,6 +60,7 @@ export class AdminComponent implements OnInit {
       console.log(this.tempAdmin);
       this.isAdmin = true;
       this.msg = "You are an admin!";
+      this.redirect();
     }, error => console.error(error));
   }
 
