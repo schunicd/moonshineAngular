@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace TheMoonshineCafe.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowMyOrigin")]
     public class AdminHomeController : ControllerBase
     {
         private readonly MoonshineCafeContext _context;
@@ -21,7 +23,7 @@ namespace TheMoonshineCafe.Controllers
             _context = context;
         }
 
-        // GET: api/Admins
+/*        // GET: api/Admins
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Admin>>> GetAdmins()
         {
@@ -125,6 +127,6 @@ namespace TheMoonshineCafe.Controllers
         private bool AdminExists(int id)
         {
             return _context.Admins.Any(e => e.id == id);
-        }
+        }*/
     }
 }

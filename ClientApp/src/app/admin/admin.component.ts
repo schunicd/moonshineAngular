@@ -1,8 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DataService } from '../data.service';
 import firebase from "firebase/app";
 import "firebase/auth";
+import { Admin } from '../Admin';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +21,7 @@ export class AdminComponent implements OnInit {
   tempAdmin: any;
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private data: DataService) {
 
   }
 
@@ -50,32 +52,27 @@ export class AdminComponent implements OnInit {
   }
 
   redirect(){
-    this.router.navigate(['/adminhome', this.isAdmin]);
+    this.data.setTempAdmin(this.email);
+    this.router.navigate(['/adminhome']);
   }
 
-  newAuthCheck() {
-    this.msg = "You are not authorized!";
-    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + this.email).subscribe(result => {
-      this.tempAdmin = result;
-      console.log(this.tempAdmin);
-      this.isAdmin = true;
-      this.msg = "You are an admin!";
-      this.redirect();
-    }, error => console.error(error));
+  async newAuthCheck() {
+    let adminCheck = await this.data.getEmail(this.email);
+    console.log(adminCheck)
+    if(adminCheck){
+      this.msg = "You are an admin"
+      console.log("Admin!")
+    }
+    else{
+      this.msg = "butts"
+    }
+    this.redirect();
   }
 
-  checkDBConnect() {
+  checkDBConnect() { //needs to moved to service
     if (!this.dbIsConnected) {
       this.msg = "Cannot authorize at this time, please try again later";
     }
   }
 
-}
-
-interface Admin {
-  ID: number,
-  name: string,
-  email: string,
-  phoneNumber: string,
-  accessLevel: number
 }

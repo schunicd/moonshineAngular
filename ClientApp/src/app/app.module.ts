@@ -47,7 +47,7 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'reservations', component: ReservationsComponent },
       { path: 'admin', component: AdminComponent },
-      { path: 'adminhome/:authCheck', component: AdminhomeComponent },
+      { path: 'adminhome', component: AdminhomeComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' }
     ]),
     NoopAnimationsModule,
