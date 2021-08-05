@@ -56,16 +56,8 @@ export class AdminComponent implements OnInit {
     this.router.navigate(['/adminhome']);
   }
 
-  async newAuthCheck() {
-    let adminCheck = await this.data.getEmail(this.email);
-    console.log(adminCheck)
-    if(adminCheck){
-      this.msg = "You are an admin"
-      console.log("Admin!")
-    }
-    else{
-      this.msg = "butts"
-    }
+  newAuthCheck() {
+    this.data.getEmail(this.email);
     this.redirect();
   }
 

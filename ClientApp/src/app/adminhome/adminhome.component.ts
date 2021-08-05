@@ -14,7 +14,8 @@ import "firebase/auth";
 })
 export class AdminhomeComponent implements OnInit, CanActivate {
 
-  constructor(private router: Router, private route: ActivatedRoute, private data: DataService) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router, 
+    private route: ActivatedRoute, private data: DataService) { }
 
   adminToCheck: string;
   subscription: Subscription;
@@ -22,26 +23,17 @@ export class AdminhomeComponent implements OnInit, CanActivate {
 
   ngOnInit() {
     this.subscription = this.data.currentCheck.subscribe(tempAdminCheck => this.adminToCheck = tempAdminCheck);
-    this.adminInDataBase();
     this.canActivate()
   }
 
   canActivate(){
-    if(!this.isAdmin){
+    var isAdmin = this.data.getIsAdmin();
+    console.log(isAdmin)
+    if(!isAdmin){
       this.router.navigate(['']);
       return false;
     }
     return true;
-  }
-
-  adminInDataBase(){
-    if(this.data.getEmail(this.adminToCheck)){
-      this.isAdmin = true;
-    }
-    else{
-      this.isAdmin = false;
-      console.log("I'm redirecting you because I suck at async functions")
-    }
   }
 
 }
