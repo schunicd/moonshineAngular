@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
     FetchDataComponent,
     ReservationsComponent,
     AdminComponent,
-    AdminhomeComponent
+    AdminhomeComponent,
+    AdminCrudEventComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,7 +50,8 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
       { path: 'reservations', component: ReservationsComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'adminhome', component: AdminhomeComponent },
-      { path: '**', redirectTo: '', pathMatch: 'full' }
+      { path: 'adminCrudEvent', component: AdminCrudEventComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
     NoopAnimationsModule,
     MatDatepickerModule,

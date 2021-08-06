@@ -14,7 +14,7 @@ import "firebase/auth";
 })
 export class AdminhomeComponent implements OnInit, CanActivate {
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router, 
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router,
     private route: ActivatedRoute, private data: DataService) { }
 
   adminToCheck: string;
@@ -34,6 +34,10 @@ export class AdminhomeComponent implements OnInit, CanActivate {
       return false;
     }
     return true;
+  }
+
+  crudEvent(){
+    this.router.navigate(['/adminCrudEvent']);
   }
 
 }
