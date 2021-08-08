@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Event } from "../Event"
 
 @Component({
   selector: 'app-reservations',
@@ -141,15 +142,6 @@ interface Band {
   BandName: string
   Website: string
   BandInfo: string
-}
-
-interface Event {
-  id: number;
-  eventDate: Date;
-  bandId: number;
-  maxSeats: number;
-  currentSeats: number;
-  ticketPrice: number;
 }
 
 interface Reservation {
