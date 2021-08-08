@@ -65,11 +65,11 @@ export class ReservationsComponent implements OnInit {
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
 
-    return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
+    return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
   filterSeats(){
-    return this.event.filter(x => x.eventDate.toString() == this.eventName);
+    return this.event.filter(x => x.eventStart.toString() == this.eventName);
   }
 
   validateName(){

@@ -10,7 +10,9 @@ namespace TheMoonshineCafe.Models
     {
         
         public int id {get; set; }
-        public DateTime eventDate { get; set; }
+        public string title { get; set; }
+        public DateTime eventStart { get; set; }
+        public DateTime eventEnd { get; set; }
         public int bandId { get; set; }
         public int maxNumberOfSeats { get; set; }
         public int currentNumberOfSeats { get; set; }

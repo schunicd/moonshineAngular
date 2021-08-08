@@ -1,6 +1,8 @@
 export class Event { 
     id: number;
-    eventDate: Date;
+    eventName: string;
+    eventStart: Date;
+    eventEnd: Date;
     bandId: number;
     maxSeats: number;
     currentSeats: number;
