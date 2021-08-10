@@ -13,11 +13,13 @@ namespace TheMoonshineCafe.Models
         public string title { get; set; }
         public DateTime eventStart { get; set; }
         public DateTime eventEnd { get; set; }
+        public DateTime refundCutOffDate { get; set; }
         public int bandId { get; set; }
         public int maxNumberOfSeats { get; set; }
         public int currentNumberOfSeats { get; set; }
         public double ticketPrice { get; set; }
         public string description { get; set; }
+        public string googleCalID { get; set; }
         public Band band { get; set; }
         
     }

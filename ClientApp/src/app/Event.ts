@@ -3,8 +3,10 @@ export class Event {
     title: string;
     eventStart: Date;
     eventEnd: Date;
+    refundDate: Date;
     bandId: number;
     maxSeats: number;
     currentSeats: number;
     ticketPrice: number;
+    googleCalendarID: string;
   }
