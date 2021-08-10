@@ -33,7 +33,7 @@
   <br>
   <mat-form-field>
     <mat-label>Ticket Price</mat-label>
-    <input pattern="^([^0-9]*)$" matNativeControl>
+    <input matNativeControl>
   </mat-form-field>
   <br>
   <mat-form-field>
@@ -55,4 +55,7 @@
     <mat-label>Google Calendar ID</mat-label>
     <input matNativeControl>
   </mat-form-field>
+
+  <button mat-raised-button (click)="createEvent()">Create Event</button>
+
 </div>
