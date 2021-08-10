@@ -12,7 +12,7 @@
       <mat-step label="Select Event">
         <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
         <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-          <option *ngFor="let e of filterEvents()" value="{{e.eventDate}}">{{e.eventDate}}</option>
+          <option *ngFor="let e of filterEvents()" value="{{e.title}}">{{e.title}}</option>
         </select>
       </mat-step>
 

@@ -14,10 +14,9 @@ namespace TheMoonshineCafe.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-
         private readonly MoonshineCafeContext _context;
 
-        public EventsController( MoonshineCafeContext context)
+        public EventsController(MoonshineCafeContext context)
         {
             _context = context;
         }
