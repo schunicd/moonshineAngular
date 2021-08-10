@@ -64,12 +64,12 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
-
+    console.log(this.event[0]);
     return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
   filterSeats(){
-    return this.event.filter(x => x.eventStart.toString() == this.eventName);
+    return this.event.filter(x => x.title.toString() == this.eventName);
   }
 
   validateName(){
