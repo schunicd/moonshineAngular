@@ -23,7 +23,7 @@
         class="navbar-collapse collapse d-sm-inline-flex justify-content-center"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul class="navbar-nav flex-grow">
+        <ul class="navbar-nav flex-grow" id="menuStyle">
           <li
             class="nav-item"
             [routerLinkActive]="['link-active']"
@@ -32,8 +32,33 @@
             <a class="nav-link text-light" [routerLink]="['/']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/aboutUs']"
+              >AboutUs</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/menu']"
+              >Menu</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/calendar']"
+              >Calendar</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/photos']"
+              >Photos</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-light" [routerLink]="['/reservations']"
               >Reservations</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/contact']"
+              >Contact</a
             >
           </li>
         </ul>
