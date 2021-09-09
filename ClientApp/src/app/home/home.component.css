@@ -22,12 +22,12 @@
     display: grid;
     text-align: center;
     grid-template-areas:
-    'leftTitleGrid leftTitleGrid . .'
-    'spotlightTitleGrid spotlightTitleGrid videoGrid videoGrid'
-    '. . videoGrid videoGrid'
-    '. . calendarGrid calendarGrid'
-    '. . calendarGrid calendarGrid'
-    '. . calendarGrid calendarGrid'
+    '. leftTitleGrid leftTitleGrid . .'
+    '. spotlightTitleGrid spotlightTitleGrid videoGrid .'
+    '. . . videoGrid .'
+    '. . . calendarGrid .'
+    '. . . calendarGrid .'
+    '. . . calendarGrid .'
     /* REPLACE .'s above with spotlightOne etc... as we add spotlight features */
     ;
     grid-gap: 10px;
