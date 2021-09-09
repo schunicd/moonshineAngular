@@ -102,7 +102,7 @@ namespace TheMoonshineCafe.Controllers
 
         private bool EventExists(int id)
         {
-            return _context.Events.Any(e => e.id == id);
+            return _context.Events.Any((System.Linq.Expressions.Expression<Func<Event, bool>>)(e => e.id == id));
         }
     }
 }
