@@ -29,35 +29,33 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-light" [routerLink]="['/']">Home</a>
+            <a *ngIf="this.data.isAdmin; else adminHome" class="nav-link text-light" [routerLink]="['/adminhome']">Admin Home</a>
+            <ng-template #adminHome><a class="nav-link text-light" [routerLink]="['/']">Home</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/aboutUs']"
-              >AboutUs</a
-            >
+            <a *ngIf="this.data.isAdmin; else adminCrudEvent" class="nav-link text-light" [routerLink]="['/adminCrudEvent']">Create/Edit Event</a>
+            <ng-template #adminCrudEvent><a class="nav-link text-light" [routerLink]="['/aboutUs']">AboutUs</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/menu']"
-              >Menu</a
-            >
+            <a *ngIf="this.data.isAdmin; else adminViewReservations" class="nav-link text-light" [routerLink]="['/adminViewReservations']">View Reservations</a>
+            <ng-template #adminViewReservations><a class="nav-link text-light" [routerLink]="['/menu']">Menu</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/calendar']"
-              >Calendar</a
-            >
+            <a *ngIf="this.data.isAdmin; else adminPhotoGallery" class="nav-link text-light" [routerLink]="['/adminPhotoGallery']">Upload Photos</a>
+            <ng-template #adminPhotoGallery><a class="nav-link text-light" [routerLink]="['/calendar']">Calendar</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/photos']"
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/photos']"
               >Photos</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/reservations']"
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/reservations']"
               >Reservations</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-light" [routerLink]="['/contact']"
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/contact']"
               >Contact</a
             >
           </li>
