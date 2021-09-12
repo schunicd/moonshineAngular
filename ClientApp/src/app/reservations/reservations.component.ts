@@ -69,7 +69,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   filterSeats(){
-    return this.event.filter(x => x.title.toString() == this.eventName);
+    return this.event.filter(x => x.bandName.toString() == this.eventName);
   }
 
   validateName(){
