@@ -21,6 +21,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.component';
+import { AdminViewReservationsComponent } from 'src/admin-view-reservations/admin-view-reservations.component';
+import { AdminPhotoGalleryComponent } from 'src/admin-photo-gallery/admin-photo-gallery.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { ContactComponent } from './contact/contact.component';
+import { MenuComponent } from './menu/menu.component';
+import { PhotosComponent } from './photos/photos.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +39,14 @@ import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.com
     ReservationsComponent,
     AdminComponent,
     AdminhomeComponent,
-    AdminCrudEventComponent
+    AdminCrudEventComponent,
+    AdminViewReservationsComponent,
+    AdminPhotoGalleryComponent,
+    AboutUsComponent,
+    CalendarComponent,
+    ContactComponent,
+    MenuComponent,
+    PhotosComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,6 +65,13 @@ import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.com
       { path: 'admin', component: AdminComponent },
       { path: 'adminhome', component: AdminhomeComponent },
       { path: 'adminCrudEvent', component: AdminCrudEventComponent },
+      { path: 'adminViewReservations', component: AdminViewReservationsComponent },
+      { path: 'adminPhotoGallery', component: AdminPhotoGalleryComponent },
+      { path: 'aboutUs', component: AboutUsComponent },
+      { path: 'calendar', component: CalendarComponent },
+      { path: 'contact', component: ContactComponent },
+      { path: 'menu', component: MenuComponent },
+      { path: 'photos', component: PhotosComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
     NoopAnimationsModule,
