@@ -1,0 +1,63 @@
+ <div id=formAndCalContainer>
+  <div id="reservationsBody" class="container">
+    <mat-vertical-stepper>
+      <mat-step label="Select Date">
+        <mat-form-field>
+          <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </mat-step>
+
+      <mat-step label="Select Event">
+        <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
+        <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
+          <option *ngFor="let e of filterEvents()" value="{{e.bandName}}">{{e.bandName}}</option>
+        </select>
+      </mat-step>
+
+      <mat-step label="Enter Name">
+        <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
+          <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+          <br>
+          <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+      </mat-step>
+
+      <mat-step label="Enter Email">
+        <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
+        <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+        <br>
+        <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+      </mat-step>
+
+      <mat-step label="Number of Seats">
+
+        <div *ngIf="eventName != null; else seatsDisabled">
+          <label>Number of seats:</label>
+          <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
+        </div>
+
+        <ng-template #seatsDisabled>
+          <label>Number of seats:</label>
+          <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
+        </ng-template>
+
+      </mat-step>
+
+      <mat-step label="Booking Type">
+        <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>
+          <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
+          <br>
+          <br>
+          <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && eventName != '' && !validateName() && !validateEmail(); else paidDisabled">Paid Booking</button>
+          <ng-template #paidDisabled><button mat-raised-button disabled="true">Paid Booking</button></ng-template>
+      </mat-step>
+
+    </mat-vertical-stepper>
+
+  </div>
+
+  <div id="moonshineCalendar">
+    <iframe src="https://calendar.google.com/calendar/embed?height=400&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FToronto&amp;src=c2NodW5pY2RAZ21haWwuY29t&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGhlbW9vbnNoaW5lY2FmZUBnbWFpbC5jb20&amp;color=%237986CB&amp;color=%233F51B5&amp;color=%23C0CA33&amp;color=%23E4C441&amp;mode=AGENDA&amp;showTitle=0" style="border:solid 1px #777" width="400" height="400" frameborder="0" scrolling="no"></iframe>
+  </div>
+</div>

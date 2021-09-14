@@ -1,0 +1,86 @@
+<header>
+  <a [routerLink]="['/']"><img src="../../assets/Images/navMenu_MoonshineLogo.jpg" id="navbarImage"></a>
+  <nav
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3"
+  >
+
+    <div class="container">
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target=".navbar-collapse"
+        aria-label="Toggle navigation"
+        [attr.aria-expanded]="isExpanded"
+        (click)="toggle()"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-center"
+        [ngClass]="{ show: isExpanded }"
+      >
+        <ul class="navbar-nav flex-grow">
+          <li
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a class="nav-link text-light" [routerLink]="['/']">Home</a>
+          </li>
+          <!--
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/counter']"
+              >Counter</a
+            >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/fetch-data']"
+              >Fetch data</a
+            >
+          </li>
+          -->
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-light" [routerLink]="['/reservations']"
+              >Reservations</a
+            >
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item">
+            <a class="nav-link">
+              <iframe
+                id="twitter-widget-0"
+                scrolling="no"
+                frameborder="0"
+                allowtransparency="true"
+                allowfullscreen="true"
+                class="twitter-follow-button twitter-follow-button-rendered"
+                style="position: static; visibility: visible; width: 155px; height: 20px;"
+                title="Twitter Follow Button"
+                src="https://platform.twitter.com/widgets/follow_button.e16c6ecf9d86005b77fc7c17beced5d8.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=MoonshineCafe&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1618349491776"
+                data-screen-name="MoonshineCafe"
+              ></iframe>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" target="_blank" href="https://www.facebook.com/themoonshinecafe/">
+              <mat-icon id="facebookColor">facebook</mat-icon>
+            </a>
+          </li>
+          <!--
+          <li class="nav-item">
+            <a class="nav-link">
+              <icon fab icon="google-plus"></icon>
+            </a>
+          </li>
+          -->
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+</header>

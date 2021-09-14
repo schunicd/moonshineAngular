@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+html, #body1 { height: 100vh; width: 100vw;}
+#body1 { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+#body1{
+  background-image: url("./assets/Images/homePage_background.jpg");
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: black;
+}

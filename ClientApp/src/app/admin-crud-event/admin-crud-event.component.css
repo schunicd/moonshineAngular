@@ -1,0 +1,30 @@
+#container{
+  background-color: rgba(255, 255, 255, 0.7);
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+  display: grid;
+  grid-template-areas: '. . . . create editDelete . . .';
+}
+
+#eventTitle{
+  width: 400px;
+}
+
+#create{
+  grid-area: create;
+}
+
+mat-vertical-stepper{
+  background-color: rgba(255, 255, 255, 0);
+}
+
+#editDelete{
+  margin: auto;
+  grid-area: editDelete;
+}
+
+#eventDescription{
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 400px;
+}

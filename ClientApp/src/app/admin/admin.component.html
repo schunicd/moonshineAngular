@@ -1,0 +1,13 @@
+<div id="adminBody">
+  <div id="adminFadeBackground" class="container">
+    <button mat-raised-button id="center" (click)="loginWithGmail()">
+      Login with Google
+    </button>
+    <br>
+    <div id="loginStatus" *ngIf="user != null;">
+      <br>
+      {{user.email}}<br>
+      {{msg}}
+    </div>
+  </div>
+</div>

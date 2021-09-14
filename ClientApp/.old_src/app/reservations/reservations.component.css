@@ -1,0 +1,17 @@
+#warning{
+  color: red;
+}
+
+/*
+#nameLabel{grid-area: nameLabel;}
+.nameInput{grid-area: nameInput;}
+.nameWarning{grid-area: nameWarning;}
+
+#grid-container{
+  display:grid;
+  grid-template-columns: 50px 200px 600px;
+  grid-template:
+                'nameLabel nameInput nameWarning'
+                ;
+}
+*/
