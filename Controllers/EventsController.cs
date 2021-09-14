@@ -94,6 +94,20 @@ namespace TheMoonshineCafe.Controllers
             return @event;
         }
 
+        // GET: api/Events/cal
+        [HttpGet("calID={calID}")]
+        public async Task<ActionResult<Models.Event>> GetEventByDate(string calID)
+        {
+            var @event = await _context.Events.FindAsync(calID);
+
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            return @event;
+        }
+
         // PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -125,6 +139,37 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
+        // PUT: api/Events/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{calID}")]
+        public async Task<IActionResult> PutEventByDatew(string calID, Models.Event @event)
+        {
+            if (calID != @event.googleCalID)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@event).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(calID))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -136,11 +181,27 @@ namespace TheMoonshineCafe.Controllers
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
 
-        // DELETE: api/Events/5
+/*        // DELETE: api/Events/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
+            {
+                return NotFound();
+            }
+
+            _context.Events.Remove(@event);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }*/
+
+        //DELETE: api/Events/calID
+        [HttpDelete("{calID}")]
+        public async Task<IActionResult> DeleteEventByCalID(string calID)
+        {
+            var @event = await _context.Events.FindAsync(calID);
             if (@event == null)
             {
                 return NotFound();
@@ -155,6 +216,11 @@ namespace TheMoonshineCafe.Controllers
         private bool EventExists(int id)
         {
             return _context.Events.Any((System.Linq.Expressions.Expression<Func<Models.Event, bool>>)(e => e.id == id));
+        }
+
+        private bool EventExists(string calID)
+        {
+            return _context.Events.Any((System.Linq.Expressions.Expression<Func<Models.Event, bool>>)(e => e.googleCalID == calID));
         }
     }
 }

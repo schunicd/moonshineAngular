@@ -44,10 +44,11 @@ export class ReservationsComponent implements OnInit {
       console.log(this.event);
     }, error => console.error(error));
 
-    this.http.get<any[]>(this.baseUrl + 'api/Calendar').subscribe(result => {
-      this.testEvents = result;
-      console.log(this.testEvents);
-    }, error => console.error(error));
+    //Testing Calendar interaction with the API
+    // this.http.get<any[]>(this.baseUrl + 'api/Calendar').subscribe(result => {
+    //   this.testEvents = result;
+    //   console.log(this.testEvents);
+    // }, error => console.error(error));
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
       this.band = result;

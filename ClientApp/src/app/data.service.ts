@@ -32,6 +32,14 @@ export class DataService {
     console.log(this.isAdmin)
   }
 
+  async deleteEvent(calID: String){
+    var callResult : any;
+    await this.http.delete(this.baseUrl + 'api/Events/' + calID).subscribe(result =>{
+      callResult = result;
+      console.log(callResult);
+    }, error => {console.error(error)});
+  }
+
   setTempAdmin(message: string){
     this.tempAdminCheck.next(message);
   }
