@@ -22,6 +22,8 @@ export class ReservationsComponent implements OnInit {
   event: Event[];
   band: Band[];
 
+  testEvents: any[];
+
   myGroup;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
@@ -40,6 +42,11 @@ export class ReservationsComponent implements OnInit {
     this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       console.log(this.event);
+    }, error => console.error(error));
+
+    this.http.get<any[]>(this.baseUrl + 'api/Calendar').subscribe(result => {
+      this.testEvents = result;
+      console.log(this.testEvents);
     }, error => console.error(error));
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
