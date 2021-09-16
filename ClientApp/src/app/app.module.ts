@@ -21,8 +21,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.component';
-import { AdminViewReservationsComponent } from 'src/admin-view-reservations/admin-view-reservations.component';
-import { AdminPhotoGalleryComponent } from 'src/admin-photo-gallery/admin-photo-gallery.component';
+import { AdminViewReservationsComponent } from './admin-view-reservations/admin-view-reservations.component';
+import { AdminPhotoGaleryComponent } from './admin-photo-gallery/admin-photo-galery.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ContactComponent } from './contact/contact.component';
@@ -41,7 +41,7 @@ import { PhotosComponent } from './photos/photos.component';
     AdminhomeComponent,
     AdminCrudEventComponent,
     AdminViewReservationsComponent,
-    AdminPhotoGalleryComponent,
+    AdminPhotoGaleryComponent,
     AboutUsComponent,
     CalendarComponent,
     ContactComponent,
@@ -66,7 +66,7 @@ import { PhotosComponent } from './photos/photos.component';
       { path: 'adminhome', component: AdminhomeComponent },
       { path: 'adminCrudEvent', component: AdminCrudEventComponent },
       { path: 'adminViewReservations', component: AdminViewReservationsComponent },
-      { path: 'adminPhotoGallery', component: AdminPhotoGalleryComponent },
+      { path: 'adminPhotoGallery', component: AdminPhotoGaleryComponent },
       { path: 'aboutUs', component: AboutUsComponent },
       { path: 'calendar', component: CalendarComponent },
       { path: 'contact', component: ContactComponent },
