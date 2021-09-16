@@ -42,7 +42,7 @@ namespace TheMoonshineCafe
 
 
             services.AddDbContext<MoonshineCafeContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("ProductionConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
