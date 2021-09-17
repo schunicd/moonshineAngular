@@ -8,9 +8,10 @@ import { DataService } from "../data.service";
 })
 export class NavMenuComponent {
   isExpanded = false;
+  isAdmin = false;
 
   constructor(private data: DataService) {
-
+      this.isAdmin = this.data.getIsAdmin();
    };
 
   collapse() {
