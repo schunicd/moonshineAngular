@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin'
+import { Event } from './Event'
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,21 @@ export class DataService {
       this.adminObject = result;
       console.log(this.adminObject);
       this.isAdmin = true;
-      console.log("In await: " + this.isAdmin)
     }, error => {console.error(error)});
     console.log(this.isAdmin)
+  }
+
+  async getCalEvents(){
+    console.log("Angular function called");
+    await this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
+      console.log(result);
+    }, error => {console.error(error)})
+  }
+
+  async postEvent(event: Event){
+    var postData: any;
+    await this.http.post(this.baseUrl + 'api/Events/', event).subscribe(data => postData = data);
+    //this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
   }
 
   async deleteEvent(calID: String){
@@ -51,14 +64,5 @@ export class DataService {
   logOut(){
 
   }
-}
-
-interface Event {
-  id: number;
-  eventDate: Date;
-  bandId: number;
-  maxSeats: number;
-  currentSeats: number;
-  ticketPrice: number;
 }
 

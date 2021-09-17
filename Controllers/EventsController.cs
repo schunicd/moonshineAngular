@@ -23,7 +23,7 @@ namespace TheMoonshineCafe.Controllers
     public class EventsController : ControllerBase
     {
         private readonly MoonshineCafeContext _context;
-        static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
+        static string[] Scopes = { CalendarService.Scope.Calendar };
         static string ApplicationName = "The moonshine cafe";
         private UserCredential credential;
 
@@ -55,10 +55,21 @@ namespace TheMoonshineCafe.Controllers
         }
 
         [HttpGet("Calendar")]
-        public async Task<ActionResult<IEnumerable<Google.Apis.Calendar.v3.Data.Events>>> GetCalendarEvents()
+        public IEnumerable<Google.Apis.Calendar.v3.Data.Events> GetCalendarEvents()
         {
+            //Console.WriteLine("Your api function can be called");
             List<Google.Apis.Calendar.v3.Data.Event> calendarEvents = new List<Google.Apis.Calendar.v3.Data.Event>();
 
+            IEnumerable<Events> calEvents = APIHelper();
+            //Task.Delay(5000); //wait 5 seconds
+
+            //return null;
+            return calEvents;
+
+        }
+
+        private IEnumerable<Events> APIHelper()
+        {
             var service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
@@ -74,10 +85,8 @@ namespace TheMoonshineCafe.Controllers
 
             // List events.
             Events events = request.Execute();
-            IEnumerable<Events> calEvents = (IEnumerable<Events>)events.Items;
+            Console.WriteLine("things" + events.Items.FirstOrDefault().Summary); //WORKS
             return null;
-            //return await calEvents.ToList();
-
         }
 
         // GET: api/Events/5
@@ -108,7 +117,38 @@ namespace TheMoonshineCafe.Controllers
             return @event;
         }
 
-        // PUT: api/Events/5
+        /*// PUT: api/Events/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutEvent(int id, Models.Event @event)
+        {
+            if (id != @event.id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@event).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }*/
+
+        // PUT: api/Events/test
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Models.Event @event)
@@ -139,44 +179,25 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
-        // PUT: api/Events/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{calID}")]
-        public async Task<IActionResult> PutEventByDatew(string calID, Models.Event @event)
-        {
-            if (calID != @event.googleCalID)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(@event).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(calID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
 
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
-            _context.Events.Add(@event);
-            await _context.SaveChangesAsync();
+            Console.WriteLine("Called");
+            if (!EventExists(@event.googleCalID))
+            {
+                Console.WriteLine("Called2");
+                _context.Events.Add(@event);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                Console.WriteLine("Bad Request");
+                return BadRequest();
+            }
 
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
@@ -201,7 +222,8 @@ namespace TheMoonshineCafe.Controllers
         [HttpDelete("{calID}")]
         public async Task<IActionResult> DeleteEventByCalID(string calID)
         {
-            var @event = await _context.Events.FindAsync(calID);
+            Models.Event foundEvent = _context.Events.Where(e => e.googleCalID == calID).FirstOrDefault();
+            var @event = await _context.Events.FindAsync(foundEvent.id);
             if (@event == null)
             {
                 return NotFound();

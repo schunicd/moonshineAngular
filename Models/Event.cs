@@ -21,7 +21,6 @@ namespace TheMoonshineCafe.Models
         public int currentNumberOfSeats { get; set; }
         public double ticketPrice { get; set; }
         public string description { get; set; }
-        [Key]
         public string googleCalID { get; set; }  
     }
 }

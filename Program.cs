@@ -24,7 +24,7 @@ namespace TheMoonshineCafe
     {
 
         //read only for now, must change later
-        static string[] Scopes = { CalendarService.Scope.CalendarReadonly };
+        static string[] Scopes = { CalendarService.Scope.Calendar };
         static string ApplicationName = "The moonshine cafe";
         public static void Main(string[] args)
         {

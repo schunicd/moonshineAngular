@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
+import { Event } from '../Event'
 
 @Component({
   selector: 'app-admin-crud-event',
@@ -7,8 +8,9 @@ import { DataService } from '../data.service';
   styleUrls: ['./admin-crud-event.component.css']
 })
 export class AdminCrudEventComponent implements OnInit {
-
-  constructor(private data: DataService) { }
+  testEvent: Event;
+  
+  constructor(private data: DataService) {}
 
   ngOnInit() {
   }
@@ -16,12 +18,24 @@ export class AdminCrudEventComponent implements OnInit {
   deleteEvent(){
     this.data.deleteEvent("testID");
   }
-  // deleteEvent(calID: String){
-  //   this.data.deleteEventByDate(calID);
-  // }
 
   createEvent(){
-    console.log("Create Event");
+    let event = {
+      id: null,
+      eventStart: new Date,
+      eventEnd: new Date,
+      refundDate: new Date,
+      bandName: "Led Zeppelin",
+      bandImagePath: "asd",
+      bandLink: "asasddd",
+      maxSeats: 1,
+      currentSeats: 20, 
+      ticketPrice: 10,
+      description: "it's a band",
+      googleCalendarID: "aksjdhfkjasdhf"
+    }
+
+    this.data.postEvent(event);
   }
 
   editEvent(){
