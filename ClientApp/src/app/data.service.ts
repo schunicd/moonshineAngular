@@ -41,7 +41,7 @@ export class DataService {
 
   async postEvent(event: Event){
     var postData: any;
-    await this.http.post(this.baseUrl + 'api/Events/', event).subscribe(data => postData = data);
+    await this.http.post(this.baseUrl + 'api/Events', event).subscribe(data => postData = data);
     //this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
   }
 

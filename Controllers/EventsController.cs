@@ -85,7 +85,7 @@ namespace TheMoonshineCafe.Controllers
 
             // List events.
             Events events = request.Execute();
-            Console.WriteLine("things" + events.Items.FirstOrDefault().Summary); //WORKS
+            //Console.WriteLine("things" + events.Items.FirstOrDefault().Summary); //WORKS
             return null;
         }
 
