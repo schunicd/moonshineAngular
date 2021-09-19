@@ -3,67 +3,52 @@
   <div id="create">
     <mat-form-field id="eventTitle">
       <mat-label>Band Name / Event</mat-label> <!--Summary-->
-      <input matNativeControl>
+      <input [(ngModel)]="eventTitle" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field id="eventLink">
       <mat-label>Band / Event Link</mat-label>
-      <input matNativeControl>
+      <input [(ngModel)]="eventLink" matNativeControl>
     </mat-form-field>
     <br>
     <div id="eventImage">
-      <input type="file">
+      <input [(ngModel)]="eventImage" type="file">
     </div>
     <br>
     <mat-form-field id="eventDescription">
       <mat-label>Description</mat-label>
-      <textarea matInput placeholder="Event Description"></textarea>
+      <textarea [(ngModel)]="eventDescription" matInput placeholder="Event Description"></textarea>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="startPicker">
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Start Time</mat-label>
-      <input matNativeControl>
+      <mat-label>Start Date & Time</mat-label>
+      <input [(ngModel)]="startDateTime" type="datetime-local" class="startEndWidth" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>End Date</mat-label>
-      <input matInput [matDatepicker]="endPicker">
-      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>End Time</mat-label>
-      <input matNativeControl>
+      <mat-label>End Date & Time</mat-label>
+      <input [(ngModel)]="endDateTime" type="datetime-local" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
       <mat-label>Ticket Price</mat-label>
-      <input matNativeControl>
+      <input [(ngModel)]="ticketPrice" type="number" min="0" step="0.01" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
       <mat-label>Max Seats</mat-label>
-      <input matNativeControl>
+      <input [(ngModel)]="maxSeats" type="number" min="1" max="60" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Refund Cutoff Date</mat-label>
-      <input matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Refund Cutoff Time</mat-label>
-      <input matNativeControl>
+      <mat-label>Refund Cutoff Date & Time</mat-label>
+      <input [(ngModel)]="refundCutoffDateTime" type="datetime-local" matNativeControl>
     </mat-form-field>
     <br>
 
     <button mat-raised-button (click)="createEvent()">Create Event</button>
+
+    <br><br>
 
   </div>
 

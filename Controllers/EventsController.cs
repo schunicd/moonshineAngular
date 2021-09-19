@@ -38,7 +38,7 @@ namespace TheMoonshineCafe.Controllers
                 // automatically when the authorization flow completes for the first time.
                 string credPath = "token.json";
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.Load(stream).Secrets,
+                    GoogleClientSecrets.FromStream(stream).Secrets,
                     Scopes,
                     "user",
                     CancellationToken.None,
@@ -186,18 +186,21 @@ namespace TheMoonshineCafe.Controllers
         [HttpPost]
         public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
-            Console.WriteLine("Called");
-            if (!EventExists(@event.googleCalID))
-            {
-                Console.WriteLine("Called2");
-                _context.Events.Add(@event);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                Console.WriteLine("Bad Request");
-                return BadRequest();
-            }
+            //Console.WriteLine("Called");
+            //if (!EventExists(@event.googleCalID))
+            //{
+            //    Console.WriteLine("Called2");
+            //    _context.Events.Add(@event);
+            //    await _context.SaveChangesAsync();
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Bad Request");
+            //    return BadRequest();
+            //}
+
+            _context.Events.Add(@event);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }

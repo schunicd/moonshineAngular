@@ -15,6 +15,10 @@
   grid-area: create;
 }
 
+.startEndWidth{
+  width: 800px;
+}
+
 mat-vertical-stepper{
   background-color: rgba(255, 255, 255, 0);
 }

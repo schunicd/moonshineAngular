@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Event } from '../Event'
@@ -9,8 +10,20 @@ import { Event } from '../Event'
 })
 export class AdminCrudEventComponent implements OnInit {
   testEvent: Event;
-  
-  constructor(private data: DataService) {}
+
+  eventTitle: String;
+  eventLink: String;
+  eventImage: String;
+  eventDescription: String;
+  startDateTime: Date;
+  endDateTime: Date;
+  ticketPrice: number;
+  maxSeats: number;
+  refundCutoffDateTime: Date;
+
+  constructor(private data: DataService) {
+
+  }
 
   ngOnInit() {
   }
@@ -20,22 +33,23 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   createEvent(){
+
     let event = {
-      id: null,
-      eventStart: new Date,
-      eventEnd: new Date,
-      refundDate: new Date,
-      bandName: "Led Zeppelin",
-      bandImagePath: "asd",
-      bandLink: "asasddd",
-      maxSeats: 1,
-      currentSeats: 20, 
-      ticketPrice: 10,
-      description: "it's a band",
-      googleCalendarID: "aksjdhfkjasdhf"
+      eventStart: this.startDateTime,
+      eventEnd: this.endDateTime,
+      refundCutOffDate: this.refundCutoffDateTime,
+      bandName: this.eventTitle,
+      bandImagePath: this.eventImage,
+      bandLink: this.eventLink,
+      maxNumberOfSeats: this.maxSeats,
+      currentNumberOfSeats: 0,
+      ticketPrice: this.ticketPrice,
+      description: this.eventDescription,
+      googleCalID: "56"
     }
 
     this.data.postEvent(event);
+
   }
 
   editEvent(){

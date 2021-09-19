@@ -15,7 +15,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import { MatDatepickerModule } from '@angular/material/datepicker'
 import { MatInputModule } from '@angular/material/input'
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
@@ -57,6 +57,7 @@ import { PhotosComponent } from './photos/photos.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },

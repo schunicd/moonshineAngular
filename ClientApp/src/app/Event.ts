@@ -1,14 +1,13 @@
-export class Event { 
-    id: number;
+export class Event {
     eventStart: Date;
     eventEnd: Date;
-    refundDate: Date;
-    bandName: string;
-    bandImagePath: string;
-    bandLink: string;
-    maxSeats: number;
-    currentSeats: number;
+    refundCutOffDate: Date;
+    bandName: String;
+    bandImagePath: String;
+    bandLink: String;
+    maxNumberOfSeats: number;
+    currentNumberOfSeats: number;
     ticketPrice: number;
-    description: string;
-    googleCalendarID: string;
+    description: String;
+    googleCalID: String;
   }
