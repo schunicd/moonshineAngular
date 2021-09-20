@@ -24,7 +24,6 @@ namespace TheMoonshineCafe.Controllers
     {
         private readonly MoonshineCafeContext _context;
         static string[] Scopes = { CalendarService.Scope.Calendar };
-        static string ApplicationName = "The moonshine cafe";
         private UserCredential credential;
 
         public EventsController(MoonshineCafeContext context)
@@ -70,13 +69,9 @@ namespace TheMoonshineCafe.Controllers
 
         private IEnumerable<Events> APIHelper()
         {
-            var service = new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
+            
             // Define parameters of request.
-            EventsResource.ListRequest request = service.Events.List("primary");
+            EventsResource.ListRequest request = TheMoonshineCafe.Program.service.Events.List("primary");
             request.TimeMin = DateTime.Now;
             request.ShowDeleted = false;
             request.SingleEvents = true;
@@ -105,9 +100,9 @@ namespace TheMoonshineCafe.Controllers
 
         // GET: api/Events/cal
         [HttpGet("calID={calID}")]
-        public async Task<ActionResult<Models.Event>> GetEventByDate(string calID)
+        public async Task<ActionResult<Models.Event>> GetEventByDate(String calID)
         {
-            var @event = await _context.Events.FindAsync(calID);
+            var @event = await Task.Run(() => _context.Events.Single(e => e.googleCalID == calID));
 
             if (@event == null)
             {
@@ -199,8 +194,46 @@ namespace TheMoonshineCafe.Controllers
             //    return BadRequest();
             //}
 
+            Google.Apis.Calendar.v3.Data.Event newEvent = new Google.Apis.Calendar.v3.Data.Event(){
+                Summary = @event.bandName + " " + @event.eventStart.Hour + " $" + @event.ticketPrice, 
+                Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
+                Description = @event.bandName + " " + @event.bandLink + " " + @event.description,
+                Start = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(@event.eventStart.ToLongDateString())
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(@event.eventEnd.ToLongDateString())
+                },
+                
+                /*
+                Recurrence = new String[] { "RRULE:FREQ=DAILY;COUNT=2" },
+                
+                Reminders = new Google.Apis.Calendar.v3.Data.Event.RemindersData()
+                {
+                    UseDefault = false,
+                    Overrides = new EventReminder[] {
+                        new EventReminder() { Method = "email", Minutes = 24 * 60 },
+                        new EventReminder() { Method = "sms", Minutes = 10 },
+                    }
+                }
+                */
+            };
+
+            EventsResource.InsertRequest request = TheMoonshineCafe.Program.service.Events.Insert(newEvent, "primary");
+            Google.Apis.Calendar.v3.Data.Event createdEvent = request.Execute();
+            
+            Console.WriteLine("EBFORE");
+            Console.WriteLine(@event.googleCalID);
+            @event.googleCalID = createdEvent.Id;
+            Console.WriteLine("AFTER");
+            Console.WriteLine(@event.googleCalID);
             _context.Events.Add(@event);
+            
             await _context.SaveChangesAsync();
+
+            Console.WriteLine("Event created: {0}", createdEvent.HtmlLink);
 
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
@@ -223,7 +256,7 @@ namespace TheMoonshineCafe.Controllers
 
         //DELETE: api/Events/calID
         [HttpDelete("{calID}")]
-        public async Task<IActionResult> DeleteEventByCalID(string calID)
+        public async Task<IActionResult> DeleteEventByCalID(String calID)
         {
             Models.Event foundEvent = _context.Events.Where(e => e.googleCalID == calID).FirstOrDefault();
             var @event = await _context.Events.FindAsync(foundEvent.id);
@@ -234,6 +267,7 @@ namespace TheMoonshineCafe.Controllers
 
             _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
+            TheMoonshineCafe.Program.service.Events.Delete("primary", calID).Execute();
 
             return NoContent();
         }

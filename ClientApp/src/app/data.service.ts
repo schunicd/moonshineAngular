@@ -11,11 +11,13 @@ import { Event } from './Event'
 export class DataService {
 
   event: any[];
+  eventToEdit: Event[];
   private tempAdminCheck = new BehaviorSubject('');
   currentCheck = this.tempAdminCheck.asObservable();
   private isAdmin: boolean;
   adminObject: any;
 
+  eventTitle: String;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.event = data.Events;
@@ -51,6 +53,20 @@ export class DataService {
       callResult = result;
       console.log(callResult);
     }, error => {console.error(error)});
+  }
+
+  async editEvent(calID: String){
+    var callResult : any;
+    await this.http.put(this.baseUrl + 'api/Events/' + calID , this.getSpecificEvent).subscribe(result => {
+      callResult = result;
+    })
+  }
+
+  public async getSpecificEvent(calID: String){
+    await this.http.get(this.baseUrl + 'api/Events/calID=' + calID).subscribe((result : Event) => {
+      console.log(result);
+      this.eventTitle = result.bandName;
+    }, error => {console.error(error)})
   }
 
   setTempAdmin(message: string){

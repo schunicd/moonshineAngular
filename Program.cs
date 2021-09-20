@@ -26,6 +26,9 @@ namespace TheMoonshineCafe
         //read only for now, must change later
         static string[] Scopes = { CalendarService.Scope.Calendar };
         static string ApplicationName = "The moonshine cafe";
+
+        public static CalendarService service;
+
         public static void Main(string[] args)
         {
 
@@ -42,11 +45,12 @@ namespace TheMoonshineCafe
                     Scopes,
                     "user",
                     CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
+                    new FileDataStore(credPath, true)
+                    ).Result;
                 Console.WriteLine("Credential file saved to: " + credPath);
             }
 
-            var service = new CalendarService(new BaseClientService.Initializer()
+            service = new CalendarService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,

@@ -57,16 +57,16 @@
     <mat-vertical-stepper>
       <mat-step label="Select Date">
         <mat-form-field>
-          <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+          <input matInput [min]="minDate" name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </mat-step>
 
       <mat-step label="Select Event">
-        <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
-        <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-          <option *ngFor="let e of filterEvents()" value="{{e.title}}">{{e.title}}</option>
+        <label id="warning" *ngIf="dateDelete == null;">Please Select a Date at the top first!</label>
+        <select *ngIf="dateDelete != null" [(ngModel)]="eventDelete" name="eventDelete">
+          <option *ngFor="let e of filterEvents()" value="{{e.googleCalID}}">{{e.bandName}}</option>
         </select>
       </mat-step>
     </mat-vertical-stepper>
