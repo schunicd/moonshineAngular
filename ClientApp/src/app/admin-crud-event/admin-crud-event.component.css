@@ -21,10 +21,6 @@
   height: 79.9vh;
 }
 
-#eventTitle{
-  width: 400px;
-}
-
 .astrix{
   display: inline;
   color: red;
@@ -32,6 +28,10 @@
 
 #cancelButton{
   margin-left: 10px;
+}
+
+#eventTitle{
+  width: 400px;
 }
 
 #create{

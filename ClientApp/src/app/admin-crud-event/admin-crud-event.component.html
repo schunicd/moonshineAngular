@@ -2,126 +2,89 @@
   <div id="adminBackgroundOpacity">
     <div id="container">
 
-
-  <div id="create">
-    <mat-form-field id="eventTitle">
-      <mat-label>Band Name / Event<p class="astrix">*</p></mat-label> <!--Summary-->
-      <input [(ngModel)]="eventTitle" matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field id="eventLink">
-      <mat-label>Band / Event Link</mat-label>
-      <input [(ngModel)]="eventLink" matNativeControl>
-    </mat-form-field>
-    <br>
-    <div id="eventImage">
-      <input [(ngModel)]="eventImage" type="file">
-    </div>
-    <br>
-    <mat-form-field id="eventDescription">
-      <mat-label>Description</mat-label>
-      <textarea [(ngModel)]="eventDescription" matInput placeholder="Event Description"></textarea>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Start Date & Time<p class="astrix">*</p></mat-label>
-      <input [(ngModel)]="startDateTime" type="datetime-local" class="startEndWidth" matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>End Date & Time<p class="astrix">*</p></mat-label>
-      <input [(ngModel)]="endDateTime" type="datetime-local" matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Ticket Price<p class="astrix">*</p></mat-label>
-      <input [(ngModel)]="ticketPrice" type="number" min="0" step="0.01" matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Max Seats<p class="astrix">*</p></mat-label>
-      <input [(ngModel)]="maxSeats" type="number" min="1" max="60" matNativeControl>
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-      <mat-label>Refund Cutoff Date & Time<p class="astrix">*</p></mat-label>
-      <input [(ngModel)]="refundCutoffDateTime" type="datetime-local" matNativeControl>
-    </mat-form-field>
-    <br>
-
-    <button mat-raised-button *ngIf="createButton" (click)="createEvent()">Create Event</button>
-    <button mat-raised-button *ngIf="deleteButton" (click)="confirmDelete()">Confirm Delete</button>
-    <button mat-raised-button *ngIf="editButton" (click)="confirmEdit()">Confirm Edit</button>
-    <button mat-raised-button *ngIf="cancelButton" (click)="cancelEditDelete()" id="cancelButton">Cancel</button>
-
-    <br><br>
-
-  </div>
-
-
-  <div id="editDelete">
-    <mat-vertical-stepper>
-      <mat-step label="Select Date">
-        <mat-form-field>
-          <input matInput [min]="minDate" name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-
+      <div id="create">
+        <mat-form-field id="eventTitle">
+          <mat-label>Band Name / Event<p class="astrix">*</p></mat-label> <!--Summary-->
+          <input [(ngModel)]="eventTitle" matNativeControl>
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>End Time</mat-label>
-          <input matNativeControl>
+        <br>
+        <mat-form-field id="eventLink">
+          <mat-label>Band / Event Link</mat-label>
+          <input [(ngModel)]="eventLink" matNativeControl>
+        </mat-form-field>
+        <br>
+        <div id="eventImage">
+          <input [(ngModel)]="eventImage" type="file">
+        </div>
+        <br>
+        <mat-form-field id="eventDescription">
+          <mat-label>Description</mat-label>
+          <textarea [(ngModel)]="eventDescription" matInput placeholder="Event Description"></textarea>
         </mat-form-field>
         <br>
         <mat-form-field>
-          <mat-label>Ticket Price</mat-label>
-          <input matNativeControl>
+          <mat-label>Start Date & Time<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="startDateTime" type="datetime-local" class="startEndWidth" matNativeControl>
         </mat-form-field>
         <br>
         <mat-form-field>
-          <mat-label>Max Seats</mat-label>
-          <input matNativeControl>
+          <mat-label>End Date & Time<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="endDateTime" type="datetime-local" matNativeControl>
         </mat-form-field>
         <br>
         <mat-form-field>
-          <mat-label>Refund Cutoff Date</mat-label>
-          <input matNativeControl>
+          <mat-label>Ticket Price<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="ticketPrice" type="number" min="0" step="0.01" matNativeControl>
         </mat-form-field>
         <br>
         <mat-form-field>
-          <mat-label>Refund Cutoff Time</mat-label>
-          <input matNativeControl>
+          <mat-label>Max Seats<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="maxSeats" type="number" min="1" max="60" matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Refund Cutoff Date & Time<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="refundCutoffDateTime" type="datetime-local" matNativeControl>
         </mat-form-field>
         <br>
 
-        <button mat-raised-button (click)="createEvent()">Create Event</button>
+        <button mat-raised-button *ngIf="createButton" (click)="createEvent()">Create Event</button>
+        <button mat-raised-button *ngIf="deleteButton" (click)="confirmDelete()">Confirm Delete</button>
+        <button mat-raised-button *ngIf="editButton" (click)="confirmEdit()">Confirm Edit</button>
+        <button mat-raised-button *ngIf="cancelButton" (click)="cancelEditDelete()" id="cancelButton">Cancel</button>
+
+        <br><br>
 
       </div>
+
 
       <div id="editDelete">
         <mat-vertical-stepper>
           <mat-step label="Select Date">
             <mat-form-field>
-              <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+              <input matInput [min]="minDate" name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
           </mat-step>
 
-      <mat-step label="Select Event">
-        <label id="warning" *ngIf="dateDelete == null;">Please Select a Date at the top first!</label>
-        <select *ngIf="dateDelete != null" [(ngModel)]="eventDelete" name="eventDelete">
-          <option *ngFor="let e of filterEvents()" value="{{e.googleCalID}}">{{e.bandName}}</option>
-        </select>
-      </mat-step>
-    </mat-vertical-stepper>
-    <mat-form-field>
-      <mat-label>Google Calendar ID</mat-label>
-      <input matNativeControl>
-    </mat-form-field>
-    <br>
-    <button mat-raised-button (click)="editEvent()">Edit Event</button>
-    <br><br>
-    <button mat-raised-button (click)="deleteEvent()">Delete Event</button>
+          <mat-step label="Select Event">
+            <label id="warning" *ngIf="dateDelete == null;">Please Select a Date at the top first!</label>
+            <select *ngIf="dateDelete != null" [(ngModel)]="eventDelete" name="eventDelete">
+              <option *ngFor="let e of filterEvents()" value="{{e.googleCalID}}">{{e.bandName}}</option>
+            </select>
+          </mat-step>
+        </mat-vertical-stepper>
+        <mat-form-field>
+          <mat-label>Google Calendar ID</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button (click)="editEvent()">Edit Event</button>
+        <br><br>
+        <button mat-raised-button (click)="deleteEvent()">Delete Event</button>
+      </div>
+
+    </div>
   </div>
 </div>
