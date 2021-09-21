@@ -1,4 +1,7 @@
-<div id="container">
+<div  id="adminCrudBackground">
+  <div id="adminBackgroundOpacity">
+    <div id="container">
+
 
   <div id="create">
     <mat-form-field id="eventTitle">
@@ -63,8 +66,47 @@
           <input matInput [min]="minDate" name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+
         </mat-form-field>
-      </mat-step>
+        <mat-form-field>
+          <mat-label>End Time</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Ticket Price</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Max Seats</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Refund Cutoff Date</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Refund Cutoff Time</mat-label>
+          <input matNativeControl>
+        </mat-form-field>
+        <br>
+
+        <button mat-raised-button (click)="createEvent()">Create Event</button>
+
+      </div>
+
+      <div id="editDelete">
+        <mat-vertical-stepper>
+          <mat-step label="Select Date">
+            <mat-form-field>
+              <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </mat-step>
 
       <mat-step label="Select Event">
         <label id="warning" *ngIf="dateDelete == null;">Please Select a Date at the top first!</label>
@@ -82,5 +124,4 @@
     <br><br>
     <button mat-raised-button (click)="deleteEvent()">Delete Event</button>
   </div>
-
 </div>

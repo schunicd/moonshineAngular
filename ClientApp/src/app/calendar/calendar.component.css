@@ -1,0 +1,22 @@
+
+#calendar{width: 900px;}
+
+.centerCalendar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 767px){
+
+  #calendar{width: 300px;}
+  #calendarLarge{display: none !important;}
+
+}
+
+@media screen and (min-width: 768px){
+
+  #calendarLarge{width: 750px;}
+  #calendarSmall{display: none !important;}
+
+  }

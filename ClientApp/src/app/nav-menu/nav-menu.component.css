@@ -44,6 +44,11 @@ header{
   color: rgba(1,121,235,255);
 }
 
+#patreonBackground{
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+}
+
 @media (min-width: 769){
   #menuStyle{
     font-size: 1.5vw;
