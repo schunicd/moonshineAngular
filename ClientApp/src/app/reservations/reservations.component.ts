@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Event } from "../Event"
 
 @Component({
   selector: 'app-reservations',
@@ -20,6 +21,8 @@ export class ReservationsComponent implements OnInit {
   eventName: string;
   event: Event[];
   band: Band[];
+
+  testEvents: any[];
 
   myGroup;
 
@@ -40,6 +43,12 @@ export class ReservationsComponent implements OnInit {
       this.event = result;
       console.log(this.event);
     }, error => console.error(error));
+
+    //Testing Calendar interaction with the API
+    // this.http.get<any[]>(this.baseUrl + 'api/Calendar').subscribe(result => {
+    //   this.testEvents = result;
+    //   console.log(this.testEvents);
+    // }, error => console.error(error));
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
       this.band = result;
@@ -63,12 +72,12 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
-
-    return this.event.filter(x => x.eventDate.toString().split("T")[0] == filterDate);
+    console.log(this.event[0]);
+    return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
   filterSeats(){
-    return this.event.filter(x => x.eventDate.toString() == this.eventName);
+    return this.event.filter(x => x.bandName.toString() == this.eventName);
   }
 
   validateName(){
@@ -141,15 +150,6 @@ interface Band {
   BandName: string
   Website: string
   BandInfo: string
-}
-
-interface Event {
-  id: number;
-  eventDate: Date;
-  bandId: number;
-  maxSeats: number;
-  currentSeats: number;
-  ticketPrice: number;
 }
 
 interface Reservation {

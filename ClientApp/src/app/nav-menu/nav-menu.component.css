@@ -43,3 +43,10 @@ header{
 #facebookColor{
   color: rgba(1,121,235,255);
 }
+
+@media (min-width: 769){
+  #menuStyle{
+    font-size: 1.5vw;
+  }
+}
+

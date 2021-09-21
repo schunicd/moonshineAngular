@@ -4,6 +4,7 @@
   background-color: rgba(255, 255, 255, 0.7);
   margin-left: 20px;
   margin-right: 20px;
+  padding-bottom: 20px;
 }
 
 @media screen and (max-width: 768px){
@@ -22,12 +23,12 @@
     display: grid;
     text-align: center;
     grid-template-areas:
-    'leftTitleGrid leftTitleGrid . .'
-    'spotlightTitleGrid spotlightTitleGrid videoGrid videoGrid'
-    '. . videoGrid videoGrid'
-    '. . calendarGrid calendarGrid'
-    '. . calendarGrid calendarGrid'
-    '. . calendarGrid calendarGrid'
+    '. leftTitleGrid leftTitleGrid . .'
+    '. spotlightTitleGrid spotlightTitleGrid videoGrid .'
+    '. . . videoGrid .'
+    '. . . calendarGrid .'
+    '. . . calendarGrid .'
+    '. . . calendarGrid .'
     /* REPLACE .'s above with spotlightOne etc... as we add spotlight features */
     ;
     grid-gap: 10px;

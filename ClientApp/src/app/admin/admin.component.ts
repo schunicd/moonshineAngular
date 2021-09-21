@@ -1,7 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DataService } from '../data.service';
 import firebase from "firebase/app";
 import "firebase/auth";
+import { Admin } from '../Admin';
 
 @Component({
   selector: 'app-admin',
@@ -18,7 +21,7 @@ export class AdminComponent implements OnInit {
   tempAdmin: any;
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private router: Router, private route: ActivatedRoute, private data: DataService) {
 
   }
 
@@ -27,6 +30,7 @@ export class AdminComponent implements OnInit {
     this.provider = provider;
 
     this.checkDBConnect();
+    this.data.getCalEvents();
 
   }
 
@@ -48,28 +52,20 @@ export class AdminComponent implements OnInit {
 
   }
 
-  newAuthCheck() {
-    this.msg = "You are not authorized!";
-    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + this.email).subscribe(result => {
-      this.tempAdmin = result;
-      console.log(this.tempAdmin);
-      this.isAdmin = true;
-      this.msg = "You are an admin!";
-    }, error => console.error(error));
+  redirect(){
+    this.data.setTempAdmin(this.email);
+    this.router.navigate(['/adminhome']);
   }
 
-  checkDBConnect() {
+  newAuthCheck() {
+    this.data.getEmail(this.email);
+    this.redirect();
+  }
+
+  checkDBConnect() { //needs to moved to service
     if (!this.dbIsConnected) {
       this.msg = "Cannot authorize at this time, please try again later";
     }
   }
 
-}
-
-interface Admin {
-  ID: number,
-  name: string,
-  email: string,
-  phoneNumber: string,
-  accessLevel: number
 }

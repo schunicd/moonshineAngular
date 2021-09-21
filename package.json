@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@angular/material": "^12.2.6",
+    "igniteui-angular": "^12.1.6",
     "node-sass": "^5.0.0"
   }
 }

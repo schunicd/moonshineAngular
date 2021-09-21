@@ -15,11 +15,9 @@ code {
   border-color: #1861ac;
 }
 
-html, #body1 { height: 100vh; width: 100vw;}
-#body1 { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
 #body1{
   background-image: url("./assets/Images/homePage_background.jpg");
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   display:block;
   margin-left: auto;
   margin-right: auto;
@@ -27,4 +25,5 @@ html, #body1 { height: 100vh; width: 100vw;}
   background-size: 100% 100%;
   background-color: black;
   min-width: 350px;
+  height: 100vh;
 }

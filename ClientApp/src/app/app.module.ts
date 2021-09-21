@@ -15,10 +15,24 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDatepickerModule} from '@angular/material/datepicker'
-import { MatInputModule } from '@angular/material/input'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
+import { AdminhomeComponent } from './adminhome/adminhome.component';
+import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.component';
+import { AdminViewReservationsComponent } from 'src/admin-view-reservations/admin-view-reservations.component';
+import { AdminPhotoGalleryComponent } from 'src/admin-photo-gallery/admin-photo-gallery.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { ContactComponent } from './contact/contact.component';
+import { MenuComponent } from './menu/menu.component';
+import { PhotosComponent } from './photos/photos.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateEventDialog } from './admin-crud-event/admin-crud-event.component';
+import { DeleteEventDialog } from './admin-crud-event/admin-crud-event.component';
+import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +42,21 @@ import { AdminComponent } from './admin/admin.component';
     CounterComponent,
     FetchDataComponent,
     ReservationsComponent,
-    AdminComponent
+    AdminComponent,
+    AdminhomeComponent,
+    AdminCrudEventComponent,
+    AdminViewReservationsComponent,
+    AdminPhotoGalleryComponent,
+    AboutUsComponent,
+    CalendarComponent,
+    ContactComponent,
+    MenuComponent,
+    PhotosComponent,
+    CreateEventDialog,
+    DeleteEventDialog,
+    EditEventDialog
   ],
+  entryComponents: [CreateEventDialog,DeleteEventDialog, EditEventDialog],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     MatIconModule,
@@ -39,12 +66,25 @@ import { AdminComponent } from './admin/admin.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
+    MatDialogModule,
+
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'reservations', component: ReservationsComponent },
-      { path: 'admin', component: AdminComponent }
+      { path: 'admin', component: AdminComponent },
+      { path: 'adminhome', component: AdminhomeComponent },
+      { path: 'adminCrudEvent', component: AdminCrudEventComponent },
+      { path: 'adminViewReservations', component: AdminViewReservationsComponent },
+      { path: 'adminPhotoGallery', component: AdminPhotoGalleryComponent },
+      { path: 'aboutUs', component: AboutUsComponent },
+      { path: 'calendar', component: CalendarComponent },
+      { path: 'contact', component: ContactComponent },
+      { path: 'menu', component: MenuComponent },
+      { path: 'photos', component: PhotosComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
     NoopAnimationsModule,
     MatDatepickerModule,
