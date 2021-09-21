@@ -15,8 +15,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatDatepickerModule } from '@angular/material/datepicker'
-import { MatInputModule } from '@angular/material/input'
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminComponent } from './admin/admin.component';
 import { AdminhomeComponent } from './adminhome/adminhome.component';
@@ -28,6 +28,11 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ContactComponent } from './contact/contact.component';
 import { MenuComponent } from './menu/menu.component';
 import { PhotosComponent } from './photos/photos.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CreateEventDialog } from './admin-crud-event/admin-crud-event.component';
+import { DeleteEventDialog } from './admin-crud-event/admin-crud-event.component';
+import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +51,12 @@ import { PhotosComponent } from './photos/photos.component';
     CalendarComponent,
     ContactComponent,
     MenuComponent,
-    PhotosComponent
+    PhotosComponent,
+    CreateEventDialog,
+    DeleteEventDialog,
+    EditEventDialog
   ],
+  entryComponents: [CreateEventDialog,DeleteEventDialog, EditEventDialog],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     MatIconModule,
@@ -57,6 +66,8 @@ import { PhotosComponent } from './photos/photos.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
+    MatDialogModule,
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },

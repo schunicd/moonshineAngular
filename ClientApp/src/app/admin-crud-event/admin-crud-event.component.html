@@ -2,7 +2,7 @@
 
   <div id="create">
     <mat-form-field id="eventTitle">
-      <mat-label>Band Name / Event</mat-label> <!--Summary-->
+      <mat-label>Band Name / Event<p class="astrix">*</p></mat-label> <!--Summary-->
       <input [(ngModel)]="eventTitle" matNativeControl>
     </mat-form-field>
     <br>
@@ -21,32 +21,35 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Start Date & Time</mat-label>
+      <mat-label>Start Date & Time<p class="astrix">*</p></mat-label>
       <input [(ngModel)]="startDateTime" type="datetime-local" class="startEndWidth" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>End Date & Time</mat-label>
+      <mat-label>End Date & Time<p class="astrix">*</p></mat-label>
       <input [(ngModel)]="endDateTime" type="datetime-local" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Ticket Price</mat-label>
+      <mat-label>Ticket Price<p class="astrix">*</p></mat-label>
       <input [(ngModel)]="ticketPrice" type="number" min="0" step="0.01" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Max Seats</mat-label>
+      <mat-label>Max Seats<p class="astrix">*</p></mat-label>
       <input [(ngModel)]="maxSeats" type="number" min="1" max="60" matNativeControl>
     </mat-form-field>
     <br>
     <mat-form-field>
-      <mat-label>Refund Cutoff Date & Time</mat-label>
+      <mat-label>Refund Cutoff Date & Time<p class="astrix">*</p></mat-label>
       <input [(ngModel)]="refundCutoffDateTime" type="datetime-local" matNativeControl>
     </mat-form-field>
     <br>
 
-    <button mat-raised-button (click)="createEvent()">Create Event</button>
+    <button mat-raised-button *ngIf="createButton" (click)="createEvent()">Create Event</button>
+    <button mat-raised-button *ngIf="deleteButton" (click)="confirmDelete()">Confirm Delete</button>
+    <button mat-raised-button *ngIf="editButton" (click)="confirmEdit()">Confirm Edit</button>
+    <button mat-raised-button *ngIf="cancelButton" (click)="cancelEditDelete()" id="cancelButton">Cancel</button>
 
     <br><br>
 

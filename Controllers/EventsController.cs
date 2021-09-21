@@ -181,20 +181,9 @@ namespace TheMoonshineCafe.Controllers
         [HttpPost]
         public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
-            //Console.WriteLine("Called");
-            //if (!EventExists(@event.googleCalID))
-            //{
-            //    Console.WriteLine("Called2");
-            //    _context.Events.Add(@event);
-            //    await _context.SaveChangesAsync();
-            //}
-            //else
-            //{
-            //    Console.WriteLine("Bad Request");
-            //    return BadRequest();
-            //}
-
+            //creating new event object based off of the Google API Event type
             Google.Apis.Calendar.v3.Data.Event newEvent = new Google.Apis.Calendar.v3.Data.Event(){
+                //assigning values for events
                 Summary = @event.bandName + " " + @event.eventStart.Hour + " $" + @event.ticketPrice, 
                 Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
                 Description = @event.bandName + " " + @event.bandLink + " " + @event.description,
@@ -206,35 +195,23 @@ namespace TheMoonshineCafe.Controllers
                 {
                     DateTime = DateTime.Parse(@event.eventEnd.ToLongDateString())
                 },
-                
-                /*
-                Recurrence = new String[] { "RRULE:FREQ=DAILY;COUNT=2" },
-                
-                Reminders = new Google.Apis.Calendar.v3.Data.Event.RemindersData()
-                {
-                    UseDefault = false,
-                    Overrides = new EventReminder[] {
-                        new EventReminder() { Method = "email", Minutes = 24 * 60 },
-                        new EventReminder() { Method = "sms", Minutes = 10 },
-                    }
-                }
-                */
             };
 
+            //Building request to insert the new event in the primary (default) calendar
             EventsResource.InsertRequest request = TheMoonshineCafe.Program.service.Events.Insert(newEvent, "primary");
+            //Executes the request and assigns the response value to a variable to be used later
             Google.Apis.Calendar.v3.Data.Event createdEvent = request.Execute();
             
-            Console.WriteLine("EBFORE");
-            Console.WriteLine(@event.googleCalID);
+            //Overwriting the default google Calendar ID that was assigned in admin-crud-event.components.ts (101,20)
             @event.googleCalID = createdEvent.Id;
-            Console.WriteLine("AFTER");
-            Console.WriteLine(@event.googleCalID);
+            //Adding the new event with the official Google Calendar ID from GOOGLE to the Events
             _context.Events.Add(@event);
-            
+            //Save the new event
             await _context.SaveChangesAsync();
 
+            //displaying the link to the created event for troubleshooting purposes
             Console.WriteLine("Event created: {0}", createdEvent.HtmlLink);
-
+            //returns status code for event creation
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
 

@@ -11,6 +11,15 @@
   width: 400px;
 }
 
+.astrix{
+  display: inline;
+  color: red;
+}
+
+#cancelButton{
+  margin-left: 10px;
+}
+
 #create{
   grid-area: create;
 }

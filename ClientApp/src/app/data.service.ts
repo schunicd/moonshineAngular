@@ -62,7 +62,7 @@ export class DataService {
     })
   }
 
-  public async getSpecificEvent(calID: String){
+  async getSpecificEvent(calID: String){
     await this.http.get(this.baseUrl + 'api/Events/calID=' + calID).subscribe((result : Event) => {
       console.log(result);
       this.eventTitle = result.bandName;
