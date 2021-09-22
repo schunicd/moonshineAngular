@@ -62,7 +62,7 @@
         <mat-vertical-stepper>
           <mat-step label="Select Date">
             <mat-form-field>
-              <input matInput [min]="minDate" name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+              <input matInput name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

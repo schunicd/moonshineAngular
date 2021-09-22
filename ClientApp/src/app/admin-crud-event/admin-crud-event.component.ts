@@ -51,7 +51,7 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   successSnackBar(message: string) {
-    this._snackBar.open(message, "Close", {duration: 5000})
+    this._snackBar.open(message, "Close", {duration: 5000});
     }
 
   failureSnackBar(message: string, action: string) {
