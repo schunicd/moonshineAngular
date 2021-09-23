@@ -25,8 +25,8 @@ export class DataService {
     console.log("New service instantiated")
    }
 
-  async getEmail(email: string){ //would like to implement hash function for comparison on the backend in the future
-    await this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + email).subscribe(result => {
+  getEmail(email: string){ //would like to implement hash function for comparison on the backend in the future
+    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + email).subscribe(result => {
       this.adminObject = result;
       console.log(this.adminObject);
       this.isAdmin = true;
@@ -34,17 +34,16 @@ export class DataService {
     console.log(this.isAdmin)
   }
 
-  async getCalEvents(){
+  getCalEvents(){
     console.log("Angular function called");
-    await this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
+    this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
       console.log(result);
     }, error => {console.error(error)})
   }
 
-  postEvent(event: Event){
+  async postEvent(event: Event){
     var postData: any;
-    this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);
-    //this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
+    await this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);
   }
 
   async deleteEvent(calID: String){
@@ -55,9 +54,9 @@ export class DataService {
     }, error => {console.error(error)});
   }
 
-  async editEvent(calID: String){
+  editEvent(calID: String){
     var callResult : any;
-    await this.http.put(this.baseUrl + 'api/Events/' + calID , this.getSpecificEvent).subscribe(result => {
+    this.http.put(this.baseUrl + 'api/Events/' + calID , this.getSpecificEvent).subscribe(result => {
       callResult = result;
     })
   }

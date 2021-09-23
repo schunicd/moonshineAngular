@@ -170,11 +170,8 @@ namespace TheMoonshineCafe.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
-
-
 
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

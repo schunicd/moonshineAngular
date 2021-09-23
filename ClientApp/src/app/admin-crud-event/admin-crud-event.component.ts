@@ -63,8 +63,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    console.log(this.eventDelete);
-
+    console.log("Google Cal ID:" + this.eventDelete);
   }
 
   confirmDelete(){
@@ -72,9 +71,10 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.openDeleteDialog();
+    this.data.deleteEvent(this.eventDelete);
+   // this.openDeleteDialog();
     if(this.confirmDeleteEvent == true){
-      this.data.deleteEvent(this.eventDelete);
+      
       this.successSnackBar("Event Deleted!");
     }
 
@@ -117,10 +117,10 @@ export class AdminCrudEventComponent implements OnInit {
       event.eventEnd != null && event.maxNumberOfSeats != null &&
       event.ticketPrice != null && event.refundCutOffDate != null){
 
-        this.openCreateDialog();
-
+        //this.openCreateDialog();
+        this.data.postEvent(event);
         if(this.confirmCreateEvent == true){
-          this.data.postEvent(event);
+          
           console.log("Creating Event");
           this.successSnackBar("Event Created!");
         }
