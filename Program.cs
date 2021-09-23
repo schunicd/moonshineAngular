@@ -32,6 +32,7 @@ namespace TheMoonshineCafe
         public static void Main(string[] args)
         {
 
+            /*
             UserCredential credential;
 
             using (var stream =
@@ -85,6 +86,7 @@ namespace TheMoonshineCafe
                 Console.WriteLine("No upcoming events found.");
             }
             #endregion
+            */
 
             var host = CreateHostBuilder(args).Build();
 

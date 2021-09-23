@@ -1,0 +1,20 @@
+
+{
+    "region" : "us-east-1",
+    "configuration" : "Debug",
+    "framework"     : "net5.0",
+    "self-contained" : false,
+    "application"    : "TheMoonshineCafe",
+    "environment"    : "TheMoonshineCafe-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-03c22ce1e8efb2773\";\"aws:ec2:vpc,Subnets\"=\"subnet-011a778da706bd969\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.2.5 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "themoonshinecafe-dev1",
+    "instance-type"        : "t2.micro",
+    "key-pair"             : "Moonshine",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}
