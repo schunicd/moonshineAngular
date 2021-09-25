@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
+using TheMoonshineCafe.DataAccess;
 
 namespace TheMoonshineCafe
 {
@@ -34,8 +35,15 @@ namespace TheMoonshineCafe
             });
 
 
-            services.AddDbContext<MoonshineCafeContext>(options => 
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //Testing new DBContext
+            //services.AddDbContext<MoonshineCafeContext>(options => 
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //NEW DB CONTEXT TO TEST
+            services.AddControllersWithViews();
+            services.AddDbContext<AppDbContext>(opts => {
+                opts.UseNpgsql(Configuration.GetConnectionString("Test_AWS"));
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

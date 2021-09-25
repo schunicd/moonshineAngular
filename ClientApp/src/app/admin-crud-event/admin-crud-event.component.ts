@@ -64,7 +64,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.deleteButton = true;
     this.cancelButton = true;
     console.log(this.eventDelete);
-
   }
 
   confirmDelete(){
