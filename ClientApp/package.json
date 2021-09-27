@@ -29,6 +29,7 @@
     "core-js": "^3.3.3",
     "firebase": "^8.3.1",
     "jquery": "3.4.1",
+    "ngx-paypal": "^8.0.0",
     "node-sass": "^5.0.0",
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",

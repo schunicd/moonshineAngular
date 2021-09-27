@@ -33,6 +33,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CreateEventDialog } from './admin-crud-event/admin-crud-event.component';
 import { DeleteEventDialog } from './admin-crud-event/admin-crud-event.component';
 import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { PaypalComponent } from './paypal/paypal.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
     PhotosComponent,
     CreateEventDialog,
     DeleteEventDialog,
-    EditEventDialog
+    EditEventDialog,
+    PaypalComponent
   ],
   entryComponents: [CreateEventDialog,DeleteEventDialog, EditEventDialog],
   imports: [
@@ -68,6 +71,7 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
     ReactiveFormsModule,
     MatSnackBarModule,
     MatDialogModule,
+    NgxPayPalModule,
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -84,6 +88,7 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
       { path: 'contact', component: ContactComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'photos', component: PhotosComponent },
+      { path: 'paypal', component: PaypalComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
     NoopAnimationsModule,
