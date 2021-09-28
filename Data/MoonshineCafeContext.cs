@@ -13,7 +13,28 @@ namespace TheMoonshineCafe.Data
         {
         }
 
-        public DbSet<Admin> Admins { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder){
+            base.OnModelCreating(modelBuilder);
+            var admin = new Admin{
+                id = 1,
+                name = "Derek",
+                email = "schunicd@gmail.com",
+                phoneNumber = "1234567890",
+                accessLevel = 1
+            };
+
+            modelBuilder.Entity<Admin>().HasData(admin);
+            modelBuilder.Entity<Admin>().ToTable("Admin");
+            modelBuilder.Entity<Band>().ToTable("Band");
+            modelBuilder.Entity<Customer>().ToTable("Customer");
+            modelBuilder.Entity<Event>().ToTable("Event");
+            modelBuilder.Entity<Payment>().ToTable("Payment");       
+            modelBuilder.Entity<Refund>().ToTable("Refund");
+            modelBuilder.Entity<Reservation>().ToTable("Reservation");
+
+        }
+
+        public virtual DbSet<Admin> Admins { get; set; }
         public DbSet<Band> Bands { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Event> Events { get; set; }
@@ -22,6 +43,7 @@ namespace TheMoonshineCafe.Data
         public DbSet<Refund> Refunds { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
 
+        /*
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<Person>().ToTable("Person");
@@ -33,5 +55,6 @@ namespace TheMoonshineCafe.Data
             modelBuilder.Entity<Refund>().ToTable("Refund");
             modelBuilder.Entity<Reservation>().ToTable("Reservation");
         }
+        */
     }
 }

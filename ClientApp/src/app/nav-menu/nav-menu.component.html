@@ -29,7 +29,7 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a *ngIf="this.isAdmin; else adminHome" class="nav-link text-light" [routerLink]="['/adminhome']">Admin Home</a>
+            <a *ngIf="isAdmin; else adminHome" class="nav-link text-light" [routerLink]="['/adminhome']">Admin Home</a>
             <ng-template #adminHome><a class="nav-link text-light" [routerLink]="['/']">Home</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
@@ -45,19 +45,13 @@
             <ng-template #adminPhotoGallery><a class="nav-link text-light" [routerLink]="['/calendar']">Calendar</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/photos']"
-              >Photos</a
-            >
+            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/photos']">Photos</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/reservations']"
-              >Reservations</a
-            >
+            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/reservations']">Reservations</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/contact']"
-              >Contact</a
-            >
+            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/contact']">Contact</a>
           </li>
         </ul>
 

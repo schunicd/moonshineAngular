@@ -8,7 +8,7 @@
     "environment"    : "TheMoonshineCafe-dev",
     "enable-xray"    : false,
     "enhanced-health-type" : "basic",
-    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-03c22ce1e8efb2773\";\"aws:ec2:vpc,Subnets\"=\"subnet-011a778da706bd969\"",
+    "additional-options"   : "",
     "solution-stack"       : "64bit Amazon Linux 2 v2.2.5 running .NET Core",
     "environment-type"     : "SingleInstance",
     "cname"                : "themoonshinecafe-dev1",

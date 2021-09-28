@@ -1,0 +1,37 @@
+
+  {"Events":[
+      {
+          "id": 1,
+          "eventDate": "05/22/2021 02:20",
+          "bandId": 2,
+          "maxSeats": 25,
+          "currentSeats": 5,
+          "ticketPrice": 10.5
+      },
+      {
+        "id": 2,
+        "eventDate": "05/22/2021",
+        "bandId": 1,
+        "maxSeats": 25,
+        "currentSeats": 5,
+        "ticketPrice": 10.5
+    },
+    {
+        "id": 3,
+        "eventDate": "03/04/2021",
+        "bandId": 2,
+        "maxSeats": 25,
+        "currentSeats": 5,
+        "ticketPrice": 10.5
+    },
+    {
+        "id": 4,
+        "eventDate": "04/04/2021",
+        "bandId": 2,
+        "maxSeats": 25,
+        "currentSeats": 5,
+        "ticketPrice": 10.5
+    }
+  ]
+
+}

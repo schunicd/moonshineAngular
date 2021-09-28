@@ -40,8 +40,7 @@ namespace TheMoonshineCafe
             //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //NEW DB CONTEXT TO TEST
-            services.AddControllersWithViews();
-            services.AddDbContext<AppDbContext>(opts => {
+            services.AddDbContext<MoonshineCafeContext>(opts => {
                 opts.UseNpgsql(Configuration.GetConnectionString("Test_AWS"));
             });
 

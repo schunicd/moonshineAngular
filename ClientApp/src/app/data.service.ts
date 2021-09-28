@@ -14,7 +14,7 @@ export class DataService {
   eventToEdit: Event[];
   private tempAdminCheck = new BehaviorSubject('');
   currentCheck = this.tempAdminCheck.asObservable();
-  private isAdmin: boolean;
+  public isAdmin: boolean;
   adminObject: any;
 
   eventTitle: String;
