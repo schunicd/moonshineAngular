@@ -34,7 +34,7 @@ export class AdminCrudEventComponent implements OnInit {
   eventDelete: String;
   event: Event[];
 
-  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,private data: DataService) {
+  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;

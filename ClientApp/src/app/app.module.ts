@@ -11,8 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ReservationsComponent } from './reservations/reservations.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -23,6 +21,7 @@ import { AdminhomeComponent } from './adminhome/adminhome.component';
 import { AdminCrudEventComponent } from './admin-crud-event/admin-crud-event.component';
 import { AdminViewReservationsComponent } from './admin-view-reservations/admin-view-reservations.component';
 import { AdminPhotoGaleryComponent } from './admin-photo-gallery/admin-photo-galery.component';
+import { AdminSendEmailComponent } from './admin-send-email/admin-send-email.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { ContactComponent } from './contact/contact.component';
@@ -39,14 +38,13 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     ReservationsComponent,
     AdminComponent,
     AdminhomeComponent,
     AdminCrudEventComponent,
     AdminViewReservationsComponent,
     AdminPhotoGaleryComponent,
+    AdminSendEmailComponent,
     AboutUsComponent,
     CalendarComponent,
     ContactComponent,
@@ -71,14 +69,13 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'reservations', component: ReservationsComponent },
       { path: 'admin', component: AdminComponent },
       { path: 'adminhome', component: AdminhomeComponent },
       { path: 'adminCrudEvent', component: AdminCrudEventComponent },
       { path: 'adminViewReservations', component: AdminViewReservationsComponent },
       { path: 'adminPhotoGallery', component: AdminPhotoGaleryComponent },
+      { path: 'adminSendEmail', component: AdminSendEmailComponent },
       { path: 'aboutUs', component: AboutUsComponent },
       { path: 'calendar', component: CalendarComponent },
       { path: 'contact', component: ContactComponent },

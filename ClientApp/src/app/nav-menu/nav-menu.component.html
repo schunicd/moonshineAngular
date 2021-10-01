@@ -29,29 +29,32 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a *ngIf="isAdmin; else adminHome" class="nav-link text-light" [routerLink]="['/adminhome']">Admin Home</a>
+            <a *ngIf="this.data.isAdmin; else adminHome" class="nav-link text-light" [routerLink]="['/adminhome']">Admin Home</a>
             <ng-template #adminHome><a class="nav-link text-light" [routerLink]="['/']">Home</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="this.isAdmin; else adminCrudEvent" class="nav-link text-light" [routerLink]="['/adminCrudEvent']">Create/Edit Event</a>
+            <a *ngIf="this.data.isAdmin; else adminCrudEvent" class="nav-link text-light" [routerLink]="['/adminCrudEvent']">Create/Edit Event</a>
             <ng-template #adminCrudEvent><a class="nav-link text-light" [routerLink]="['/aboutUs']">AboutUs</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="this.isAdmin; else adminViewReservations" class="nav-link text-light" [routerLink]="['/adminViewReservations']">View Reservations</a>
+            <a *ngIf="this.data.isAdmin; else adminViewReservations" class="nav-link text-light" [routerLink]="['/adminViewReservations']">View Reservations</a>
             <ng-template #adminViewReservations><a class="nav-link text-light" [routerLink]="['/menu']">Menu</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="this.isAdmin; else adminPhotoGallery" class="nav-link text-light" [routerLink]="['/adminPhotoGallery']">Upload Photos</a>
+            <a *ngIf="this.data.isAdmin; else adminPhotoGallery" class="nav-link text-light" [routerLink]="['/adminPhotoGallery']">Upload Photos</a>
             <ng-template #adminPhotoGallery><a class="nav-link text-light" [routerLink]="['/calendar']">Calendar</a></ng-template>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/photos']">Photos</a>
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/photos']">Photos</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/reservations']">Reservations</a>
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/reservations']">Reservations</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a *ngIf="!this.isAdmin;" class="nav-link text-light" [routerLink]="['/contact']">Contact</a>
+            <a *ngIf="!this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/contact']">Contact</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a *ngIf="this.data.isAdmin;" class="nav-link text-light" [routerLink]="['/adminSendEmail']">Send Email</a>
           </li>
         </ul>
 
@@ -65,9 +68,9 @@
                 allowtransparency="true"
                 allowfullscreen="true"
                 class="twitter-follow-button twitter-follow-button-rendered"
-                style="margin-top: 3px; margin-bottom: 3px; width: 19px; height: 20px; border-bottom-right-radius: 10px; border-top-right-radius: 5px;"
+                style="margin-top: 15px; margin-bottom: 3px; width: 65px; height: 20px;"
                 title="Twitter Follow Button"
-                src="https://platform.twitter.com/widgets/follow_button.e16c6ecf9d86005b77fc7c17beced5d8.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=MoonshineCafe&amp;show_count=false&amp;show_screen_name=true&amp;size=m&amp;time=1618349491776"
+                src="https://platform.twitter.com/widgets/follow_button.e16c6ecf9d86005b77fc7c17beced5d8.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;screen_name=MoonshineCafe&amp;show_count=false&amp;show_screen_name=false&amp;size=m&amp;time=1618349491776"
                 data-screen-name="MoonshineCafe"
               ></iframe>
             </a>
@@ -76,6 +79,13 @@
             <a class="nav-link" target="_blank" href="https://www.facebook.com/themoonshinecafe/">
               <mat-icon id="facebookColor">facebook</mat-icon>
             </a>
+          </li>
+          <li class="nav-item">
+            <div id="patreonBackground">
+              <a class="nav-link" target="_blank" href="https://www.patreon.com/themoonshinecafe">
+                <img src="../../assets/Images/patreon.gif" style="width: 170px; height: 50px;">
+              </a>
+            </div>
           </li>
         </ul>
       </div>

@@ -1,4 +1,4 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -18,10 +18,11 @@
     "TheMoonshineCafe": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
+        "SENDGRID_API_KEY": "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",
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
   }
 }

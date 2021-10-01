@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from "../data.service";
 
 @Component({
@@ -6,13 +6,17 @@ import { DataService } from "../data.service";
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css']
 })
-export class NavMenuComponent {
+export class NavMenuComponent implements OnInit{
   isExpanded = false;
   isAdmin = false;
 
-  constructor(private data: DataService) {
-      this.isAdmin = this.data.getIsAdmin();
+  constructor(public data: DataService) {
+
    };
+
+   ngOnInit(){
+     this.isAdmin = this.data.isAdmin;
+   }
 
   collapse() {
     this.isExpanded = false;

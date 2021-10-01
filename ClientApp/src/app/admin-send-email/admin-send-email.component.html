@@ -1,0 +1,27 @@
+<div  id="adminSendEmail">
+  <div id="adminBackgroundOpacity">
+    <div id="container">
+
+      <div id="create">
+        <mat-form-field id="emailSubject">
+          <mat-label>Email Subject<p class="astrix">*</p></mat-label>
+          <input [(ngModel)]="emailSubject" name="emailSubject" matNativeControl>
+        </mat-form-field>
+        <br>
+        <mat-form-field id="emailBody">
+          <mat-label>Email Body<p class="astrix">*</p></mat-label>
+          <textarea [(ngModel)]="emailBody" name="emailBody" matNativeControl></textarea>
+        </mat-form-field>
+        <br>
+        <div id="emailImage">
+          <input [(ngModel)]="emailImage" name="emailImage" type="file">
+        </div>
+        <br>
+
+      </div>
+
+      <button mat-raised-button (click)="sendEmail()">Send Email</button>
+
+    </div>
+  </div>
+</div>

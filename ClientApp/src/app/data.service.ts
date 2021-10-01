@@ -77,8 +77,18 @@ export class DataService {
     return this.isAdmin;
   }
 
+  sendEmail(email: Email){
+    var postData: any;
+    this.http.post(this.baseUrl + 'api/AdminSendEmail', email).subscribe(data => postData = data);
+  }
+
   logOut(){
 
   }
 }
 
+interface Email {
+  emailSubject: String;
+  emailBody: String;
+  emailImage: String;
+}
