@@ -34,7 +34,7 @@ namespace TheMoonshineCafe
 
             UserCredential credential;
 
-            using (var stream =
+            /*using (var stream =
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
@@ -84,7 +84,7 @@ namespace TheMoonshineCafe
             {
                 Console.WriteLine("No upcoming events found.");
             }
-            #endregion
+            #endregion*/
 
             var host = CreateHostBuilder(args).Build();
 

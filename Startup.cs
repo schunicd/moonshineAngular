@@ -6,12 +6,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Google.Apis.Auth.AspNetCore3;
 using TheMoonshineCafe.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace TheMoonshineCafe
 {
     public class Startup
     {
+        private const string ClientId = "833331136290-l0lso5c20728dd8vp05p7v30eg7saumk.apps.googleusercontent.com";
+        private const string ClientSecret = "KDhPqiNnjL7ImbJc5qlzNvbt";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -45,11 +49,34 @@ namespace TheMoonshineCafe
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services
+                .AddAuthentication(o =>
+                {
+                    // This forces challenge results to be handled by Google OpenID Handler, so there's no
+                    // need to add an AccountController that emits challenges for Login.
+                    o.DefaultChallengeScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                    // This forces forbid results to be handled by Google OpenID Handler, which checks if
+                    // extra scopes are required and does automatic incremental auth.
+                    o.DefaultForbidScheme = GoogleOpenIdConnectDefaults.AuthenticationScheme;
+                    // Default scheme that will handle everything else.
+                    // Once a user is authenticated, the OAuth2 token info is stored in cookies.
+                    o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie()
+                .AddGoogleOpenIdConnect(options =>
+                {
+                    options.ClientId = ClientId;
+                    options.ClientSecret = ClientSecret;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseRouting();
 
             app.UseCors("AllowMyOrigin");
@@ -83,26 +110,6 @@ namespace TheMoonshineCafe
                     app.UseHsts();
                 }
             });
-
-/*
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }*/
-
-/*            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }*/
-
         }
     }
 }

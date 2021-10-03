@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
     this.provider = provider;
 
     this.checkDBConnect();
-    this.data.getCalEvents();
+    //this.data.getCalEvents();
 
   }
 
@@ -54,6 +54,7 @@ export class AdminComponent implements OnInit {
 
   redirect(){
     this.data.setTempAdmin(this.email);
+    this.data.getAuth(this.email);
     this.router.navigate(['/adminhome']);
   }
 

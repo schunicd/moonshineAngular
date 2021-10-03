@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Google.Apis" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
+    <PackageReference Include="Google.Apis.Auth.AspNetCore3" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Calendar.v3" Version="1.55.0.2410" />
     <PackageReference Include="Google.Apis.Core" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Drive.v3" Version="1.55.0.2397" />
@@ -38,6 +39,15 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="credentials.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="credentialsOLD.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

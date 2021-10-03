@@ -15,6 +15,9 @@ using TheMoonshineCafe.Models;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Util.Store;
 using System.Text;
+using Google.Apis.Auth.AspNetCore3;
+using Google.Apis.PeopleService.v1;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TheMoonshineCafe.Controllers
 {
@@ -25,12 +28,13 @@ namespace TheMoonshineCafe.Controllers
         private readonly MoonshineCafeContext _context;
         static string[] Scopes = { CalendarService.Scope.Calendar };
         private UserCredential credential;
+        private GoogleCredential cred;
 
         public EventsController(MoonshineCafeContext context)
         {
             _context = context;
 
-            using (var stream =
+            /*using (var stream =
                 new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
@@ -43,7 +47,7 @@ namespace TheMoonshineCafe.Controllers
                     CancellationToken.None,
                     new FileDataStore(credPath, true)).Result;
                 Console.WriteLine("Credential file saved to: " + credPath);
-            }
+            }*/
         }
 
         // GET: api/Events
@@ -51,6 +55,39 @@ namespace TheMoonshineCafe.Controllers
         public async Task<ActionResult<IEnumerable<Models.Event>>> GetEvents()
         {
             return await _context.Events.ToListAsync();
+            
+        }
+
+        [GoogleScopedAuthorize("https://www.googleapis.com/auth/calendar.events")]
+        //public async void UserProfile([FromServices] IGoogleAuthProvider auth)
+        public async void UserProfile([FromServices] IGoogleAuthProvider auth)
+        {
+            cred = await auth.GetCredentialAsync();
+            var service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = cred
+            });
+            
+/*            var service = new PeopleServiceService(new BaseClientService.Initializer() {
+                HttpClientInitializer = cred
+            });*/
+
+            var request = service.Events.List("primary");
+            request.TimeMin = DateTime.Now;
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.MaxResults = 10;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+            //request.PersonFields = "names";
+            var person = await request.ExecuteAsync();
+
+            Console.WriteLine(person);
+            //return View(person);
+        }
+
+        private void ViewComponent(Google.Apis.PeopleService.v1.Data.Person person)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpGet("Calendar")]

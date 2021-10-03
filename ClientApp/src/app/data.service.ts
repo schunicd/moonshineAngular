@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin'
 import { Event } from './Event'
@@ -32,6 +32,14 @@ export class DataService {
       this.isAdmin = true;
     }, error => {console.error(error)});
     console.log(this.isAdmin)
+  }
+
+  getAuth(user: String){
+    var defaultHeaders = new HttpHeaders();
+    defaultHeaders = defaultHeaders.append('Content-Type', 'application/json');
+    if (user != null) {
+      defaultHeaders = defaultHeaders.append('Authorization', 'Bearer ' + user);
+    }
   }
 
   getCalEvents(){
