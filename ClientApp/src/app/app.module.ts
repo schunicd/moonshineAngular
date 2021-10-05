@@ -29,9 +29,6 @@ import { MenuComponent } from './menu/menu.component';
 import { PhotosComponent } from './photos/photos.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-import { CreateEventDialog } from './admin-crud-event/admin-crud-event.component';
-import { DeleteEventDialog } from './admin-crud-event/admin-crud-event.component';
-import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
 
 @NgModule({
   declarations: [
@@ -49,12 +46,8 @@ import { EditEventDialog } from './admin-crud-event/admin-crud-event.component';
     CalendarComponent,
     ContactComponent,
     MenuComponent,
-    PhotosComponent,
-    CreateEventDialog,
-    DeleteEventDialog,
-    EditEventDialog
+    PhotosComponent
   ],
-  entryComponents: [CreateEventDialog,DeleteEventDialog, EditEventDialog],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     MatIconModule,

@@ -3,7 +3,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { DataService } from '../data.service';
 import { Event } from '../Event'
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-admin-crud-event',
@@ -21,6 +20,7 @@ export class AdminCrudEventComponent implements OnInit {
   deleteButton: boolean;
   cancelButton: boolean;
 
+  eventID: Number;
   eventTitle: String;
   eventLink: String;
   eventImage: String;
@@ -34,7 +34,7 @@ export class AdminCrudEventComponent implements OnInit {
   eventDelete: String;
   event: Event[];
 
-  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
+  constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
@@ -63,7 +63,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    console.log(this.eventDelete);
   }
 
   confirmDelete(){
@@ -71,26 +70,10 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.openDeleteDialog();
-    if(this.confirmDeleteEvent == true){
-      this.data.deleteEvent(this.eventDelete);
-      this.successSnackBar("Event Deleted!");
-    }
-
+    console.log(this.eventID);
+    this.data.deleteEvent(this.eventID);
   }
 
-  openDeleteDialog(){
-    const dialogRef = this.dialog.open(DeleteEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmDeleteEvent = true;
-      }
-      else{
-        this.confirmDeleteEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
-  }
 
   resetEventName(){
     this.eventDelete = null;
@@ -109,39 +92,18 @@ export class AdminCrudEventComponent implements OnInit {
       currentNumberOfSeats: 0,
       ticketPrice: this.ticketPrice,
       description: this.eventDescription,
-      googleCalID: "abc123"
     }
 
     if(event.bandName != null && event.eventStart != null &&
       event.eventEnd != null && event.maxNumberOfSeats != null &&
       event.ticketPrice != null && event.refundCutOffDate != null){
-
-        this.openCreateDialog();
-
-        if(this.confirmCreateEvent == true){
-          this.data.postEvent(event);
-          console.log("Creating Event");
-          this.successSnackBar("Event Created!");
-        }
-
+        this.data.postEvent(event);
+        console.log(event);
       }
     else{
       this.failureSnackBar("Please verify all fields with a red '*' are filled out accurately.", "Close");
     }
 
-  }
-
-  openCreateDialog(){
-    const dialogRef = this.dialog.open(CreateEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmCreateEvent = true;
-      }
-      else{
-        this.confirmCreateEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
   }
 
   filterEvents(){
@@ -166,9 +128,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.cancelButton = true;
 
     console.log("Edit Event");
-    //this.data.getSpecificEvent(this.eventDelete);
-
-    //this.eventTitle = this.data.getSpecificEvent(this.eventDelete);
 
     console.log(this.data.eventTitle);
     this.setFieldsForEdit();
@@ -179,24 +138,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.openEditDialog();
-    if(this.confirmDeleteEvent == true){
-      //this.data.editEvent(this.eventDelete);
-      this.successSnackBar("Event Edited!");
-    }
-  }
-
-  openEditDialog(){
-    const dialogRef = this.dialog.open(EditEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmDeleteEvent = true;
-      }
-      else{
-        this.confirmDeleteEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
+    this.data.editEvent(this.eventID);
   }
 
   cancelEditDelete(){
@@ -211,21 +153,3 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
 }
-
-@Component({
-  selector: 'create-event-dialog',
-  templateUrl: './create-event-dialog.html',
-})
-export class CreateEventDialog{}
-
-@Component({
-  selector: 'delete-event-dialog',
-  templateUrl: './delete-event-dialog.html',
-})
-export class DeleteEventDialog{}
-
-@Component({
-  selector: 'edit-event-dialog',
-  templateUrl: './edit-event-dialog.html',
-})
-export class EditEventDialog{}
