@@ -25,8 +25,8 @@ export class DataService {
     console.log("New service instantiated")
    }
 
-  async getEmail(email: string){ //would like to implement hash function for comparison on the backend in the future
-    await this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + email).subscribe(result => {
+  getEmail(email: string){ //would like to implement hash function for comparison on the backend in the future
+    this.http.get<Admin[]>(this.baseUrl + 'api/Admins/email=' + email).subscribe(result => {
       this.adminObject = result;
       console.log(this.adminObject);
       this.isAdmin = true;
@@ -34,9 +34,8 @@ export class DataService {
     console.log(this.isAdmin)
   }
 
-  async getCalEvents(){
-    console.log("Angular function called");
-    await this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
+  getCalEvents(){
+     this.http.get<any[]>(this.baseUrl + 'api/Events').subscribe(result => {
       console.log(result);
     }, error => {console.error(error)})
   }
@@ -44,29 +43,32 @@ export class DataService {
   postEvent(event: Event){
     var postData: any;
     this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);
-    //this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
   }
 
-  async deleteEvent(calID: String){
+  deleteEvent(id: Number){
     var callResult : any;
-    await this.http.delete(this.baseUrl + 'api/Events/' + calID).subscribe(result =>{
+    this.http.delete(this.baseUrl + 'api/Events/' + id).subscribe(result =>{
       callResult = result;
       console.log(callResult);
     }, error => {console.error(error)});
   }
 
-  async editEvent(calID: String){
+  editEvent(id: Number){
     var callResult : any;
-    await this.http.put(this.baseUrl + 'api/Events/' + calID , this.getSpecificEvent).subscribe(result => {
+    console.log(this.getSpecificEvent(id))
+    this.http.put(this.baseUrl + 'api/Events/' + id , this.getSpecificEvent(id)).subscribe(result => {
       callResult = result;
     })
   }
 
-  async getSpecificEvent(calID: String){
-    await this.http.get(this.baseUrl + 'api/Events/calID=' + calID).subscribe((result : Event) => {
+  async getSpecificEvent(id: Number): Promise<Event>{
+    var event;
+    await this.http.get(this.baseUrl + 'api/Events/' + id).subscribe((result : Event) => {
       console.log(result);
+      event = result;
       this.eventTitle = result.bandName;
     }, error => {console.error(error)})
+    return event;
   }
 
   setTempAdmin(message: string){

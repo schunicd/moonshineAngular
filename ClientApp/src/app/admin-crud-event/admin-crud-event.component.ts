@@ -20,6 +20,7 @@ export class AdminCrudEventComponent implements OnInit {
   deleteButton: boolean;
   cancelButton: boolean;
 
+  eventID: Number;
   eventTitle: String;
   eventLink: String;
   eventImage: String;
@@ -62,7 +63,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    console.log(this.eventDelete);
   }
 
   confirmDelete(){
@@ -71,11 +71,8 @@ export class AdminCrudEventComponent implements OnInit {
     this.deleteButton = false;
     this.cancelButton = false;
 
-    if(this.confirmDeleteEvent == true){
-      this.data.deleteEvent(this.eventDelete);
-      this.successSnackBar("Event Deleted!");
-    }
-
+    console.log(this.eventID);
+    this.data.deleteEvent(this.eventID);
   }
 
   resetEventName(){
@@ -95,20 +92,16 @@ export class AdminCrudEventComponent implements OnInit {
       currentNumberOfSeats: 0,
       ticketPrice: this.ticketPrice,
       description: this.eventDescription,
-      googleCalID: "abc123"
     }
 
     if(event.bandName != null && event.eventStart != null &&
       event.eventEnd != null && event.maxNumberOfSeats != null &&
       event.ticketPrice != null && event.refundCutOffDate != null){
 
-        if(this.confirmCreateEvent == true){
-          this.data.postEvent(event);
-          console.log("Creating Event");
-          this.successSnackBar("Event Created!");
-        }
+        this.data.postEvent(event);
+        console.log(event);
+      }
 
-    }
     else{
       this.failureSnackBar("Please verify all fields with a red '*' are filled out accurately.", "Close");
     }
@@ -137,9 +130,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.cancelButton = true;
 
     console.log("Edit Event");
-    //this.data.getSpecificEvent(this.eventDelete);
-
-    //this.eventTitle = this.data.getSpecificEvent(this.eventDelete);
 
     console.log(this.data.eventTitle);
     this.setFieldsForEdit();
@@ -150,11 +140,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-
-    if(this.confirmDeleteEvent == true){
-      //this.data.editEvent(this.eventDelete);
-      this.successSnackBar("Event Edited!");
-    }
+    this.data.editEvent(this.eventID);
   }
 
   cancelEditDelete(){

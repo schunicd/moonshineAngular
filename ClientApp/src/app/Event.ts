@@ -9,5 +9,4 @@ export class Event {
     currentNumberOfSeats: number;
     ticketPrice: number;
     description: String;
-    googleCalID: String;
   }

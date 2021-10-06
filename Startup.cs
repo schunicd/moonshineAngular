@@ -36,13 +36,13 @@ namespace TheMoonshineCafe
 
 
             //Testing new DBContext
-            //services.AddDbContext<MoonshineCafeContext>(options => 
-            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<MoonshineCafeContext>(options => 
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //NEW DB CONTEXT TO TEST
-            services.AddDbContext<MoonshineCafeContext>(opts => {
+            /*services.AddDbContext<MoonshineCafeContext>(opts => {
                 opts.UseNpgsql(Configuration.GetConnectionString("Test_AWS"));
-            });
+            });*/
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -90,26 +90,6 @@ namespace TheMoonshineCafe
                     app.UseHsts();
                 }
             });
-
-/*
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }*/
-
-/*            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }*/
-
         }
     }
 }

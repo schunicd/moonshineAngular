@@ -30,8 +30,6 @@ export class AdminComponent implements OnInit {
     this.provider = provider;
 
     this.checkDBConnect();
-    this.data.getCalEvents();
-
   }
 
   loginWithGmail() {
