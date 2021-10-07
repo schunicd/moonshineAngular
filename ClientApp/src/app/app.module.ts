@@ -29,6 +29,8 @@ import { MenuComponent } from './menu/menu.component';
 import { PhotosComponent } from './photos/photos.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { PaypalComponent } from './paypal/paypal.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatSnackBarModule,
     MatDialogModule,
+    NgxPayPalModule,
 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -74,6 +77,7 @@ import { MatDialogModule } from '@angular/material/dialog';
       { path: 'contact', component: ContactComponent },
       { path: 'menu', component: MenuComponent },
       { path: 'photos', component: PhotosComponent },
+      { path: 'paypal', component: PaypalComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
     NoopAnimationsModule,

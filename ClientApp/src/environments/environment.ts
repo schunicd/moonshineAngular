@@ -14,6 +14,8 @@ export const firebaseConfig = {
   messagingSenderId: "833331136290",
   appId: "1:833331136290:web:a54fa502f9677e497b477b"
 };
+
+declare var paypal;
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
