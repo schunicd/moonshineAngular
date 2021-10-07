@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { DataService } from '../data.service';
-import { Event } from '../Event'
-import { MatDialog } from '@angular/material/dialog';
+import { Event } from '../Event';
+import { EventWithID } from '../EventWithID';
 
 @Component({
   selector: 'app-admin-crud-event',
@@ -21,6 +21,7 @@ export class AdminCrudEventComponent implements OnInit {
   deleteButton: boolean;
   cancelButton: boolean;
 
+  eventID: number;
   eventTitle: String;
   eventLink: String;
   eventImage: String;
@@ -32,15 +33,21 @@ export class AdminCrudEventComponent implements OnInit {
   refundCutoffDateTime: Date;
   dateDelete: Date;
   eventDelete: String;
-  event: Event[];
+  event: EventWithID[];
+  eventEditDelete: EventWithID[];
+  stepperIndex: number;
 
-  constructor(private dialog: MatDialog, private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,private data: DataService) {
+  constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
-    this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
+    this.getEvents();
+
+  }
+
+  getEvents() {
+    this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       console.log(this.event);
     }, error => console.error(error));
-
   }
 
   ngOnInit() {
@@ -51,53 +58,62 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   successSnackBar(message: string) {
-    this._snackBar.open(message, "Close", {duration: 5000})
-    }
+    this._snackBar.open(message, "Close", { duration: 5000 });
+  }
 
   failureSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
 
-  deleteEvent(){
+  clearForm() {
+    this.eventTitle = "";
+    this.eventLink = "";
+    this.eventImage = "";
+    this.eventDescription = "";
+    this.startDateTime = null;
+    this.endDateTime = null;
+    this.ticketPrice = null;
+    this.maxSeats = null;
+    this.refundCutoffDateTime = null;
+    this.eventID = null;
+    this.dateDelete = null;
+    this.stepperIndex = 0;
+  }
+
+  deleteEvent() {
     this.createButton = false;
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    console.log(this.eventDelete);
-
+    this.eventEditDelete = this.filterOneEvent(this.eventID);
+    this.eventTitle = this.eventEditDelete[0].bandName;
+    this.eventLink = this.eventEditDelete[0].bandLink;
+    this.eventDescription = this.eventEditDelete[0].description;
+    this.startDateTime = this.eventEditDelete[0].eventStart;
+    this.endDateTime = this.eventEditDelete[0].eventEnd;
+    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
+    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
   }
 
-  confirmDelete(){
+  confirmDelete() {
     this.createButton = true;
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.openDeleteDialog();
-    if(this.confirmDeleteEvent == true){
-      this.data.deleteEvent(this.eventDelete);
-      this.successSnackBar("Event Deleted!");
-    }
 
+    console.log(this.eventID);
+    this.data.deleteEvent(this.eventID);
+    this.getEvents();
+    this.clearForm();
+    this.successSnackBar("Event Deleted!");
   }
 
-  openDeleteDialog(){
-    const dialogRef = this.dialog.open(DeleteEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmDeleteEvent = true;
-      }
-      else{
-        this.confirmDeleteEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
-  }
-
-  resetEventName(){
+  resetEventName() {
     this.eventDelete = null;
   }
 
-  createEvent(){
+  createEvent() {
 
     let event = {
       eventStart: this.startDateTime,
@@ -110,123 +126,79 @@ export class AdminCrudEventComponent implements OnInit {
       currentNumberOfSeats: 0,
       ticketPrice: this.ticketPrice,
       description: this.eventDescription,
-      googleCalID: "abc123"
     }
 
-    if(event.bandName != null && event.eventStart != null &&
+    if (event.bandName != null && event.eventStart != null &&
       event.eventEnd != null && event.maxNumberOfSeats != null &&
-      event.ticketPrice != null && event.refundCutOffDate != null){
+      event.ticketPrice != null && event.refundCutOffDate != null) {
 
-        this.openCreateDialog();
+      this.data.postEvent(event);
+      console.log(event);
+      this.getEvents();
+      this.clearForm();
+      this.successSnackBar("Event Created!");
+    }
 
-        if(this.confirmCreateEvent == true){
-          this.data.postEvent(event);
-          console.log("Creating Event");
-          this.successSnackBar("Event Created!");
-        }
-
-      }
-    else{
+    else {
       this.failureSnackBar("Please verify all fields with a red '*' are filled out accurately.", "Close");
     }
 
   }
 
-  openCreateDialog(){
-    const dialogRef = this.dialog.open(CreateEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmCreateEvent = true;
-      }
-      else{
-        this.confirmCreateEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
-  }
-
-  filterEvents(){
+  filterEvents() {
 
     let day = this.dateDelete.getDate().toString();
     let month = (this.dateDelete.getMonth() + 1).toString();
-    if(parseInt(month) < 10)
+    if (parseInt(month) < 10)
       month = "0" + month;
 
-    if(parseInt(day) < 10)
+    if (parseInt(day) < 10)
       day = "0" + day;
 
     let filterDate = this.dateDelete.getUTCFullYear() + "-" + month + "-" + day;
     return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
-  editEvent(){
+  filterOneEvent(id: number) {
+    return this.event.filter(x => x.id == id)
+  }
+
+  editEvent() {
 
     this.createButton = false;
     this.editButton = true;
     this.deleteButton = false;
     this.cancelButton = true;
+    this.eventEditDelete = this.filterOneEvent(this.eventID);
+    this.eventTitle = this.eventEditDelete[0].bandName;
+    this.eventLink = this.eventEditDelete[0].bandLink;
+    this.eventDescription = this.eventEditDelete[0].description;
+    this.startDateTime = this.eventEditDelete[0].eventStart;
+    this.endDateTime = this.eventEditDelete[0].eventEnd;
+    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
+    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
 
     console.log("Edit Event");
-    //this.data.getSpecificEvent(this.eventDelete);
-
-    //this.eventTitle = this.data.getSpecificEvent(this.eventDelete);
 
     console.log(this.data.eventTitle);
-    this.setFieldsForEdit();
+
   }
 
-  confirmEdit(){
+  confirmEdit() {
     this.createButton = true;
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.openEditDialog();
-    if(this.confirmDeleteEvent == true){
-      //this.data.editEvent(this.eventDelete);
-      this.successSnackBar("Event Edited!");
-    }
+    this.getEvents();
+    this.data.editEvent(this.eventID, this.eventEditDelete);
   }
 
-  openEditDialog(){
-    const dialogRef = this.dialog.open(EditEventDialog);
-    dialogRef.afterClosed().subscribe(result => {
-      if(result == true){
-        this.confirmDeleteEvent = true;
-      }
-      else{
-        this.confirmDeleteEvent = false;
-      }
-      console.log(`Dialog result: ${result}`);
-    })
-  }
-
-  cancelEditDelete(){
+  cancelEditDelete() {
     this.createButton = true;
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-  }
-
-  setFieldsForEdit(){
-    this.eventTitle = this.data.eventTitle;
   }
 
 }
-
-@Component({
-  selector: 'create-event-dialog',
-  templateUrl: './create-event-dialog.html',
-})
-export class CreateEventDialog{}
-
-@Component({
-  selector: 'delete-event-dialog',
-  templateUrl: './delete-event-dialog.html',
-})
-export class DeleteEventDialog{}
-
-@Component({
-  selector: 'edit-event-dialog',
-  templateUrl: './edit-event-dialog.html',
-})
-export class EditEventDialog{}
