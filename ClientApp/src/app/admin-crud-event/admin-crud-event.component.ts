@@ -178,11 +178,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.ticketPrice = this.eventEditDelete[0].ticketPrice;
     this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
     this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
-
-    console.log("Edit Event");
-
-    console.log(this.data.eventTitle);
-
   }
 
   confirmEdit(){

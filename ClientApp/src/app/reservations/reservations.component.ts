@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Event } from "../Event"
+import { EventWithID } from '../EventWithID';
 
 @Component({
   selector: 'app-reservations',
@@ -43,12 +44,6 @@ export class ReservationsComponent implements OnInit {
       this.event = result;
       console.log(this.event);
     }, error => console.error(error));
-
-    //Testing Calendar interaction with the API
-    // this.http.get<any[]>(this.baseUrl + 'api/Calendar').subscribe(result => {
-    //   this.testEvents = result;
-    //   console.log(this.testEvents);
-    // }, error => console.error(error));
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
       this.band = result;
@@ -96,6 +91,36 @@ export class ReservationsComponent implements OnInit {
 
   resetEventName(){
     this.eventName = null;
+  }
+
+  editEvent(){
+
+    /*resetDate: Date;
+  minDate: Date;
+  date: Date;
+  name: string;
+  email: string;
+  seats: number;
+  eventMaxSeats: number;
+  eventName: string;
+  event: Event[];
+  band: Band[];
+*/
+
+    // this.createButton = false;
+    // this.editButton = true;
+    // this.deleteButton = false;
+    // this.cancelButton = true;
+    // this.eventEditDelete = this.filterOneEvent(this.eventID);
+    // this.eventTitle = this.eventEditDelete[0].bandName;
+    // this.eventLink = this.eventEditDelete[0].bandLink;
+    // this.eventDescription = this.eventEditDelete[0].description;
+    // this.date = this.eventEditDelete[0].eventStart;
+    // this.endDateTime = this.eventEditDelete[0].eventEnd;
+    // this.ticketPrice = this.eventEditDelete[0].ticketPrice;
+    // this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
+    // this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
+    //this.data.editEvent(this.eventID, this.eventEditDelete);
   }
 
   tentativeBooking(){
