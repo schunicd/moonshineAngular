@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { DataService } from '../data.service';
-import { Event } from '../Event'
+import { Event } from '../Event';
+import { EventWithID } from '../EventWithID';
 
 @Component({
   selector: 'app-admin-crud-event',
@@ -20,7 +21,7 @@ export class AdminCrudEventComponent implements OnInit {
   deleteButton: boolean;
   cancelButton: boolean;
 
-  eventID: Number;
+  eventID: number;
   eventTitle: String;
   eventLink: String;
   eventImage: String;
@@ -32,15 +33,21 @@ export class AdminCrudEventComponent implements OnInit {
   refundCutoffDateTime: Date;
   dateDelete: Date;
   eventDelete: String;
-  event: Event[];
+  event: EventWithID[];
+  eventEditDelete: EventWithID[];
+  stepperIndex: number;
 
   constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
-    this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
+    this.getEvents();
+
+  }
+
+  getEvents(){
+    this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       console.log(this.event);
     }, error => console.error(error));
-
   }
 
   ngOnInit() {
@@ -58,11 +65,35 @@ export class AdminCrudEventComponent implements OnInit {
     this._snackBar.open(message, action);
   }
 
+  clearForm(){
+    this.eventTitle = "";
+    this.eventLink = "";
+    this.eventImage = "";
+    this.eventDescription = "";
+    this.startDateTime = null;
+    this.endDateTime = null;
+    this.ticketPrice = null;
+    this.maxSeats = null;
+    this.refundCutoffDateTime = null;
+    this.eventID = null;
+    this.dateDelete = null;
+    this.stepperIndex = 0;
+  }
+
   deleteEvent(){
     this.createButton = false;
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
+    this.eventEditDelete = this.filterOneEvent(this.eventID);
+    this.eventTitle = this.eventEditDelete[0].bandName;
+    this.eventLink = this.eventEditDelete[0].bandLink;
+    this.eventDescription = this.eventEditDelete[0].description;
+    this.startDateTime = this.eventEditDelete[0].eventStart;
+    this.endDateTime = this.eventEditDelete[0].eventEnd;
+    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
+    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
   }
 
   confirmDelete(){
@@ -73,6 +104,9 @@ export class AdminCrudEventComponent implements OnInit {
 
     console.log(this.eventID);
     this.data.deleteEvent(this.eventID);
+    this.getEvents();
+    this.clearForm();
+    this.successSnackBar("Event Deleted!");
   }
 
   resetEventName(){
@@ -100,6 +134,9 @@ export class AdminCrudEventComponent implements OnInit {
 
         this.data.postEvent(event);
         console.log(event);
+        this.getEvents();
+        this.clearForm();
+        this.successSnackBar("Event Created!");
       }
 
     else{
@@ -122,17 +159,30 @@ export class AdminCrudEventComponent implements OnInit {
     return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
+  filterOneEvent(id: number){
+    return this.event.filter(x => x.id == id)
+  }
+
   editEvent(){
 
     this.createButton = false;
     this.editButton = true;
     this.deleteButton = false;
     this.cancelButton = true;
+    this.eventEditDelete = this.filterOneEvent(this.eventID);
+    this.eventTitle = this.eventEditDelete[0].bandName;
+    this.eventLink = this.eventEditDelete[0].bandLink;
+    this.eventDescription = this.eventEditDelete[0].description;
+    this.startDateTime = this.eventEditDelete[0].eventStart;
+    this.endDateTime = this.eventEditDelete[0].eventEnd;
+    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
+    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
 
     console.log("Edit Event");
 
     console.log(this.data.eventTitle);
-    this.setFieldsForEdit();
+
   }
 
   confirmEdit(){
@@ -140,7 +190,8 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.data.editEvent(this.eventID);
+    this.getEvents();
+    this.data.editEvent(this.eventID, this.eventEditDelete);
   }
 
   cancelEditDelete(){
@@ -148,10 +199,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-  }
-
-  setFieldsForEdit(){
-    this.eventTitle = this.data.eventTitle;
   }
 
 }

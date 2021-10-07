@@ -2,8 +2,9 @@ import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
-import { Admin } from '../app/Admin'
-import { Event } from './Event'
+import { Admin } from '../app/Admin';
+import { Event } from './Event';
+import { EventWithID } from './EventWithID';
 
 @Injectable({
   providedIn: 'root'
@@ -53,14 +54,17 @@ export class DataService {
     }, error => {console.error(error)});
   }
 
-  editEvent(id: Number){
+  editEvent(id: Number, event: EventWithID[]){
     var callResult : any;
-    console.log(this.getSpecificEvent(id))
-    this.http.put(this.baseUrl + 'api/Events/' + id , this.getSpecificEvent(id)).subscribe(result => {
+    console.log(id);
+    console.log(event);
+    this.http.put(this.baseUrl + 'api/Events/' + id , event).subscribe(result => {
       callResult = result;
+      console.log(result);
     })
   }
 
+  /*
   async getSpecificEvent(id: Number): Promise<Event>{
     var event;
     await this.http.get(this.baseUrl + 'api/Events/' + id).subscribe((result : Event) => {
@@ -70,6 +74,7 @@ export class DataService {
     }, error => {console.error(error)})
     return event;
   }
+  */
 
   setTempAdmin(message: string){
     this.tempAdminCheck.next(message);
