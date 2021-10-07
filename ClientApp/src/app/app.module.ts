@@ -48,7 +48,8 @@ import { PaypalComponent } from './paypal/paypal.component';
     CalendarComponent,
     ContactComponent,
     MenuComponent,
-    PhotosComponent
+    PhotosComponent,
+    PaypalComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
