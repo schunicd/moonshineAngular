@@ -8,8 +8,8 @@ import { ElementRef } from '@angular/core';
   export class PaypalComponent implements OnInit {
 
     public payPalConfig?: IPayPalConfig;
-    private payPalID = 'AeEiO1jzqkISYf1_qru9moGMmr_QxY6eCZJf3Pgh80jTHWRwxBpO7VNQWdreA9DRZqSk-N0DmX_vgiru'
-    showSuccess: boolean
+    private payPalID = 'AeEiO1jzqkISYf1_qru9moGMmr_QxY6eCZJf3Pgh80jTHWRwxBpO7VNQWdreA9DRZqSk-N0DmX_vgiru';
+    showSuccess: boolean;
 
     ngOnInit(): void {
       this.initConfig();
@@ -58,6 +58,7 @@ import { ElementRef } from '@angular/core';
         console.log('onApprove - transaction was approved, but not authorized', data, actions);
         actions.order.get().then(details => {
           console.log('onApprove - you can get full order details inside onApprove: ', details);
+
         });
       },
       onClientAuthorization: (data) => {

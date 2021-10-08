@@ -104,6 +104,9 @@ namespace TheMoonshineCafe.Controllers
                     return @event;
                 }
         */
+
+
+
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -115,10 +118,43 @@ namespace TheMoonshineCafe.Controllers
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutEvent(Event model)
+        {
+            
+            var existedEvent = await _context.Set<Event>().FirstOrDefaultAsync(i=> i.id==model.id);
+            
+            if (existedEvent == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(existedEvent).CurrentValues.SetValues(model);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EventExists(model.id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+/*
         // PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEvent(int id, Event @event)
+        public async Task<ActionResult> PutEvent(int id, Event @event)
         {
             if (id != @event.id)
             {
@@ -145,6 +181,8 @@ namespace TheMoonshineCafe.Controllers
 
             return NoContent();
         }
+*/
+
 
         /*        // PUT: api/Events/test
                 // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

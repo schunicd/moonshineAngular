@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Event } from "../Event"
 import { EventWithID } from '../EventWithID';
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 
 @Component({
   selector: 'app-reservations',
@@ -27,6 +28,10 @@ export class ReservationsComponent implements OnInit {
 
   myGroup;
 
+  public payPalConfig?: IPayPalConfig;
+  private payPalID = 'AeEiO1jzqkISYf1_qru9moGMmr_QxY6eCZJf3Pgh80jTHWRwxBpO7VNQWdreA9DRZqSk-N0DmX_vgiru';
+  showSuccess: boolean;
+
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.minDate = new Date();
@@ -47,17 +52,77 @@ export class ReservationsComponent implements OnInit {
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {
       this.band = result;
-      console.log(this.band);
+      //console.log(this.band);
     }, error => console.error(error));
 
   }
 
   ngOnInit() {
+    this.initConfig();
+  }
 
+  private initConfig(): void {
+    this.payPalConfig = {
+    currency: 'CAD',
+    clientId: this.payPalID,
+    createOrderOnClient: (data) => <ICreateOrderRequest>{
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          amount: {
+            currency_code: 'CAD',
+            value: '9.99',
+            breakdown: {
+              item_total: {
+                currency_code: 'CAD',
+                value: '9.99'
+              }
+            }
+          },
+          items: [
+            {
+              name: this.eventName,
+              quantity: this.seats.toString(),
+              category: 'DIGITAL_GOODS',
+              unit_amount: {
+                currency_code: 'CAD',
+                value: '9.99',
+              },
+            }
+          ]
+        }
+      ]
+    },
+    advanced: {
+      commit: 'true'
+    },
+    style: {
+      label: 'paypal',
+      layout: 'vertical'
+    },
+    onApprove: (data, actions) => {
+      console.log('onApprove - transaction was approved, but not authorized', data, actions);
+      actions.order.get().then(details => {
+        console.log('onApprove - you can get full order details inside onApprove: ', details);
+      });
+    },
+    onClientAuthorization: (data) => {
+      console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      this.showSuccess = true;
+    },
+    onCancel: (data, actions) => {
+      console.log('OnCancel', data, actions);
+    },
+    onError: err => {
+      console.log('OnError', err);
+    },
+    onClick: (data, actions) => {
+      console.log('onClick', data, actions);
+    },
+  };
   }
 
   filterEvents(){
-
     let day = this.date.getDate().toString();
     let month = (this.date.getMonth() + 1).toString();
     if(parseInt(month) < 10)
@@ -69,6 +134,14 @@ export class ReservationsComponent implements OnInit {
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
     console.log(this.event[0]);
     return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
+  }
+
+  filterTime(){
+    let time = this.date.getTime();
+
+    console.log(this.event.filter(x => x.eventStart.getTime() == time));
+
+    //return ;
   }
 
   filterSeats(){
@@ -96,16 +169,16 @@ export class ReservationsComponent implements OnInit {
   editEvent(){
 
     /*resetDate: Date;
-  minDate: Date;
-  date: Date;
-  name: string;
-  email: string;
-  seats: number;
-  eventMaxSeats: number;
-  eventName: string;
-  event: Event[];
-  band: Band[];
-*/
+    minDate: Date;
+    date: Date;
+    name: string;
+    email: string;
+    seats: number;
+    eventMaxSeats: number;
+    eventName: string;
+    event: Event[];
+    band: Band[];
+    */
 
     // this.createButton = false;
     // this.editButton = true;
@@ -124,6 +197,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   tentativeBooking(){
+    this.filterTime();
     if(confirm("Confirm Tentative Booking On: " + this.eventName)){
       console.log("Tentative Booking Confirmed!");
       this.name = "";
@@ -138,6 +212,7 @@ export class ReservationsComponent implements OnInit {
 
   paidBooking(){
     let maxseats = this.filterSeats();
+
     if(confirm("Confirm Paid Booking On: " + this.eventName)){
       console.log("Paid Booking Confirmed!");
 

@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin';
 import { Event } from './Event';
@@ -54,15 +54,16 @@ export class DataService {
     }, error => {console.error(error)});
   }
 
-  editEvent(id: Number, event: EventWithID[]){
+  editEvent(id: Number, event: EventWithID){
     var callResult : any;
     console.log(id);
     console.log(event);
-    this.http.put(this.baseUrl + 'api/Events/' + id , event).subscribe(result => {
+    this.http.put<EventWithID>(this.baseUrl + 'api/Events/' + id , event).subscribe(result => {
       callResult = result;
       console.log(result);
     })
   }
+
 
   /*
   async getSpecificEvent(id: Number): Promise<Event>{
@@ -98,4 +99,9 @@ interface Email {
   emailSubject: String;
   emailBody: String;
   emailImage: String;
+}
+
+interface updateEvent{
+  id: string;
+  description: string;
 }

@@ -50,8 +50,11 @@
           <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
           <br>
           <br>
+          <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+          <!--
           <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && eventName != '' && !validateName() && !validateEmail(); else paidDisabled">Paid Booking</button>
           <ng-template #paidDisabled><button mat-raised-button disabled="true">Paid Booking</button></ng-template>
+          -->
       </mat-step>
 
     </mat-vertical-stepper>
