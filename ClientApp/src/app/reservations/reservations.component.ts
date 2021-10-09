@@ -13,6 +13,7 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 })
 export class ReservationsComponent implements OnInit {
 
+  eventDate: Date;
   resetDate: Date;
   minDate: Date;
   date: Date;
@@ -21,8 +22,10 @@ export class ReservationsComponent implements OnInit {
   seats: number;
   eventMaxSeats: number;
   eventName: string;
-  event: Event[];
+  event: EventWithID[];
+  eventsNoTime: EventWithID[];
   band: Band[];
+  eventSeatsSold: EventWithID;
 
   testEvents: any[];
 
@@ -45,8 +48,9 @@ export class ReservationsComponent implements OnInit {
       firstName: new FormControl()
    });
 
-    this.http.get<Event[]>(this.baseUrl + 'api/Events').subscribe(result => {
+    this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
+      this.eventsNoTime = result;
       console.log(this.event);
     }, error => console.error(error));
 
@@ -104,6 +108,9 @@ export class ReservationsComponent implements OnInit {
       console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then(details => {
         console.log('onApprove - you can get full order details inside onApprove: ', details);
+        this.eventSeatsSold = this.filterTime();
+        this.eventSeatsSold.currentNumberOfSeats -= this.seats;
+        this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
       });
     },
     onClientAuthorization: (data) => {
@@ -132,20 +139,16 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
-    console.log(this.event[0]);
-    return this.event.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
+    console.log(this.eventsNoTime[10]);
+    return this.eventsNoTime.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 
   filterTime(){
-    let time = this.date.getTime();
-
-    console.log(this.event.filter(x => x.eventStart.getTime() == time));
-
-    //return ;
+    return this.event.filter(x => x.eventStart.toString().split("T")[1] == this.eventName.toString().split("T")[1])[0];
   }
 
   filterSeats(){
-    return this.event.filter(x => x.bandName.toString() == this.eventName);
+    return this.event.filter(x => x.eventStart.toString().split("T")[1] == this.eventName.toString().split("T")[1]);
   }
 
   validateName(){

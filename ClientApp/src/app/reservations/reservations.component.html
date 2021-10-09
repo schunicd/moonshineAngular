@@ -13,7 +13,7 @@
       <mat-step label="Select Event">
         <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
         <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName">
-          <option *ngFor="let e of filterEvents()" value="{{e.bandName}}">{{e.bandName}}</option>
+          <option *ngFor="let e of filterEvents()" value="{{e.eventStart}}">{{e.bandName}}  ${{e.ticketPrice}}</option>
         </select>
       </mat-step>
 
@@ -33,16 +33,17 @@
 
       <mat-step label="Number of Seats">
 
-        <div *ngIf="eventName != null; else seatsDisabled">
+        <div *ngIf="eventName != null">
           <label>Number of seats:</label>
-          <input onkeydown="return false;" style="margin-left: 10px;" type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
+          <input type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
         </div>
 
+        <!--
         <ng-template #seatsDisabled>
           <label>Number of seats:</label>
           <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
         </ng-template>
-
+        -->
       </mat-step>
 
       <mat-step label="Booking Type">
