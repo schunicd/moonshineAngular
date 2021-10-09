@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Event } from "../Event"
 import { EventWithID } from '../EventWithID';
+import { Customer } from '../Customer';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 
 @Component({
@@ -26,6 +27,7 @@ export class ReservationsComponent implements OnInit {
   eventsNoTime: EventWithID[];
   band: Band[];
   eventSeatsSold: EventWithID;
+  customer: Customer;
 
   testEvents: any[];
 
@@ -41,6 +43,8 @@ export class ReservationsComponent implements OnInit {
     this.eventName = null;
     this.name = "";
     this.email = "";
+
+    this.customer = new Customer();
 
     console.log(this.minDate);
 
@@ -108,6 +112,24 @@ export class ReservationsComponent implements OnInit {
       console.log('onApprove - transaction was approved, but not authorized', data, actions);
       actions.order.get().then(details => {
         console.log('onApprove - you can get full order details inside onApprove: ', details);
+
+        this.customer.name = "Derek R Schunicke";
+        this.customer.email = this.email;
+        this.customer.onMailingList = false;
+
+        this.data.getCustomers();
+
+        console.log("this.data.existingCustomers");
+        console.log(this.data.existingCustomers);
+
+        /*
+        if(!this.data.existingCustomers.find(c => c.email == this.customer.email)){
+          this.data.postCustomer(this.customer);
+        }
+        */
+
+
+
         this.eventSeatsSold = this.filterTime();
         this.eventSeatsSold.currentNumberOfSeats -= this.seats;
         this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);

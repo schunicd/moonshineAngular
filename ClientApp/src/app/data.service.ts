@@ -5,6 +5,7 @@ import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin';
 import { Event } from './Event';
 import { EventWithID } from './EventWithID';
+import { Customer } from './Customer';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class DataService {
   currentCheck = this.tempAdminCheck.asObservable();
   public isAdmin: boolean;
   adminObject: any;
+  existingCustomers: any[];
 
   eventTitle: String;
 
@@ -45,6 +47,21 @@ export class DataService {
     var postData: any;
     this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);
   }
+
+  getCustomers(){
+    this.http.get<Customer[]>(this.baseUrl + "api/Customers").subscribe(result => {
+      console.log(result);
+      this.existingCustomers = result;
+    }, error => {console.error(error)})
+  }
+
+  postCustomer(customer: Customer){
+    var postData: any;
+    this.http.post<Customer>(this.baseUrl + "api/Customers", customer).subscribe(data => {
+      console.log(data);
+    }, error => {console.error(error)});
+  }
+
 
   deleteEvent(id: Number){
     var callResult : any;

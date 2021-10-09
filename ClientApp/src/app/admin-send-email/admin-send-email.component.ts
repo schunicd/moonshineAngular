@@ -21,19 +21,22 @@ export class AdminSendEmailComponent implements OnInit {
   ngOnInit() {
   }
 
+  onFileSelected(event){
+    this.emailImage = event.target.files[0];
+  }
+
   sendEmail(){
     console.log(this.emailSubject);
     console.log(this.emailBody);
     console.log(this.emailImage);
 
-    let imageString = "'" + this.emailImage + "'";
     let email = {
       emailSubject: this.emailSubject,
       emailBody: this.emailBody,
-      emailImage: imageString
+      emailImage: this.emailImage
     }
 
-    this.data.sendEmail(email);
+    //this.data.sendEmail(email);
   }
 
 }

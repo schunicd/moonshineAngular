@@ -11,6 +11,8 @@ namespace TheMoonshineCafe.Models
         [Required]
         public string name { get; set; }
         public string email { get; set; }
+        public string phoneNumber { get; set; }
+        public Boolean onMailingList { get; set; }
 
     }
 }
