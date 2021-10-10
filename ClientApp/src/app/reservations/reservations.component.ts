@@ -166,7 +166,7 @@ export class ReservationsComponent implements OnInit {
   }
 
   filterTime(){
-    return this.event.filter(x => x.eventStart.toString().split("T")[1] == this.eventName.toString().split("T")[1])[0];
+    return this.event.filter(x => x.eventStart.toString() == this.eventName.toString())[0];
   }
 
   filterSeats(){
