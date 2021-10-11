@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin';
@@ -62,6 +62,16 @@ export class DataService {
     }, error => {console.error(error)});
   }
 
+  editCustomer(id: Number, customer: Customer){
+    var callResult : any;
+    console.log(id);
+    console.log(customer);
+    this.http.put<Customer>(this.baseUrl + 'api/Customers/' + id , customer).subscribe(result => {
+      callResult = result;
+      console.log(result);
+    })
+  }
+
 
   deleteEvent(id: Number){
     var callResult : any;
@@ -104,6 +114,7 @@ export class DataService {
 
   sendEmail(email: Email){
     var postData: any;
+    console.log(email);
     this.http.post(this.baseUrl + 'api/AdminSendEmail', email).subscribe(data => postData = data);
   }
 
@@ -113,9 +124,9 @@ export class DataService {
 }
 
 interface Email {
-  emailSubject: String;
-  emailBody: String;
-  emailImage: String;
+  subject: String;
+  body: String;
+  image: String;
 }
 
 interface updateEvent{

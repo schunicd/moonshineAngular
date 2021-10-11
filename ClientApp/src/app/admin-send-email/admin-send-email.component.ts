@@ -22,7 +22,8 @@ export class AdminSendEmailComponent implements OnInit {
   }
 
   onFileSelected(event){
-    this.emailImage = event.target.files[0];
+    console.log(event.target.files[0]);
+    //this.emailImage = event.target.files[0];
   }
 
   sendEmail(){
@@ -30,19 +31,21 @@ export class AdminSendEmailComponent implements OnInit {
     console.log(this.emailBody);
     console.log(this.emailImage);
 
+
+
     let email = {
-      emailSubject: this.emailSubject,
-      emailBody: this.emailBody,
-      emailImage: this.emailImage
+      subject: this.emailSubject,
+      body: this.emailBody,
+      image: ""
     }
 
-    //this.data.sendEmail(email);
+    this.data.sendEmail(email);
   }
 
 }
 
 interface Email {
-  emailSubject: String;
-  emailBody: String;
-  emailImage: String;
+  subject: String;
+  body: String;
+  image: String;
 }

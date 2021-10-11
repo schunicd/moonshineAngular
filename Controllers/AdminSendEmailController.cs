@@ -85,36 +85,46 @@ namespace TheMoonshineCafe.Controllers
         public  void PostCustomer(Email email)
         {
             
-            string to = "schunicd@gmail.com"; //To address    
+            var customerEmails = _context.Customers.ToList();
+
+             
             string from = "schunicd@gmail.com"; //From address    
-            MailMessage message = new MailMessage(from, to);  
-              
-            message.Subject = email.subject;  
-            message.BodyEncoding = Encoding.UTF8;
-            message.IsBodyHtml = true;
-            message.AlternateViews.Add(Mail_Body(email));
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
-            System.Net.NetworkCredential basicCredential1 = new  
-            System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
-            client.EnableSsl = true;  
-            client.UseDefaultCredentials = false;
-            client.Credentials = basicCredential1;
-            try   
-            {  
-                client.Send(message);
-            }   
+            string to = "";
             
-            catch (Exception ex)   
-            {  
-                throw ex;  
-            }  
+            foreach (var e in customerEmails)
+            {
+                if(e.onMailingList){
+                    to = e.email; //To address   
+                    MailMessage message = new MailMessage(from, to);  
+                    message.Subject = email.subject;  
+                    message.BodyEncoding = Encoding.UTF8;
+                    message.IsBodyHtml = true;
+                    message.AlternateViews.Add(Mail_Body(email));
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+                    System.Net.NetworkCredential basicCredential1 = new  
+                    System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
+                    client.EnableSsl = true;  
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = basicCredential1;
+                    try   
+                    {  
+                        client.Send(message);
+                    }   
+                    
+                    catch (Exception ex)   
+                    {  
+                        throw ex;  
+                    }  
+
+                }
+            }
             
         }
 
         private AlternateView Mail_Body(Email email){
-            string path = ("C:/fakepath/" + "'" + email.image + "'");
-            LinkedResource Img = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
-            Img.ContentId = "MyImage";
+            //string path = ("C:\Users\derek\Desktop\\band.jpg");
+            //LinkedResource Img = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
+            //Img.ContentId = "MyImage";
             string str = @"  
             <table>  
                 <tr>  
@@ -127,9 +137,8 @@ namespace TheMoonshineCafe.Controllers
                     </td>  
                 </tr></table>  
             ";  
-        AlternateView AV =   
-        AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);  
-        AV.LinkedResources.Add(Img);  
+        AlternateView AV = AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);  
+        //AV.LinkedResources.Add(Img);  
         return AV;  
         }
 

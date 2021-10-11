@@ -14,6 +14,8 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 })
 export class ReservationsComponent implements OnInit {
 
+  TAX_VALUE = 0.13;
+
   eventDate: Date;
   resetDate: Date;
   minDate: Date;
@@ -23,6 +25,7 @@ export class ReservationsComponent implements OnInit {
   seats: number;
   eventMaxSeats: number;
   eventName: string;
+  ticketPrice: number;
   event: EventWithID[];
   eventsNoTime: EventWithID[];
   band: Band[];
@@ -69,6 +72,10 @@ export class ReservationsComponent implements OnInit {
     this.initConfig();
   }
 
+  updateEventSelected(){
+    this.eventSeatsSold = this.filterTime();
+  }
+
   private initConfig(): void {
     this.payPalConfig = {
     currency: 'CAD',
@@ -79,22 +86,26 @@ export class ReservationsComponent implements OnInit {
         {
           amount: {
             currency_code: 'CAD',
-            value: '9.99',
+            value: (this.eventSeatsSold.ticketPrice * this.seats + (this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE)).toFixed(2).toString(),
             breakdown: {
               item_total: {
                 currency_code: 'CAD',
-                value: '9.99'
+                value: (this.eventSeatsSold.ticketPrice * this.seats).toString()
+              },
+              tax_total: {
+                currency_code: 'CAD',
+                value: (this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE).toFixed(2).toString()
               }
             }
           },
           items: [
             {
-              name: this.eventName,
+              name: "Event: " + this.eventSeatsSold.bandName + "     Date : " + this.eventSeatsSold.eventStart,
               quantity: this.seats.toString(),
               category: 'DIGITAL_GOODS',
               unit_amount: {
                 currency_code: 'CAD',
-                value: '9.99',
+                value: this.eventSeatsSold.ticketPrice.toString()
               },
             }
           ]
@@ -128,9 +139,6 @@ export class ReservationsComponent implements OnInit {
         }
         */
 
-
-
-        this.eventSeatsSold = this.filterTime();
         this.eventSeatsSold.currentNumberOfSeats -= this.seats;
         this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
       });
@@ -150,6 +158,8 @@ export class ReservationsComponent implements OnInit {
     },
   };
   }
+
+
 
   filterEvents(){
     let day = this.date.getDate().toString();

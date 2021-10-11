@@ -49,6 +49,7 @@ namespace TheMoonshineCafe.Data
                 new Admin{name="Derek", email="schunicd@gmail.com", phoneNumber="1234567890", accessLevel=1},
                 new Admin{name="Harpreet", email="preet.ghuman911@gmail.com", phoneNumber="5551112318", accessLevel=1},
                 new Admin{name="Mohammed", email="mohammed.a.r.musleh@gmail.com", phoneNumber="3321568974", accessLevel=1},
+                new Admin{name="Admin", email="TheMoonshineTest@outlook.com", phoneNumber="1234567890", accessLevel=1}
             };
             foreach (Admin a in admins)
             {

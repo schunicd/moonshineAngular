@@ -20,7 +20,7 @@
   <p id="emailText">
     Join Our Mailing List!
   </p>
-    <input id="clientEmail" [(ngModel)]="clientEmail" type="text">
-  <button id="joinButton" mat-raised-button>Join</button>
+    <input id="clientEmail" [(ngModel)]="clientEmail" name="clientEmail" type="text">
+  <button id="joinButton" (click)="joinMailingList()" mat-raised-button>Join</button>
 </div>
 <br>
