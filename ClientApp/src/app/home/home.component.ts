@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from '../data.service';
 import { Customer } from '../Customer';
 import { HttpClient } from '@angular/common/http';
+import { EventWithID } from '../EventWithID';
 
 export interface Tile {
   cols: number;
@@ -15,13 +16,33 @@ export interface Tile {
 })
 export class HomeComponent {
 
+  result: any[]
+
   constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.http.get<Customer[]>(this.baseUrl + "api/Customers").subscribe(result => {
-      console.log(result);
+      //console.log(result);
       this.existingCustomers = result;
     }, error => {console.error(error)})
 
+    this.http.get<EventWithID[]>(this.baseUrl + 'api/Events/upcoming').subscribe(result => {
+      this.result = result;
+      console.log(this.result);
+    }, error => console.error(error));
+    console.log(this.result)
+
+   }
+   
+   ngOnInit(){
+    //console.log(this.getUpcomingEvents());
+   }
+
+  async getUpcomingEvents(){
+    await this.http.get<EventWithID[]>(this.baseUrl + 'api/Events/upcoming').subscribe(result => {
+      this.result = result;
+      const test = result;
+      return test
+    }, error => console.error(error));
    }
 
   leftFirstTile: Tile = {cols: 1, rows: 1};

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "../data.service";
 
+
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
@@ -15,7 +16,7 @@ export class NavMenuComponent implements OnInit{
    };
 
    ngOnInit(){
-     this.isAdmin = this.data.isAdmin;
+     this.isAdmin = this.data.isAdmin;   
    }
 
   collapse() {

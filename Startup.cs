@@ -34,16 +34,16 @@ namespace TheMoonshineCafe
                 });
             });
 
-            /*
+
             //Testing new DBContext
-            services.AddDbContext<MoonshineCafeContext>(options => 
+            services.AddDbContext<MoonshineCafeContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            */
+
 
             //NEW DB CONTEXT TO TEST
-            services.AddDbContext<MoonshineCafeContext>(opts => {
+            /*services.AddDbContext<MoonshineCafeContext>(opts => {
                 opts.UseNpgsql(Configuration.GetConnectionString("Test_AWS"));
-            });
+            });*/
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
