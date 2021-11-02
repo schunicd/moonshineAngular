@@ -21,21 +21,6 @@ namespace TheMoonshineCafe.Controllers
         public EventsController(MoonshineCafeContext context)
         {
             _context = context;
-
-/*            using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
-            {
-                // The file token.json stores the user's access and refresh tokens, and is created
-                // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.FromStream(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }*/
         }
 
         // GET: api/Events
@@ -45,36 +30,57 @@ namespace TheMoonshineCafe.Controllers
             return await _context.Events.ToListAsync();
         }
 
-/*        [HttpGet("Calendar")]
-        public IEnumerable<Google.Apis.Calendar.v3.Data.Events> GetCalendarEvents()
+        [HttpGet("upcoming")]
+        public async Task<ActionResult<IEnumerable<Models.Event>>> GetUpcomingEvents()
         {
-            //Console.WriteLine("Your api function can be called");
-            List<Google.Apis.Calendar.v3.Data.Event> calendarEvents = new List<Google.Apis.Calendar.v3.Data.Event>();
+            List<Event> events = await _context.Events.ToListAsync();
+            List<Event> upcoming = new List<Event>();
+            List<Event> sortedUpcoming = new List<Event>();
+            DateTime now = DateTime.Now;
 
-            IEnumerable<Events> calEvents = APIHelper();
-            //Task.Delay(5000); //wait 5 seconds
+            foreach(Event e in events)
+            {
+                if(e.eventStart.Date >= now.Date)
+                {
+                    upcoming.Add(e);
+                }
+            }
 
-            //return null;
-            return calEvents;
+            sortedUpcoming = BubbleSort(upcoming, upcoming.Count);
 
-        }*/
+            if (upcoming.Count > 4)
+            {
+                return sortedUpcoming.GetRange(0, 4);
+            }
+            else
+            {
+                return sortedUpcoming;
+            }
+        }
 
-/*        private IEnumerable<Events> APIHelper()
+        private List<Event> BubbleSort(List<Event> toSort, int listLength)
         {
-            
-            // Define parameters of request.
-            EventsResource.ListRequest request = TheMoonshineCafe.Program.service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 10;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+            Console.WriteLine("I've run" + listLength);
+            if(listLength == 1)
+            {
+                return toSort;
+            }
 
-            // List events.
-            Events events = request.Execute();
-            //Console.WriteLine("things" + events.Items.FirstOrDefault().Summary); //WORKS
-            return null;
-        }*/
+            List<Event> sorted = new List<Event>();
+            for(int i = 0; i < listLength - 1; i++)
+            {
+                if(toSort[i].eventStart > toSort[i + 1].eventStart)
+                {
+                    Event temp = toSort[i];
+                    toSort[i] = toSort[i + 1];
+                    toSort[i + 1] = temp;
+                }
+            }
+
+            BubbleSort(toSort, listLength - 1);
+
+            return toSort;
+        }
 
         // GET: api/Events/5
         [HttpGet("{id}")]
@@ -89,22 +95,6 @@ namespace TheMoonshineCafe.Controllers
 
             return @event;
         }
-
-        /*        // GET: api/Events/cal
-                [HttpGet("calID={calID}")]
-                public async Task<ActionResult<Models.Event>> GetEventByDate(String calID)
-                {
-                    var @event = await Task.Run(() => _context.Events.Single(e => e.googleCalID == calID));
-
-                    if (@event == null)
-                    {
-                        return NotFound();
-                    }
-
-                    return @event;
-                }
-        */
-
 
 
         // POST: api/Events

@@ -1,9 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from '../data.service';
 import { Customer } from '../Customer';
 import { HttpClient } from '@angular/common/http';
 import { EventWithID } from '../EventWithID';
-import { moveSyntheticComments } from 'typescript';
 
 export interface Tile {
   cols: number;
@@ -20,8 +19,6 @@ export class HomeComponent {
   panelOpenState = false;
   event: EventWithID[];
 
-
-
   constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
@@ -34,7 +31,7 @@ export class HomeComponent {
 
    getMailingListClients(){
     this.http.get<Customer[]>(this.baseUrl + "api/Customers").subscribe(result => {
-      console.log(result);
+      //console.log(result);
       this.existingCustomers = result;
     }, error => {console.error(error)})
    }
