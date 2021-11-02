@@ -6,6 +6,7 @@ import { Admin } from '../app/Admin';
 import { Event } from './Event';
 import { EventWithID } from './EventWithID';
 import { Customer } from './Customer';
+import { Reservation } from './Reservation';
 
 @Injectable({
   providedIn: 'root'
@@ -58,6 +59,13 @@ export class DataService {
   postCustomer(customer: Customer){
     var postData: any;
     this.http.post<Customer>(this.baseUrl + "api/Customers", customer).subscribe(data => {
+      console.log(data);
+    }, error => {console.error(error)});
+  }
+
+  postReservation(res: Reservation){
+    var postData: any;
+    this.http.post<Reservation>(this.baseUrl + "api/Reservations", res).subscribe(data => {
       console.log(data);
     }, error => {console.error(error)});
   }

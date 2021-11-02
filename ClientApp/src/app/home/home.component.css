@@ -17,15 +17,13 @@
   margin: auto;
 }
 
-
-
 @media screen and (max-width: 768px){
 
   #leftTileHeader{font-size: 18px;}
   #leftMoonshineCafeColor{font-size: 20px;}
   #homePage{text-align: center;}
-  #sptlightHeaderBackground{margin: auto;}
-  #moonshineCalendar{width:300px;}
+  #spotlightHeaderBackground{margin: auto;}
+  #moonshineCalendar{width:300px; height: 400px; overflow-y: auto;}
   #calendarSize{width: 300px;}
   #moonshineVideo{width: 300px;}
   #emailText{padding-right: 0;}
@@ -44,19 +42,59 @@
     grid-template-areas:
     '. leftTitleGrid leftTitleGrid . .'
     '. spotlightTitleGrid spotlightTitleGrid videoGrid .'
-    '. . . videoGrid .'
-    '. . . calendarGrid .'
-    '. . . calendarGrid .'
-    '. . . calendarGrid .'
+    '. spotlightOne spotlightOne videoGrid .'
+    '. spotlightTwo spotlightTwo calendarGrid .'
+    '. spotlightThree spotlightThree calendarGrid .'
+    '. spotlightFour spotlightFour calendarGrid .'
     /* REPLACE .'s above with spotlightOne etc... as we add spotlight features */
     ;
     grid-gap: 10px;
   }
 
   #leftTileHeader{grid-area: leftTitleGrid;}
-  #sptlightHeaderBackground{grid-area: spotlightTitleGrid;}
+  #spotlightHeaderBackground{grid-area: spotlightTitleGrid;}
   #moonshineVideo{grid-area: videoGrid;}
-  #moonshineCalendar{grid-area: calendarGrid;}
+  #spotlightOne{grid-area: spotlightOne;}
+  #spotlightTwo{grid-area: spotlightTwo;}
+  #spotlightThree{grid-area: spotlightThree;}
+  #spotlightFour{grid-area: spotlightFour;}
+
+  #moonshineCalendar{
+    grid-area: calendarGrid;
+    overflow-y: auto;
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
+  }
+
+  .spotlightAlbumImage{
+    height: 150px;
+    float: left;
+  }
+
+  .spotlightStyle{
+    height: 160px;
+    border: 2px solid black;
+  }
+
+  #moonshineCalendar::-webkit-scrollbar {
+    width: 1em;
+  }
+
+  #moonshineCalendar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+  }
+
+  #moonshineCalendar::-webkit-scrollbar-thumb {
+    background-color: rgb(131, 131, 131);
+    border-radius: 10px;
+    outline: 1px solid slategrey;
+  }
+
+  #calendarTitle{
+    height: 60px;
+  }
 
   #emailText{
     padding-right: 10px;
@@ -71,7 +109,6 @@
 }
 
 #leftTileHeader{padding-top: 20px;}
-#sptlightHeaderBackground{margin: auto;}
 
 .center{margin: auto;}
 
@@ -100,8 +137,9 @@
   grid-area: 'spotlightText';
 }
 
-#sptlightHeaderBackground{
-  width: 60%;
+#spotlightHeaderBackground{
+  margin: auto;
+  width: 50%;
   height: 100%;
   text-align: center;
   border-radius: 50px;
@@ -109,7 +147,7 @@
 }
 
 #spotlightHeaderText{
-  padding-top: 23px;
+  padding-top: 30px;
   padding-bottom: 23px;
   font-size: calc(3vh);
   line-height: calc(20px + 3vh);

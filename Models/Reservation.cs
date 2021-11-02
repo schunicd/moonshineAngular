@@ -8,9 +8,9 @@ namespace TheMoonshineCafe.Models
         public int id {get;  set; }
         public bool paidInAdvance { get; set; }
         public DateTime timeResMade { get; set; }
-        public Customer customerid { get; set; }
+        public int customerid { get; set; }
         public int numberOfSeats { get; set; }
-        public Event resEventid { get; set; }
+        public int resEventid { get; set; }
 
     }
 }

@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -63,7 +64,7 @@ import { PaypalComponent } from './paypal/paypal.component';
     MatSnackBarModule,
     MatDialogModule,
     NgxPayPalModule,
-
+    MatExpansionModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'reservations', component: ReservationsComponent },

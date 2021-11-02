@@ -35,7 +35,7 @@
 
         <div *ngIf="eventName != null">
           <label>Number of seats:</label>
-          <input type="number" [(ngModel)]="seats" name="seats" min="1" *ngFor="let e of filterSeats()" max="{{e.maxNumberOfSeats - e.currentNumberOfSeats}}" placeholder="1">
+          <input type="number" [(ngModel)]="seats" name="seats" min="1" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
         </div>
 
         <!--

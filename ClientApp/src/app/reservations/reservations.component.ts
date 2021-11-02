@@ -6,6 +6,8 @@ import { Event } from "../Event"
 import { EventWithID } from '../EventWithID';
 import { Customer } from '../Customer';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { Reservation } from '../Reservation';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reservations',
@@ -30,7 +32,8 @@ export class ReservationsComponent implements OnInit {
   eventsNoTime: EventWithID[];
   band: Band[];
   eventSeatsSold: EventWithID;
-  customer: Customer;
+  customer: any;
+  existingCustomers: any[];
 
   testEvents: any[];
 
@@ -66,6 +69,15 @@ export class ReservationsComponent implements OnInit {
       //console.log(this.band);
     }, error => console.error(error));
 
+    this.getCustomers();
+
+  }
+
+  getCustomers(){
+    this.http.get<Customer[]>(this.baseUrl + "api/Customers").subscribe(result => {
+      console.log(result);
+      this.existingCustomers = result;
+    }, error => {console.error(error)})
   }
 
   ngOnInit() {
@@ -74,6 +86,26 @@ export class ReservationsComponent implements OnInit {
 
   updateEventSelected(){
     this.eventSeatsSold = this.filterTime();
+  }
+
+  tentativeBooking(){
+    this.filterTime();
+    if(confirm("Confirm Tentative Booking On: " + this.eventName)){
+      console.log("Tentative Booking Confirmed!");
+      this.name = "";
+      this.date = this.resetDate;
+      this.email = "";
+      this.seats = 0;
+      this.eventName = null;
+
+      return;
+    }
+    console.log("Tentative Booking Cancelled!");
+
+  }
+
+  toFixed(num){
+    return (+(Math.round(+(num + 'e' + 2)) + 'e' + -2)).toFixed(2);
   }
 
   private initConfig(): void {
@@ -86,15 +118,15 @@ export class ReservationsComponent implements OnInit {
         {
           amount: {
             currency_code: 'CAD',
-            value: (this.eventSeatsSold.ticketPrice * this.seats + (this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE)).toFixed(2).toString(),
+            value: this.toFixed((this.eventSeatsSold.ticketPrice * this.seats + (this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE))).toString(),
             breakdown: {
               item_total: {
                 currency_code: 'CAD',
-                value: (this.eventSeatsSold.ticketPrice * this.seats).toString()
+                value: this.toFixed(this.eventSeatsSold.ticketPrice * this.seats).toString()
               },
               tax_total: {
                 currency_code: 'CAD',
-                value: (this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE).toFixed(2).toString()
+                value: this.toFixed(this.eventSeatsSold.ticketPrice * this.seats * this.TAX_VALUE).toString()
               }
             }
           },
@@ -105,7 +137,7 @@ export class ReservationsComponent implements OnInit {
               category: 'DIGITAL_GOODS',
               unit_amount: {
                 currency_code: 'CAD',
-                value: this.eventSeatsSold.ticketPrice.toString()
+                value: this.toFixed(this.eventSeatsSold.ticketPrice).toString()
               },
             }
           ]
@@ -124,22 +156,38 @@ export class ReservationsComponent implements OnInit {
       actions.order.get().then(details => {
         console.log('onApprove - you can get full order details inside onApprove: ', details);
 
-        this.customer.name = "Derek R Schunicke";
+        //setting values for customer
+        this.customer.name = this.name;
         this.customer.email = this.email;
         this.customer.onMailingList = false;
 
-        this.data.getCustomers();
-
-        console.log("this.data.existingCustomers");
-        console.log(this.data.existingCustomers);
-
-        /*
-        if(!this.data.existingCustomers.find(c => c.email == this.customer.email)){
+        //if the customer is not an existing customer, add them to the list of customers,
+        //and then refresh the list of customers so we can find their ID in the next step.
+        if(!this.existingCustomers.find(c => c.email == this.customer.email)){
           this.data.postCustomer(this.customer);
+          this.getCustomers();
         }
-        */
 
-        this.eventSeatsSold.currentNumberOfSeats -= this.seats;
+        //getting the customers ID from the list of existing customers
+        let customerId = this.existingCustomers.find(c => c.email == this.customer.email).id;
+
+        //creating a new reservation object and getting the date/time when the client is placing the order
+        var reservation = new Reservation();
+        let reservationDate = new Date();
+
+        //setting the values for the reservation before we post it to reservations DB
+        reservation.customerid = customerId;
+        reservation.paidInAdvance = true;
+        reservation.numberOfSeats = this.seats;
+        reservation.resEventid = this.eventSeatsSold.id;
+        reservation.timeResMade = reservationDate;
+
+        //inserting the reservation into reservation DB
+        this.data.postReservation(reservation);
+
+        //adding seats sold to the current number of seats and then updating
+        //the event in the event DB
+        this.eventSeatsSold.currentNumberOfSeats += this.seats;
         this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
       });
     },
@@ -231,53 +279,6 @@ export class ReservationsComponent implements OnInit {
     //this.data.editEvent(this.eventID, this.eventEditDelete);
   }
 
-  tentativeBooking(){
-    this.filterTime();
-    if(confirm("Confirm Tentative Booking On: " + this.eventName)){
-      console.log("Tentative Booking Confirmed!");
-      this.name = "";
-      this.date = this.resetDate;
-      this.email = "";
-      this.seats = 0;
-      this.eventName = null;
-      return;
-    }
-    console.log("Tentative Booking Cancelled!");
-  }
-
-  paidBooking(){
-    let maxseats = this.filterSeats();
-
-    if(confirm("Confirm Paid Booking On: " + this.eventName)){
-      console.log("Paid Booking Confirmed!");
-
-      let postData;
-
-      let reservation = {
-        paidInAdvance: true,
-        timeResMade: new Date,
-        customerid: 43,
-        numberOfSeats: this.seats,
-        resEventid: 75
-      }
-
-      console.log("RESERVATION");
-      console.log(reservation);
-      this.http.post<Reservation[]>(this.baseUrl + "api/Reservations/", reservation).subscribe(data => postData = data);
-      console.log("POST DATA");
-      console.log(postData);
-      this.name = "";
-      this.date = this.resetDate;
-      this.email = "";
-      this.seats = 0;
-      this.eventName = null;
-      return;
-    }
-
-
-    console.log("Paid Booking Canceled!");
-  }
-
 }
 
 interface Band {
@@ -287,11 +288,3 @@ interface Band {
   BandInfo: string
 }
 
-interface Reservation {
-  id: number,
-  paidInAdvance: boolean,
-  timeResMade: Date,
-  customerid: number,
-  numberOfSeats: number,
-  resEventid: number
-}
