@@ -34,7 +34,7 @@ export class AdminCrudEventComponent implements OnInit {
   dateDelete: Date;
   eventDelete: String;
   event: EventWithID[];
-  eventEditDelete: EventWithID[];
+  eventEditDelete: EventWithID;
   stepperIndex: number;
 
   constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
@@ -85,15 +85,15 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    this.eventEditDelete = this.filterOneEvent(this.eventID);
-    this.eventTitle = this.eventEditDelete[0].bandName;
-    this.eventLink = this.eventEditDelete[0].bandLink;
-    this.eventDescription = this.eventEditDelete[0].description;
-    this.startDateTime = this.eventEditDelete[0].eventStart;
-    this.endDateTime = this.eventEditDelete[0].eventEnd;
-    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
-    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
-    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
+    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
+    this.eventTitle = this.eventEditDelete.bandName;
+    this.eventLink = this.eventEditDelete.bandLink;
+    this.eventDescription = this.eventEditDelete.description;
+    this.startDateTime = this.eventEditDelete.eventStart;
+    this.endDateTime = this.eventEditDelete.eventEnd;
+    this.ticketPrice = this.eventEditDelete.ticketPrice;
+    this.maxSeats = this.eventEditDelete.maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete.refundCutOffDate;
   }
 
   confirmDelete() {
@@ -169,15 +169,15 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = true;
     this.deleteButton = false;
     this.cancelButton = true;
-    this.eventEditDelete = this.filterOneEvent(this.eventID);
-    this.eventTitle = this.eventEditDelete[0].bandName;
-    this.eventLink = this.eventEditDelete[0].bandLink;
-    this.eventDescription = this.eventEditDelete[0].description;
-    this.startDateTime = this.eventEditDelete[0].eventStart;
-    this.endDateTime = this.eventEditDelete[0].eventEnd;
-    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
-    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
-    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
+    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
+    this.eventTitle = this.eventEditDelete.bandName;
+    this.eventLink = this.eventEditDelete.bandLink;
+    this.eventDescription = this.eventEditDelete.description;
+    this.startDateTime = this.eventEditDelete.eventStart;
+    this.endDateTime = this.eventEditDelete.eventEnd;
+    this.ticketPrice = this.eventEditDelete.ticketPrice;
+    this.maxSeats = this.eventEditDelete.maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete.refundCutOffDate;
 
     console.log("Edit Event");
 
@@ -191,6 +191,15 @@ export class AdminCrudEventComponent implements OnInit {
     this.deleteButton = false;
     this.cancelButton = false;
     this.getEvents();
+    this.eventEditDelete.bandName = this.eventTitle;
+    this.eventEditDelete.bandImagePath = this.eventImage;
+    this.eventEditDelete.bandLink = this.eventLink;
+    this.eventEditDelete.description = this.eventDescription;
+    this.eventEditDelete.eventStart = this.startDateTime;
+    this.eventEditDelete.eventEnd = this.endDateTime;
+    this.eventEditDelete.ticketPrice = this.ticketPrice;
+    this.eventEditDelete.maxNumberOfSeats = this.maxSeats;
+    this.eventEditDelete.refundCutOffDate = this.refundCutoffDateTime;
     this.data.editEvent(this.eventID, this.eventEditDelete);
   }
 

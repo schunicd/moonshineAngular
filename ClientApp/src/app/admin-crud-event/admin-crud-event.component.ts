@@ -87,14 +87,14 @@ export class AdminCrudEventComponent implements OnInit {
     this.deleteButton = true;
     this.cancelButton = true;
     this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
-    this.eventTitle = this.eventEditDelete[0].bandName;
-    this.eventLink = this.eventEditDelete[0].bandLink;
-    this.eventDescription = this.eventEditDelete[0].description;
-    this.startDateTime = this.eventEditDelete[0].eventStart;
-    this.endDateTime = this.eventEditDelete[0].eventEnd;
-    this.ticketPrice = this.eventEditDelete[0].ticketPrice;
-    this.maxSeats = this.eventEditDelete[0].maxNumberOfSeats;
-    this.refundCutoffDateTime = this.eventEditDelete[0].refundCutOffDate;
+    this.eventTitle = this.eventEditDelete.bandName;
+    this.eventLink = this.eventEditDelete.bandLink;
+    this.eventDescription = this.eventEditDelete.description;
+    this.startDateTime = this.eventEditDelete.eventStart;
+    this.endDateTime = this.eventEditDelete.eventEnd;
+    this.ticketPrice = this.eventEditDelete.ticketPrice;
+    this.maxSeats = this.eventEditDelete.maxNumberOfSeats;
+    this.refundCutoffDateTime = this.eventEditDelete.refundCutOffDate;
   }
 
   confirmDelete(){

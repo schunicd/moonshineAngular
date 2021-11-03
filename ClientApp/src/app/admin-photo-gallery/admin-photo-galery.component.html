@@ -1,3 +1,15 @@
 <div id="adminPhotoGalleryBackground">
-  <h1 id="welcomeMessage"><span>Upload Photos Here</span></h1>
+  <div id="welcomeMessage">
+    <h1><span>Upload Photos Here</span></h1>
+    <h1>File Upload Using Angular 7 and ASP.NET Core Web API</h1>
+    <input #file type="file" multiple (change)="upload(file.files)" />
+    <br />
+    <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
+      {{progress}}%
+    </span>
+    <span style="font-weight:bold;color:green;" *ngIf="message">
+      {{message}}
+  </span>
+</div>
+
 </div>
