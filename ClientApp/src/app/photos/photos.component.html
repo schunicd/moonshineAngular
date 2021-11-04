@@ -1,1 +1,6 @@
-<p id="photoBackground">photos works!</p>
+
+<div *ngIf="photos?.length">
+    <div *ngFor="let photo of photos">
+        <img src="{{photo}}"/>
+    </div>
+</div>

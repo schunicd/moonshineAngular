@@ -14,9 +14,11 @@ namespace moonshineAngular.Controllers
     public class imageUploadController : Controller
     {
         private IHostingEnvironment _hostingEnvironment;
+        private string fPath = "";
         public imageUploadController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
+            SetFullPath(_hostingEnvironment.ContentRootPath + "\\ClientApp\\src\\assets\\PhotoGallery");
         }
         [HttpPost, DisableRequestSizeLimit]
         public ActionResult UploadFile()
@@ -48,5 +50,33 @@ namespace moonshineAngular.Controllers
                 return Json("Upload Failed: " + ex.Message);
             }
         }
+
+        [HttpGet, DisableRequestSizeLimit]
+        public List<string> GetImagePaths()
+        {
+            try
+            {
+                List<string> paths = new List<string>();
+                string startRelPath = "assets";
+                foreach (var path in Directory.GetFiles(fPath))
+                {
+                    int relPathStartIndex = path.IndexOf(startRelPath);
+                    string newPath = path.Substring(relPathStartIndex);
+                    paths.Add(newPath);
+                }
+               return paths;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Fail");
+                return null;
+            }
+        }
+
+        private void SetFullPath(string path)
+        {
+            this.fPath = path;
+        }
+
     }
 }
