@@ -78,6 +78,27 @@ namespace moonshineAngular.Controllers
             this.fPath = path;
         }
 
+        // DELETE: api/imageUpload/photoPath
+        [HttpDelete("{photoPath}"), DisableRequestSizeLimit]
+        public ActionResult DeletePhoto(String[] photoPath)
+        {
+            FileInfo[] deletePhoto = null;
+            int indx = 0;
+             //= new FileInfo(photoPath);
+            if (photoPath == null)
+            {
+                return NotFound();
+            }
+
+            foreach (String pp in photoPath)
+            {
+                deletePhoto[indx++] = new FileInfo(pp);
+                deletePhoto[indx].Delete();
+            } 
+
+            return NoContent();
+        }
+
     }
 
 }
