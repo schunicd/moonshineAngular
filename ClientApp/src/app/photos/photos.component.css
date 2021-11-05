@@ -1,7 +1,19 @@
-#photoBackground{
-  background-color: rgba(255, 255, 255, 0.7);
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 10px;
-  text-align: center;
+.photoStyle{
+  height: 200px;
+  width: 200px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-bottom: 50px;
+  float: left;
 }
+
+img {
+  transition:transform 0.25s ease;
+}
+
+img:hover {
+  -webkit-transform:scale(2); /* or some other value */
+  transform:scale(2);
+}
+
+

@@ -62,6 +62,7 @@ namespace moonshineAngular.Controllers
                 {
                     int relPathStartIndex = path.IndexOf(startRelPath);
                     string newPath = path.Substring(relPathStartIndex);
+                    Console.WriteLine(newPath);
                     paths.Add(newPath);
                 }
                return paths;
@@ -84,7 +85,7 @@ namespace moonshineAngular.Controllers
         {
             FileInfo[] deletePhoto = null;
             int indx = 0;
-             //= new FileInfo(photoPath);
+
             if (photoPath == null)
             {
                 return NotFound();
