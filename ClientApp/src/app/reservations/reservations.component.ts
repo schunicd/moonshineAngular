@@ -27,6 +27,7 @@ export class ReservationsComponent implements OnInit {
   seats: number;
   eventMaxSeats: number;
   eventName: string;
+  displayEventName: string;
   ticketPrice: number;
   event: EventWithID[];
   eventsNoTime: EventWithID[];
@@ -49,9 +50,7 @@ export class ReservationsComponent implements OnInit {
     this.eventName = null;
     this.name = "";
     this.email = "";
-
     this.customer = new Customer();
-
     console.log(this.minDate);
 
     this.myGroup = new FormGroup({
@@ -71,6 +70,10 @@ export class ReservationsComponent implements OnInit {
 
     this.getCustomers();
 
+  }
+
+  convertDate(date){
+    return date.split(" ")[0] + " " + date.split(" ")[1] + " " + date.split(" ")[2] + " " + date.split(" ")[3];
   }
 
   getCustomers(){
@@ -206,8 +209,6 @@ export class ReservationsComponent implements OnInit {
     },
   };
   }
-
-
 
   filterEvents(){
     let day = this.date.getDate().toString();

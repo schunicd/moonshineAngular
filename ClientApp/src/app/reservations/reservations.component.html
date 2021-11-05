@@ -2,7 +2,7 @@
 <div id=formAndCalContainer>
   <div id="reservationsBody" class="container">
     <mat-vertical-stepper class="">
-      <mat-step label="Select Date">
+      <mat-step label="Select Date" *ngIf="date == null; else selectedDate" >
         <mat-form-field>
           <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -10,32 +10,71 @@
         </mat-form-field>
       </mat-step>
 
-      <mat-step label="Select Event">
+      <ng-template #selectedDate>
+        <mat-step label="Date: {{convertDate(date.toString())}}">
+          <mat-form-field>
+            <input matInput [min]="minDate" name="date" [(ngModel)]="date" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-step>
+      </ng-template>
+
+      <mat-step label="Select Event" *ngIf="!eventName; else selectedEvent">
         <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
-        <select *ngIf="date != null" [(ngModel)]="eventName" name="eventName" (change)="updateEventSelected()">
+        <label id="warning" *ngIf="date != null && filterEvents().length == 0">Sorry, there are no events scheduled on {{convertDate(date.toString())}}.</label>
+        <select *ngIf="date != null && filterEvents().length > 0" [(ngModel)]="eventName" name="eventName" (change)="updateEventSelected()">
           <option *ngFor="let e of filterEvents()" value="{{e.eventStart}}">{{e.bandName}}  ${{e.ticketPrice}}</option>
         </select>
       </mat-step>
 
-      <mat-step label="Enter Name">
+      <ng-template #selectedEvent>
+        <mat-step label="Event: {{this.eventSeatsSold.bandName}}  ${{this.eventSeatsSold.ticketPrice}}">
+          <label id="warning" *ngIf="date == null;">Please Select a Date at the top first!</label>
+          <label id="warning" *ngIf="date != null && filterEvents().length == 0">Sorry, there are no events scheduled on {{convertDate(date.toString())}}.</label>
+          <select *ngIf="date != null && filterEvents().length > 0" [(ngModel)]="eventName" name="eventName" (change)="updateEventSelected()">
+            <option *ngFor="let e of filterEvents()" value="{{e.eventStart}}">{{e.bandName}}  ${{e.ticketPrice}}</option>
+          </select>
+        </mat-step>
+      </ng-template>
+
+      <mat-step label="Enter Name" *ngIf="!name; else enteredName">
         <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
           <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
           <br>
           <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
       </mat-step>
 
-      <mat-step label="Enter Email">
+      <ng-template #enteredName>
+        <mat-step label="Name: {{name}}">
+          <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
+            <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
+            <br>
+            <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+        </mat-step>
+      </ng-template>
+
+      <mat-step label="Enter Email" *ngIf="!email; else enteredEmail">
         <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
         <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
         <br>
         <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
       </mat-step>
 
-      <mat-step label="Number of Seats">
+      <ng-template #enteredEmail>
+        <mat-step label="Email: {{email}}">
+          <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
+          <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
+          <br>
+          <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+        </mat-step>
+      </ng-template>
 
+      <mat-step label="Number of Seats" *ngIf="!seats; else enteredSeats">
         <div *ngIf="eventName != null">
           <label>Number of seats:</label>
           <input type="number" [(ngModel)]="seats" name="seats" min="1" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
+          <p id="priceFormat"> * ${{this.eventSeatsSold.ticketPrice}} (+ Taxes)</p>
         </div>
 
         <!--
@@ -45,6 +84,16 @@
         </ng-template>
         -->
       </mat-step>
+
+      <ng-template #enteredSeats>
+        <mat-step label="Number of Seats: {{seats}} * ${{this.eventSeatsSold.ticketPrice}} = ${{this.eventSeatsSold.ticketPrice * seats}} (+ Taxes)">
+          <div *ngIf="eventName != null">
+            <label>Number of seats:</label>
+            <input type="number" [(ngModel)]="seats" name="seats" min="1" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
+            <p id="priceFormat"> * ${{this.eventSeatsSold.ticketPrice}} = ${{this.eventSeatsSold.ticketPrice * seats}} (+ Taxes)</p>
+          </div>
+        </mat-step>
+      </ng-template>
 
       <mat-step label="Booking Type">
         <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>

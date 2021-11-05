@@ -31,6 +31,18 @@ export class AdminPhotoGaleryComponent implements OnInit {
 
   }
 
+  delete(files){
+    if(files.length === 0)
+      return;
+    const formData = new FormData();
+    for(let file of files)
+      formData.append(file.name, file);
+    const deleteReq = new HttpRequest('DELETE', `api/imageUpload/`, formData);
+    this.http.request(deleteReq).subscribe(event => {
+      console.log(event);
+    })
+  }
+
   ngOnInit() {
   }
 

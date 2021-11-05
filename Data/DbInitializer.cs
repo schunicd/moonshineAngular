@@ -31,12 +31,7 @@ namespace TheMoonshineCafe.Data
 
             var events = new Event[]
             {
-                new Event{bandName="event2", eventStart=DateTime.Parse("02/22/2022 02:20"), eventEnd=DateTime.Parse("02/22/2022 18:00"), refundCutOffDate=DateTime.Parse("02/22/2022 02:05"),  maxNumberOfSeats = 23, currentNumberOfSeats=0, description="testing 1", ticketPrice=3.50},
-                new Event{bandName="event1", eventStart=DateTime.Parse("02/22/2022"), eventEnd=DateTime.Parse("02/22/2022 02:00"), refundCutOffDate=DateTime.Parse("02/22/2022"),  maxNumberOfSeats = 23, currentNumberOfSeats=0, ticketPrice=3.50},
-                new Event{bandName="We're back", eventStart=DateTime.Parse("11/25/2021"), eventEnd=DateTime.Parse("11/25/2021 18:00"), maxNumberOfSeats = 50, currentNumberOfSeats=15, ticketPrice=7.50},
-                new Event{bandName="We're back2", eventStart=DateTime.Parse("12/01/2021"), eventEnd=DateTime.Parse("12/01/2021 12:00"), maxNumberOfSeats = 100, currentNumberOfSeats=100, ticketPrice=10f},
-                new Event{bandName="We're back3", eventStart=DateTime.Parse("12/23/2021 01:30"), eventEnd=DateTime.Parse("12/23/2021 03:30"), maxNumberOfSeats = 100, currentNumberOfSeats=100, description="testing 5", ticketPrice=10f},
-                new Event{bandName="We're back4", eventStart=DateTime.Parse("01/21/2022 05:30"), eventEnd=DateTime.Parse("01/21/2022 10:30"), maxNumberOfSeats = 20, currentNumberOfSeats=0, description="testing 6", ticketPrice=10f}
+                
             };
             foreach(Event e in events)
             {
