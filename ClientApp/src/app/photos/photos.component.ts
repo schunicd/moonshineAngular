@@ -11,6 +11,19 @@ import { stringify } from 'querystring';
 export class PhotosComponent implements OnInit {
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+
+    /*
+    const galleryFolder = '../../assets/PhotoGallery';
+    const fs = require('fs');
+
+    fs.readdir(galleryFolder, (err, files) => {
+      console.log("PRINTING FILE PATHS");
+      files.array.forEach(file => {
+        console.log(file);
+      });
+    });
+    */
+
   }
 
   catcher: any[];

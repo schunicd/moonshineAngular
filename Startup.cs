@@ -7,12 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
-using TheMoonshineCafe.DataAccess;
+using TheMoonshineCafe.Services;
+using Amazon.S3;
 
 namespace TheMoonshineCafe
 {
     public class Startup
     {
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +27,12 @@ namespace TheMoonshineCafe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddSingleton<IS3Service, S3Service>();
+            services.AddAWSService<IAmazonS3>();
+
+
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy(name: _policyName, builder =>

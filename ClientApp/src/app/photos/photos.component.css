@@ -1,9 +1,9 @@
 .photoStyle{
   height: 200px;
   width: 200px;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 50px;
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-top: 50px;
   float: left;
 }
 
@@ -12,7 +12,7 @@ img {
 }
 
 img:hover {
-  -webkit-transform:scale(2); /* or some other value */
+  -webkit-transform:scale(2);
   transform:scale(2);
 }
 

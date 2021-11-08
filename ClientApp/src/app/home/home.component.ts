@@ -85,7 +85,7 @@ export class HomeComponent {
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    let temp_date = dateNumbers.split("-");
+    let temp_date = dateNumbers.split("T")[0].split("-");
   return months[Number(temp_date[1]) - 1] + " " + temp_date[2] + " " + temp_date[0];
   }
 

@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.Core" Version="3.7.3.19" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.3.12" />
+    <PackageReference Include="AWSSDK.Extensions.NETCORE.Setup" Version="3.7.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.4" />
     <PackageReference Include="Google.Apis" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />
     <PackageReference Include="Google.Apis.Calendar.v3" Version="1.55.0.2410" />
@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
