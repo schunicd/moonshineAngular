@@ -1,6 +1,6 @@
 
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -13,7 +13,7 @@ export class AdminPhotoGaleryComponent implements OnInit {
   public progress: number;
   public message: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   upload(files) {
     if (files.length === 0)

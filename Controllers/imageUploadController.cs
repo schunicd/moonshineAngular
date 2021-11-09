@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using TheMoonshineCafe.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Amazon.S3.Model;
 
 namespace moonshineAngular.Controllers
 {
@@ -40,8 +41,6 @@ namespace moonshineAngular.Controllers
         {
             var file = Request.Form.Files[0];
 
-            
-
             Console.WriteLine(file);
 
             var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -51,6 +50,17 @@ namespace moonshineAngular.Controllers
             await _service.UploadFileAsync(file);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetPhotos")]
+        public List<string> GetPhotos() 
+        {
+            List<string> photos = new List<string>();
+            Console.WriteLine("IMAGE UPLOAD CONTROLLER");
+            //photos = _service.GetPhotos();
+            Console.WriteLine(_service.GetPhotos().Result.Count);
+            return _service.GetPhotos().Result;
         }
 
     }

@@ -66,6 +66,32 @@ namespace TheMoonshineCafe.Services
             };
         }
 
+        public async Task<List<string>> GetPhotos()
+        {
+            AmazonS3Client client = new AmazonS3Client();
+            ListObjectsRequest listRequest = new ListObjectsRequest
+            {
+                BucketName = "moonshinephotostest"
+            };
+
+            ListObjectsResponse listResponse;
+            List<string> photos = new List<string>();
+            do
+            {
+                listResponse = await client.ListObjectsAsync(listRequest);
+                foreach (S3Object obj in listResponse.S3Objects)
+                {
+                    photos.Add(obj.Key);
+                    //Console.WriteLine(obj.Key);
+                    //Console.WriteLine(" Size - " + obj.Size);
+                }
+
+                listRequest.Marker = listResponse.NextMarker;
+            } while (listResponse.IsTruncated);
+
+            return photos;
+        }
+
         private const string BucketName = "moonshinephotostest";
         private const string FilePath = "C:\\Users\\derek\\Desktop\\band.jpg"; //Option 1
         private const string UploadWithKeyName = "UploadWithKeyName"; //Option 2
@@ -89,6 +115,7 @@ namespace TheMoonshineCafe.Services
                 transferRequest.Metadata.Add("Date-UTC-Uploaded", DateTime.UtcNow.ToString());
 
                 await new TransferUtility(_client).UploadAsync(transferRequest);
+
 
                 //var fileTransferUtility = new TransferUtility(_client);
 
@@ -131,6 +158,8 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
             }
         }
+
+
 
     }
 
