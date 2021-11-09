@@ -92,62 +92,24 @@ namespace TheMoonshineCafe.Services
             return photos;
         }
 
-        private const string BucketName = "moonshinephotostest";
-        private const string FilePath = "C:\\Users\\derek\\Desktop\\band.jpg"; //Option 1
-        private const string UploadWithKeyName = "UploadWithKeyName"; //Option 2
-        private const string FileStreamUpload = "FileStreamUpload"; //Option 3
-        private const string AdvancedUpload = "AdvancedUpload"; //Option 4
-
+        private const string BucketName = "moonshinephotostest"; //declaring bucketname as a constant
         public async Task UploadFileAsync(IFormFile file)
         {
             try
             {
-
-                var transferRequest = new TransferUtilityUploadRequest()
+                var transferRequest = new TransferUtilityUploadRequest() //setting values for the request to transfer a file
                 {
-                    InputStream = file.OpenReadStream(),
-                    AutoCloseStream = false,
-                    BucketName = BucketName,
-                    Key = file.FileName,
-                    StorageClass = S3StorageClass.Standard
+                    InputStream = file.OpenReadStream(),    //setting the selected file as the input stream
+                    AutoCloseStream = false,                //
+                    BucketName = BucketName,                //setting bucket name to constant declared above
+                    Key = file.FileName,                    //setting key as filename so we can get the files by their names from the bucket
+                    StorageClass = S3StorageClass.Standard  //setting storage class as standard since it has high reliability
                 };
 
-                transferRequest.Metadata.Add("Date-UTC-Uploaded", DateTime.UtcNow.ToString());
+                transferRequest.Metadata.Add("Date-UTC-Uploaded", DateTime.UtcNow.ToString()); //adding metadata of when the file was uploaded
 
-                await new TransferUtility(_client).UploadAsync(transferRequest);
+                await new TransferUtility(_client).UploadAsync(transferRequest);    //initiating transfer request
 
-
-                //var fileTransferUtility = new TransferUtility(_client);
-
-                //Option 1
-                //await fileTransferUtility.UploadAsync("C:\\fakepath\\" + file.FileName, BucketName);
-
-                /*
-                //Option 2
-                await fileTransferUtility.UploadAsync(FilePath, bucketName, UploadWithKeyName);
-
-                //Option 3
-                using (var fileToUpload = new FileStream(FilePath, FileMode.Open, FileAccess.Read))
-                {
-                    await fileTransferUtility.UploadAsync(fileToUpload, bucketName, FileStreamUpload);
-                }
-
-                //Option 4
-                var fileTransferUtilityRequest = new TransferUtilityUploadRequest()
-                {
-                    BucketName = bucketName,
-                    FilePath = FilePath,
-                    StorageClass = S3StorageClass.Standard,
-                    PartSize = 6291456, //6MB
-                    Key = AdvancedUpload,
-                    CannedACL = S3CannedACL.BucketOwnerFullControl 
-                };
-
-                fileTransferUtilityRequest.Metadata.Add("param1", "Value1");
-                fileTransferUtilityRequest.Metadata.Add("param2", "Value2");
-
-                await fileTransferUtility.UploadAsync(fileTransferUtilityRequest);
-                */
             }
             catch (AmazonS3Exception e)
             {
@@ -158,8 +120,6 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
             }
         }
-
-
 
     }
 

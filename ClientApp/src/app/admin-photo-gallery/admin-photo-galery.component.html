@@ -4,7 +4,6 @@
 <div id="adminPhotoGalleryBackground">
   <div id="welcomeMessage">
     <h1><span>Upload Photos Here</span></h1>
-    <h1>File Upload Using Angular 7 and ASP.NET Core Web API</h1>
     <input id="uploadPhoto" #file type="file" accept="image/*" (change)="upload(file.files)" />
     <br />
     <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">

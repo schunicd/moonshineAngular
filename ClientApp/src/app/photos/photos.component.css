@@ -1,7 +1,7 @@
 .photoStyle{
-  height: 200px;
-  width: 200px;
-  margin-left: 70px;
+  height: 250px;
+  width: 400px;
+  margin-left: 100px;
   margin-right: 70px;
   margin-top: 50px;
   float: left;
@@ -12,8 +12,8 @@ img {
 }
 
 img:hover {
-  -webkit-transform:scale(2);
-  transform:scale(2);
+  -webkit-transform:scale(1.5);
+  transform:scale(1.5);
 }
 
 

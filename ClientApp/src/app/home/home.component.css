@@ -4,6 +4,7 @@
   background-color: rgba(255, 255, 255, 0.7);
   margin-left: 20px;
   margin-right: 20px;
+  padding-top: 10px;
   padding-bottom: 20px;
 }
 
@@ -11,15 +12,7 @@ a{
   color: maroon;
 }
 
-#emailSubscription{
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 25px;
-  padding-top: 20px;
-  padding-bottom: 10px;
-  text-align: center;
-  width: 450px;
-  margin: auto;
-}
+
 
 @media screen and (max-width: 768px){
 
@@ -44,7 +37,7 @@ a{
     display: grid;
     text-align: center;
     grid-template-areas:
-    '. leftTitleGrid leftTitleGrid . .'
+    '. leftTitleGrid leftTitleGrid mailingList .'
     '. spotlightTitleGrid spotlightTitleGrid videoGrid .'
     '. spotlightOne spotlightOne videoGrid .'
     '. spotlightTwo spotlightTwo calendarGrid .'
@@ -62,6 +55,18 @@ a{
   #spotlightTwo{grid-area: spotlightTwo;}
   #spotlightThree{grid-area: spotlightThree;}
   #spotlightFour{grid-area: spotlightFour;}
+
+  #emailSubscription{
+    grid-area: mailingList;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+    width: 450px;
+    margin: auto;
+  }
 
   #moonshineCalendar{
     grid-area: calendarGrid;

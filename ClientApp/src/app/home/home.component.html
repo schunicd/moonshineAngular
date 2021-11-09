@@ -8,7 +8,7 @@
 
   <div id="spotlightOne" class="spotlightStyle">
     <img *ngIf="event[0].bandImagePath" src="{{event[0].bandImagePath}}" class="spotlightAlbumImage">
-    <h5 *ngIf="event[0].bandLink; else spt1"><a href="event[0].bandLink" target="_blank">{{event[0].bandName}}</a> : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5>
+    <h5 *ngIf="event[0].bandLink; else spt1"><a href="{{event[0].bandLink}}" target="_blank">{{event[0].bandName}}</a> : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5>
     <ng-template #spt1><h5>{{event[0].bandName}} : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5></ng-template>
     <p>{{event[0].description}}</p>
   </div>
@@ -32,6 +32,14 @@
     <h5 *ngIf="event[3].bandLink; else spt4"><a href="{{event[3].bandLink}}" target="_blank">{{event[3].bandName}}</a> : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5>
     <ng-template #spt4><h5>{{event[3].bandName}} : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5></ng-template>
     <p>{{event[3].description}}</p>
+  </div>
+
+  <div id="emailSubscription">
+    <p id="emailText">
+      Join Our Mailing List!
+    </p>
+      <input id="clientEmail" [(ngModel)]="clientEmail" name="clientEmail" type="text">
+    <button id="joinButton" (click)="joinMailingList()" mat-raised-button>Join</button>
   </div>
 
   <div id="moonshineVideo" class="center">
@@ -69,11 +77,5 @@
   </div>
 </div>
 <br>
-<div id="emailSubscription">
-  <p id="emailText">
-    Join Our Mailing List!
-  </p>
-    <input id="clientEmail" [(ngModel)]="clientEmail" name="clientEmail" type="text">
-  <button id="joinButton" (click)="joinMailingList()" mat-raised-button>Join</button>
-</div>
+
 <br>

@@ -31,12 +31,9 @@ export class AdminPhotoGaleryComponent implements OnInit {
     });
 
     this.http.request(uploadReq).subscribe(event => {
-      /*
-      if (event.type === HttpEventType.UploadProgress)
-        this.progress = Math.round(100 * event.loaded / event.total);
-      else if (event.type === HttpEventType.Response)
-        this.message = event.body.toString();
-        */
+
+        this.message = "Photo Uploaded Successfully!";
+
     });
 
   }
