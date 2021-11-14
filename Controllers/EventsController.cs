@@ -13,11 +13,16 @@ using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
 using TheMoonshineCafe.Models;
 using Google.Apis.Calendar.v3.Data;
+//using Google.GData.Calendar;
+using Google.GData.Extensions;
+using Google.GData.AccessControl;
+using Google.GData.Client;
 using Google.Apis.Util.Store;
 using System.Text;
 using Google.Apis.Auth.AspNetCore3;
-using Google.Apis.PeopleService.v1;
 using Microsoft.AspNetCore.Authorization;
+//using CalendarService = Google.GData.Calendar.CalendarService;
+using Event = Google.Apis.Calendar.v3.Data.Event;
 
 namespace TheMoonshineCafe.Controllers
 {
@@ -26,71 +31,138 @@ namespace TheMoonshineCafe.Controllers
     public class EventsController : ControllerBase
     {
         private readonly MoonshineCafeContext _context;
+        string jsonFile = "GCalServiceAccountCredentials.json";
+        string calendarId = @"schunicd@gmail.com";
         static string[] Scopes = { CalendarService.Scope.Calendar };
-        private UserCredential credential;
-        private GoogleCredential cred;
+        private ServiceAccountCredential credential;
+        public CalendarService service;
+
+        static List<Google.Apis.Calendar.v3.Data.Event> DB =
+             new List<Google.Apis.Calendar.v3.Data.Event>() {
+                new Google.Apis.Calendar.v3.Data.Event(){
+                    Id = "eventid" + 1,
+                    Summary = "Google I/O 2015",
+                    Location = "800 Howard St., San Francisco, CA 94103",
+                    Description = "A chance to hear more about Google's developer products.",
+                    Start = new EventDateTime()
+                    {
+                        DateTime = new DateTime(2021, 01, 13, 15, 30, 0),
+                        TimeZone = "America/Los_Angeles",
+                    },
+                    End = new EventDateTime()
+                    {
+                        DateTime = new DateTime(2021, 01, 14, 15, 30, 0),
+                        TimeZone = "America/Los_Angeles",
+                    },
+                     Recurrence = new List<string> { "RRULE:FREQ=DAILY;COUNT=2" }
+                }
+             };
+
+        public void SetService(ServiceAccountCredential cred)
+        {
+            service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Calendar API Sample",
+            });
+        }
 
         public EventsController(MoonshineCafeContext context)
         {
             _context = context;
 
-            /*using (var stream =
-                new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+            using (var stream =
+                new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
             {
                 // The file token.json stores the user's access and refresh tokens, and is created
                 // automatically when the authorization flow completes for the first time.
-                string credPath = "token.json";
-                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                    GoogleClientSecrets.FromStream(stream).Secrets,
-                    Scopes,
-                    "user",
-                    CancellationToken.None,
-                    new FileDataStore(credPath, true)).Result;
-                Console.WriteLine("Credential file saved to: " + credPath);
-            }*/
+                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                credential = new ServiceAccountCredential(
+                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   {
+                       Scopes = Scopes
+                   }.FromPrivateKey(confg.PrivateKey));
+                //Console.WriteLine("Credential file saved to: " + credPath);
+                SetService(credential);
+            }
+/*
+            var service = new CalendarService(new BaseClientService.Initializer()
+            { //initializes the service
+                HttpClientInitializer = credential,
+                ApplicationName = "Calendar API Sample",
+            });*/
+
+            var calendar = service.Calendars.Get(calendarId).Execute();
+            Console.WriteLine("Calendar Name :");
+            Console.WriteLine(calendar.Summary);
+
+
+            // Define parameters of request.
+            EventsResource.ListRequest listRequest = service.Events.List(calendarId);
+            listRequest.TimeMin = DateTime.Now;
+            listRequest.ShowDeleted = false;
+            listRequest.SingleEvents = true;
+            listRequest.MaxResults = 10;
+            listRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            // List events.
+            Events events = listRequest.Execute();
+            Console.WriteLine("Upcoming events:");
+            if (events.Items != null && events.Items.Count > 0)
+            {
+                foreach (var eventItem in events.Items)
+                {
+                    string when = eventItem.Start.DateTime.ToString();
+                    if (String.IsNullOrEmpty(when))
+                    {
+                        when = eventItem.Start.Date;
+                    }
+                    Console.WriteLine("{0} ({1})", eventItem.Summary, when);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No upcoming events found.");
+            }
+            Console.WriteLine("click for more .. ");
+
+
         }
 
         // GET: api/Events
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Models.Event>>> GetEvents()
         {
+            var myevent = DB.Find(x => x.Id == "eventid" + 1);
+
+            var InsertRequest = service.Events.Insert(myevent, calendarId);
+
+            try
+            {
+                InsertRequest.Execute();
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    service.Events.Update(myevent, calendarId, myevent.Id).Execute();
+                    Console.WriteLine("Insert/Update new Event ");
+
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("can't Insert/Update new Event ");
+
+                }
+            }
+
             return await _context.Events.ToListAsync();
             
         }
 
-        [GoogleScopedAuthorize("https://www.googleapis.com/auth/calendar.events")]
-        //public async void UserProfile([FromServices] IGoogleAuthProvider auth)
-        public async void UserProfile([FromServices] IGoogleAuthProvider auth)
-        {
-            cred = await auth.GetCredentialAsync();
-            var service = new CalendarService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = cred
-            });
-            
-/*            var service = new PeopleServiceService(new BaseClientService.Initializer() {
-                HttpClientInitializer = cred
-            });*/
+     /*   
 
-            var request = service.Events.List("primary");
-            request.TimeMin = DateTime.Now;
-            request.ShowDeleted = false;
-            request.SingleEvents = true;
-            request.MaxResults = 10;
-            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-            //request.PersonFields = "names";
-            var person = await request.ExecuteAsync();
-
-            Console.WriteLine(person);
-            //return View(person);
-        }
-
-        private void ViewComponent(Google.Apis.PeopleService.v1.Data.Person person)
-        {
-            throw new NotImplementedException();
-        }
-
-        [HttpGet("Calendar")]
+        /*[HttpGet("Calendar")]
         public IEnumerable<Google.Apis.Calendar.v3.Data.Events> GetCalendarEvents()
         {
             //Console.WriteLine("Your api function can be called");
@@ -147,7 +219,7 @@ namespace TheMoonshineCafe.Controllers
             }
 
             return @event;
-        }
+        }*/
 
         /*// PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -212,7 +284,7 @@ namespace TheMoonshineCafe.Controllers
 
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
             //creating new event object based off of the Google API Event type
@@ -247,7 +319,7 @@ namespace TheMoonshineCafe.Controllers
             Console.WriteLine("Event created: {0}", createdEvent.HtmlLink);
             //returns status code for event creation
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
-        }
+        }*/
 
 /*        // DELETE: api/Events/5
         [HttpDelete("{id}")]
