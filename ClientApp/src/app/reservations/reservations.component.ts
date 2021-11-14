@@ -206,17 +206,22 @@ export class ReservationsComponent implements OnInit {
 
       let reservationEmail = {
         email: this.email,
-        body: "Thank you for your purchase, please find your reciept below:",
-        eventDate: this.eventSeatsSold.eventStart.toString(),
-        eventName: this.eventSeatsSold.bandName + " " + this.eventSeatsSold.ticketPrice,
+        eventDate: this.formatEventDate(this.eventSeatsSold.eventStart),
+        eventName: this.eventSeatsSold.bandName + " $" + this.eventSeatsSold.ticketPrice,
         name: this.customer.name,
         paypalID: data.id,
         purchaseDate: reservationDate,
         subject: "Order Confirmation: " + data.id,
+        ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
+        subtotal: data.purchase_units[0].amount.breakdown.item_total.value,
+        taxes: data.purchase_units[0].amount.breakdown.tax_total.value,
         totalCost: data.purchase_units[0].amount.value,
         totalSeats: this.seats
       }
 
+      console.log("EVENT SEATS SOLD START TIME");
+      console.log(this.eventSeatsSold.eventStart);
+      this.formatEventDate(this.eventSeatsSold.eventStart);
 
       //Sending Reservation Confirmation Email to Client
       this.data.sendReservationEmail(reservationEmail);
@@ -232,6 +237,18 @@ export class ReservationsComponent implements OnInit {
       console.log('onClick', data, actions);
     },
   };
+  }
+
+  formatEventDate(ed){
+    let d = ed.split("T")[0];
+    let t = ed.split("T")[1];
+    let h = t.split(":")[0];
+    let m = t.split(":")[1];
+    let s = t.split(":")[2];
+
+    let suffix = h >= 12 ? "PM" : "AM";
+
+    return d + " " + ((parseInt(h) + 11) % 12 + 1) + ":" + m + ":" + s + " " + suffix;
   }
 
   filterEvents(){

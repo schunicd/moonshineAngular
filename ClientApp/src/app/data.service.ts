@@ -145,13 +145,15 @@ interface Email {
 
 interface ReservationEmail {
   subject: String;
-  body: String;
   eventDate: String;
   eventName: String;
   name: String;
   email: String;
   purchaseDate: Date;
   totalSeats: Number;
+  ticketPrice: String;
+  subtotal: String;
+  taxes: String;
   totalCost: String;
   paypalID: String;
 }

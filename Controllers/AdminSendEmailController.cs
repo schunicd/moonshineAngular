@@ -515,6 +515,46 @@ namespace TheMoonshineCafe.Controllers
 </tr>
 </tbody>
 </table>
+<table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-7' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center;' width='100%'>
+<tbody>
+<tr>
+<td>
+<table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #26282c; color: #333;' width='680'>
+<tbody>
+<tr>
+<th class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #3e434d; border-left: 0px solid #26282C; border-top: 0px; border-right: 0px; border-bottom: 0px;' width='33.333333333333336%'>
+<table border='0' cellpadding='0' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+<tr>
+<td style='padding-top:35px;padding-right:10px;padding-bottom:15px;padding-left:10px;'>
+<div style='font-family: sans-serif'>
+<div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+<p style='margin: 0; font-size: 12px; text-align: center;'><span style='color:#ddc403;font-size:18px;'>Cost Per Seat:</span></p>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</th>
+<th class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; background-color: #3e434d; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='66.66666666666667%'>
+<table border='0' cellpadding='0' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+<tr>
+<td style='padding-bottom:35px;padding-top:35px;'>
+<div style='font-family: sans-serif'>
+<div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>$" + email.ticketPrice + @"</p>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
 <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-8' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
 <tbody>
 <tr>
@@ -568,7 +608,7 @@ namespace TheMoonshineCafe.Controllers
 <td>
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-<p  style='color:#ffffff;margin: 0; font-size: 14px; text-align: right; mso-line-height-alt: 14.399999999999999px;'>$" + "PUT SUBTOTAL HERE" + @"</p>
+<p  style='color:#ffffff;margin: 0; font-size: 14px; text-align: right; mso-line-height-alt: 14.399999999999999px;'>$" + email.subtotal + @"</p>
 </div>
 </div>
 </td>
@@ -659,7 +699,7 @@ namespace TheMoonshineCafe.Controllers
 <td>
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-<p  style='color:#ffffff;margin: 0; font-size: 14px; text-align: right; mso-line-height-alt: 14.399999999999999px;'>$" + "PUT TAX HERE" + @"</p>
+<p  style='color:#ffffff;margin: 0; font-size: 14px; text-align: right; mso-line-height-alt: 14.399999999999999px;'>$" + email.taxes + @"</p>
 </div>
 </div>
 </td>

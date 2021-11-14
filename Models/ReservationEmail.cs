@@ -6,9 +6,7 @@ namespace moonshineAngular.Models
     {
         public string subject { get; set; }
 
-        public string body { get; set; }
-
-        public string eventDate { get; set; }
+        public String eventDate { get; set; }
 
         public string eventName { get; set; }
 
@@ -19,6 +17,12 @@ namespace moonshineAngular.Models
         public DateTime purchaseDate { get; set; }
   
         public int totalSeats { get; set; }
+
+        public string ticketPrice { get; set; }
+
+        public string subtotal { get; set; }
+
+        public string taxes { get; set; }
 
         public string totalCost { get; set; }
 
