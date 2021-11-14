@@ -11,6 +11,7 @@ namespace TheMoonshineCafe.Models
         public int customerid { get; set; }
         public int numberOfSeats { get; set; }
         public int resEventid { get; set; }
+        public string paypalID { get; set; }
 
     }
 }

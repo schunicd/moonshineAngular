@@ -126,6 +126,12 @@ export class DataService {
     this.http.post(this.baseUrl + 'api/AdminSendEmail', email).subscribe(data => postData = data);
   }
 
+  sendReservationEmail(email: ReservationEmail){
+    var postData: any;
+    console.log(email)
+    this.http.post(this.baseUrl + 'api/AdminSendEmail/Reservation', email).subscribe(data => postData = data);
+  }
+
   logOut(){
 
   }
@@ -137,7 +143,15 @@ interface Email {
   image: String;
 }
 
-interface updateEvent{
-  id: string;
-  description: string;
+interface ReservationEmail {
+  subject: String;
+  body: String;
+  eventDate: String;
+  eventName: String;
+  name: String;
+  email: String;
+  purchaseDate: Date;
+  totalSeats: Number;
+  totalCost: String;
+  paypalID: String;
 }

@@ -51,6 +51,7 @@ export class ReservationsComponent implements OnInit {
     this.name = "";
     this.email = "";
     this.customer = new Customer();
+    console.log("MIN DATE");
     console.log(this.minDate);
 
     this.myGroup = new FormGroup({
@@ -159,44 +160,67 @@ export class ReservationsComponent implements OnInit {
       actions.order.get().then(details => {
         console.log('onApprove - you can get full order details inside onApprove: ', details);
 
-        //setting values for customer
-        this.customer.name = this.name;
-        this.customer.email = this.email;
-        this.customer.onMailingList = false;
 
-        //if the customer is not an existing customer, add them to the list of customers,
-        //and then refresh the list of customers so we can find their ID in the next step.
-        if(!this.existingCustomers.find(c => c.email == this.customer.email)){
-          this.data.postCustomer(this.customer);
-          this.getCustomers();
-        }
-
-        //getting the customers ID from the list of existing customers
-        let customerId = this.existingCustomers.find(c => c.email == this.customer.email).id;
-
-        //creating a new reservation object and getting the date/time when the client is placing the order
-        var reservation = new Reservation();
-        let reservationDate = new Date();
-
-        //setting the values for the reservation before we post it to reservations DB
-        reservation.customerid = customerId;
-        reservation.paidInAdvance = true;
-        reservation.numberOfSeats = this.seats;
-        reservation.resEventid = this.eventSeatsSold.id;
-        reservation.timeResMade = reservationDate;
-
-        //inserting the reservation into reservation DB
-        this.data.postReservation(reservation);
-
-        //adding seats sold to the current number of seats and then updating
-        //the event in the event DB
-        this.eventSeatsSold.currentNumberOfSeats += this.seats;
-        this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
       });
     },
     onClientAuthorization: (data) => {
       console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
       this.showSuccess = true;
+
+      //setting values for customer
+      this.customer.name = this.name;
+      this.customer.email = this.email;
+      this.customer.onMailingList = false;
+
+      //if the customer is not an existing customer, add them to the list of customers,
+      //and then refresh the list of customers so we can find their ID in the next step.
+      if(!this.existingCustomers.find(c => c.email == this.customer.email)){
+        this.data.postCustomer(this.customer);
+        this.getCustomers();
+      }
+
+      //getting the customers ID from the list of existing customers
+      let customerId = this.existingCustomers.find(c => c.email == this.customer.email).id;
+
+      //creating a new reservation object and getting the date/time when the client is placing the order
+      var reservation = new Reservation();
+      let reservationDate = new Date();
+
+      console.log("RESERVATION DATE");
+      console.log(reservationDate);
+
+      //setting the values for the reservation before we post it to reservations DB
+      reservation.customerid = customerId;
+      reservation.paidInAdvance = true;
+      reservation.numberOfSeats = this.seats;
+      reservation.resEventid = this.eventSeatsSold.id;
+      reservation.timeResMade = reservationDate;
+
+      //inserting the reservation into reservation DB
+      this.data.postReservation(reservation);
+
+      //adding seats sold to the current number of seats and then updating
+      //the event in the event DB
+      this.eventSeatsSold.currentNumberOfSeats += this.seats;
+      this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
+
+      let reservationEmail = {
+        email: this.email,
+        body: "Thank you for your purchase, please find your reciept below:",
+        eventDate: this.eventSeatsSold.eventStart.toString(),
+        eventName: this.eventSeatsSold.bandName + " " + this.eventSeatsSold.ticketPrice,
+        name: this.customer.name,
+        paypalID: data.id,
+        purchaseDate: reservationDate,
+        subject: "Order Confirmation: " + data.id,
+        totalCost: data.purchase_units[0].amount.value,
+        totalSeats: this.seats
+      }
+
+
+      //Sending Reservation Confirmation Email to Client
+      this.data.sendReservationEmail(reservationEmail);
+
     },
     onCancel: (data, actions) => {
       console.log('OnCancel', data, actions);
@@ -220,7 +244,7 @@ export class ReservationsComponent implements OnInit {
       day = "0" + day;
 
     let filterDate = this.date.getUTCFullYear() + "-" + month + "-" + day;
-    console.log(this.eventsNoTime[10]);
+    //console.log(this.eventsNoTime[10]);
     return this.eventsNoTime.filter(x => x.eventStart.toString().split("T")[0] == filterDate);
   }
 

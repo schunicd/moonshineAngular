@@ -16,8 +16,6 @@ export class AdminSendEmailComponent implements OnInit {
   emailBody: String;
   emailImage: File;
 
-  completeEmail: Email;
-
   ngOnInit() {
   }
 
