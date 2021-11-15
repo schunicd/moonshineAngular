@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material';
 import { DataService } from '../data.service';
 import { Event } from '../Event';
 import { EventWithID } from '../EventWithID';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-admin-crud-event',
@@ -22,6 +23,7 @@ export class AdminCrudEventComponent implements OnInit {
   cancelButton: boolean;
 
   eventID: number;
+  googleCalID: String;
   eventTitle: String;
   eventLink: String;
   eventImage: String;
@@ -40,8 +42,6 @@ export class AdminCrudEventComponent implements OnInit {
 
   constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
-    this.getEvents();
-
   }
 
   getEvents(){
@@ -52,6 +52,7 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getEvents();
     this.createButton = true;
     this.editButton = false;
     this.deleteButton = false;
@@ -95,6 +96,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.ticketPrice = this.eventEditDelete.ticketPrice;
     this.maxSeats = this.eventEditDelete.maxNumberOfSeats;
     this.refundCutoffDateTime = this.eventEditDelete.refundCutOffDate;
+    this.googleCalID = this.eventEditDelete.googleCalID;
   }
 
   confirmDelete(){
@@ -104,10 +106,11 @@ export class AdminCrudEventComponent implements OnInit {
     this.cancelButton = false;
 
     console.log(this.eventID);
-    this.data.deleteEvent(this.eventID);
+    this.data.deleteEvent(this.googleCalID);
     this.getEvents();
     this.clearForm();
     this.successSnackBar("Event Deleted!");
+    this.ngOnInit();
   }
 
   resetEventName(){
@@ -143,7 +146,6 @@ export class AdminCrudEventComponent implements OnInit {
     else{
       this.failureSnackBar("Please verify all fields with a red '*' are filled out accurately.", "Close");
     }
-
   }
 
   filterEvents(){
@@ -165,14 +167,13 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   editEvent(){
-
     this.createButton = false;
     this.editButton = true;
     this.deleteButton = false;
     this.cancelButton = true;
     this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
     this.eventTitle = this.eventEditDelete.bandName;
-    this.eventImage = "C://Desktop";
+    this.eventImage = "";
     this.eventLink = this.eventEditDelete.bandLink;
     this.eventDescription = this.eventEditDelete.description;
     this.startDateTime = this.eventEditDelete.eventStart;
@@ -180,6 +181,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.ticketPrice = this.eventEditDelete.ticketPrice;
     this.maxSeats = this.eventEditDelete.maxNumberOfSeats;
     this.refundCutoffDateTime = this.eventEditDelete.refundCutOffDate;
+    this.googleCalID = this.eventEditDelete.googleCalID;
   }
 
   confirmEdit(){
@@ -198,6 +200,10 @@ export class AdminCrudEventComponent implements OnInit {
     this.eventEditDelete.maxNumberOfSeats = this.maxSeats;
     this.eventEditDelete.refundCutOffDate = this.refundCutoffDateTime;
     this.data.editEvent(this.eventID, this.eventEditDelete);
+    
+    this.getEvents();
+    this.clearForm();
+    this.successSnackBar("Event Edited!");
   }
 
   cancelEditDelete(){

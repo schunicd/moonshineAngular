@@ -27,6 +27,10 @@ export class HomeComponent {
       console.log(this.event);
     }, error => console.error(error));
 
+    this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
+      console.log(result);
+    }, error => console.error(error));
+
    }
 
    getMailingListClients(){

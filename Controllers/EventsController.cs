@@ -10,6 +10,12 @@ using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
 using TheMoonshineCafe.Models;
 using System.Text;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Calendar.v3;
+using Google.Apis.Calendar.v3.Data;
+using Google.Apis.Services;
+using Microsoft.AspNetCore.Authorization;
+using Event = Google.Apis.Calendar.v3.Data.Event;
 
 namespace TheMoonshineCafe.Controllers
 {
@@ -18,9 +24,38 @@ namespace TheMoonshineCafe.Controllers
     public class EventsController : ControllerBase
     {
         private readonly MoonshineCafeContext _context;
+        string jsonFile = "GCalServiceAccountCredentials.json";
+        string calendarId = @"schunicd@gmail.com";
+        static string[] Scopes = { CalendarService.Scope.Calendar };
+        private ServiceAccountCredential credential;
+        public CalendarService service;
+
+        public void SetService(ServiceAccountCredential cred)
+        {
+            service = new CalendarService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = "Calendar API Sample",
+            });
+        }
+
         public EventsController(MoonshineCafeContext context)
         {
             _context = context;
+
+            using (var stream =
+                new FileStream(jsonFile, FileMode.Open, FileAccess.Read))
+            {
+                // The file token.json stores the user's access and refresh tokens, and is created
+                // automatically when the authorization flow completes for the first time.
+                var confg = Google.Apis.Json.NewtonsoftJsonSerializer.Instance.Deserialize<JsonCredentialParameters>(stream);
+                credential = new ServiceAccountCredential(
+                   new ServiceAccountCredential.Initializer(confg.ClientEmail)
+                   {
+                       Scopes = Scopes
+                   }.FromPrivateKey(confg.PrivateKey));
+                SetService(credential);
+            }
         }
 
         // GET: api/Events
@@ -30,15 +65,37 @@ namespace TheMoonshineCafe.Controllers
             return await _context.Events.ToListAsync();
         }
 
+        [HttpGet("Calendar")]
+        public List<Event> GetCalendarEvents()
+        {
+            //Console.WriteLine("Your api function can be called");
+            List<Event> calendarEvents = new List<Event>();
+
+            EventsResource.ListRequest request = service.Events.List(calendarId);
+            request.TimeMin = DateTime.Now;
+            request.ShowDeleted = false;
+            request.SingleEvents = true;
+            request.MaxResults = 10;
+            request.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+
+            // List events.
+            Events events = request.Execute();
+            foreach(Event e in events.Items)
+            {
+                calendarEvents.Add(e);
+            }
+            return calendarEvents;
+        }
+
         [HttpGet("upcoming")]
         public async Task<ActionResult<IEnumerable<Models.Event>>> GetUpcomingEvents()
         {
-            List<Event> events = await _context.Events.ToListAsync();
-            List<Event> upcoming = new List<Event>();
-            List<Event> sortedUpcoming = new List<Event>();
+            List<Models.Event> events = await _context.Events.ToListAsync();
+            List<Models.Event> upcoming = new List<Models.Event>();
+            List<Models.Event> sortedUpcoming = new List<Models.Event>();
             DateTime now = DateTime.Now;
 
-            foreach(Event e in events)
+            foreach(Models.Event e in events)
             {
                 if(e.eventStart.Date >= now.Date)
                 {
@@ -58,7 +115,7 @@ namespace TheMoonshineCafe.Controllers
             }
         }
 
-        private List<Event> BubbleSort(List<Event> toSort, int listLength)
+        private List<Models.Event> BubbleSort(List<Models.Event> toSort, int listLength)
         {
             Console.WriteLine("I've run" + listLength);
             if(listLength == 1)
@@ -66,12 +123,12 @@ namespace TheMoonshineCafe.Controllers
                 return toSort;
             }
 
-            List<Event> sorted = new List<Event>();
+            List<Models.Event> sorted = new List<Models.Event>();
             for(int i = 0; i < listLength - 1; i++)
             {
                 if(toSort[i].eventStart > toSort[i + 1].eventStart)
                 {
-                    Event temp = toSort[i];
+                    Models.Event temp = toSort[i];
                     toSort[i] = toSort[i + 1];
                     toSort[i + 1] = temp;
                 }
@@ -100,26 +157,118 @@ namespace TheMoonshineCafe.Controllers
         // POST: api/Events
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Event>> PostEvent(Event @event)
+        public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
-            _context.Events.Add(@event);
+            //creating new event object based off of the Google API Event type
+            Event newEvent = new Event(){
+                //assigning values for events
+                Summary = @event.bandName + " " + @event.eventStart.Hour + " $" + @event.ticketPrice, 
+                Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
+                Description = @event.bandName + " " + @event.bandLink + " " + @event.description,
+                Start = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(@event.eventStart.ToLongDateString())
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(@event.eventEnd.ToLongDateString())
+                },
+            };
+
+            //Building request to insert the new event in the primary (default) calendar
+            EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
+            //Executes the request and assigns the response value to a variable to be used later
+            
+            try
+            {
+                Event createdEvent = request.Execute();
+                @event.googleCalID = createdEvent.Id;
+                _context.Events.Add(@event);
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    service.Events.Update(newEvent, calendarId, newEvent.Id).Execute();
+                    Console.WriteLine("Insert/Update new Event ");
+
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("can't Insert/Update new Event ");
+
+                }
+            }
+
+            //Overwriting the default google Calendar ID that was assigned in admin-crud-event.components.ts (101,20)
+            
+            //Adding the new event with the official Google Calendar ID from GOOGLE to the Events
+            
+            //Save the new event
             await _context.SaveChangesAsync();
 
+            //displaying the link to the created event for troubleshooting purposes
+            //Console.WriteLine("Event created: {0}", createdEvent.HtmlLink);
+            //returns status code for event creation
             return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
         }
 
+        // POST: api/Events No Google API
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /*        [HttpPost]
+                public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
+                {
+                    _context.Events.Add(@event);
+                    await _context.SaveChangesAsync();
+
+                    return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
+                }*/
+
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutEvent(Event model)
+        //public async Task<ActionResult> PutEvent(Models.Event model)
+        public async Task<ActionResult> PutEvent(Models.Event model)
         {
+            if (!EventExists(model.googleCalID))
+            {
+                return NotFound();
+            }
+
+            Models.Event foundEvent = _context.Events.Where(e => e.googleCalID == model.googleCalID).FirstOrDefault();
+            //var existedEvent = await _context.Set<Models.Event>().FirstOrDefaultAsync(i=> i.id==model.id);
             
-            var existedEvent = await _context.Set<Event>().FirstOrDefaultAsync(i=> i.id==model.id);
-            
-            if (existedEvent == null)
+            if (foundEvent == null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(existedEvent).CurrentValues.SetValues(model);
+            Event newEvent = new Event()
+            {
+                //assigning values for events
+                Summary = model.bandName + " " + model.eventStart.Hour + " $" + model.ticketPrice,
+                Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
+                Description = model.bandName + " " + model.bandLink + " " + model.description,
+                Start = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(model.eventStart.ToLongDateString())
+                },
+                End = new EventDateTime()
+                {
+                    DateTime = DateTime.Parse(model.eventEnd.ToLongDateString())
+                },
+            };
+
+            try
+            {
+
+                service.Events.Update(newEvent, calendarId, foundEvent.googleCalID).Execute();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to Delete on Google Calendar");
+                return BadRequest();
+            }
+
+            _context.Entry(foundEvent).CurrentValues.SetValues(model);
 
             try
             {
@@ -139,115 +288,10 @@ namespace TheMoonshineCafe.Controllers
 
             return NoContent();
         }
-
-/*
-        // PUT: api/Events/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutEvent(int id, Event @event)
-        {
-            if (id != @event.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(@event).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!EventExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-*/
-
-
-        /*        // PUT: api/Events/test
-                // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-                [HttpPut("{id}")]
-                public async Task<IActionResult> PutEvent(int id, Models.Event @event)
-                {
-                    if (id != @event.id)
-                    {
-                        return BadRequest();
-                    }
-
-                    _context.Entry(@event).State = EntityState.Modified;
-
-                    try
-                    {
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!EventExists(id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
-
-                    return NoContent();
-                }
-        */
-
-
-        /*        // POST: api/Events
-                // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-                [HttpPost]
-                public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
-                {
-                    //creating new event object based off of the Google API Event type
-                    Google.Apis.Calendar.v3.Data.Event newEvent = new Google.Apis.Calendar.v3.Data.Event(){
-                        //assigning values for events
-                        Summary = @event.bandName + " " + @event.eventStart.Hour + " $" + @event.ticketPrice, 
-                        Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
-                        Description = @event.bandName + " " + @event.bandLink + " " + @event.description,
-                        Start = new EventDateTime()
-                        {
-                            DateTime = DateTime.Parse(@event.eventStart.ToLongDateString())
-                        },
-                        End = new EventDateTime()
-                        {
-                            DateTime = DateTime.Parse(@event.eventEnd.ToLongDateString())
-                        },
-                    };
-
-                    //Building request to insert the new event in the primary (default) calendar
-                    EventsResource.InsertRequest request = TheMoonshineCafe.Program.service.Events.Insert(newEvent, "primary");
-                    //Executes the request and assigns the response value to a variable to be used later
-                    Google.Apis.Calendar.v3.Data.Event createdEvent = request.Execute();
-
-                    //Overwriting the default google Calendar ID that was assigned in admin-crud-event.components.ts (101,20)
-                    @event.googleCalID = createdEvent.Id;
-                    //Adding the new event with the official Google Calendar ID from GOOGLE to the Events
-                    _context.Events.Add(@event);
-                    //Save the new event
-                    await _context.SaveChangesAsync();
-
-                    //displaying the link to the created event for troubleshooting purposes
-                    Console.WriteLine("Event created: {0}", createdEvent.HtmlLink);
-                    //returns status code for event creation
-                    return CreatedAtAction("GetEvent", new { id = @event.id }, @event);
-                }*/
+       
 
         // DELETE: api/Events/5
-        [HttpDelete("{id}")]
+/*        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             var @event = await _context.Events.FindAsync(id);
@@ -260,12 +304,17 @@ namespace TheMoonshineCafe.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-/*
+        }*/
+
         //DELETE: api/Events/calID
         [HttpDelete("{calID}")]
         public async Task<IActionResult> DeleteEventByCalID(String calID)
         {
+            if (!EventExists(calID))
+            {
+                return NotFound();
+            }
+
             Models.Event foundEvent = _context.Events.Where(e => e.googleCalID == calID).FirstOrDefault();
             var @event = await _context.Events.FindAsync(foundEvent.id);
             if (@event == null)
@@ -273,21 +322,41 @@ namespace TheMoonshineCafe.Controllers
                 return NotFound();
             }
 
+            try
+            {
+                service.Events.Delete(calendarId, calID).Execute();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Failed to Delete on Google Calendar");
+                return BadRequest();
+            }
+
             _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
-            TheMoonshineCafe.Program.service.Events.Delete("primary", calID).Execute();
+
+            try
+            {
+                
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                Console.WriteLine("Failed to update database");
+                return BadRequest();
+            }
+                      
 
             return NoContent();
-        }*/
+        }
 
         private bool EventExists(int id)
         {
             return _context.Events.Any((System.Linq.Expressions.Expression<Func<Models.Event, bool>>)(e => e.id == id));
         }
 
-/*        private bool EventExists(string calID)
+        private bool EventExists(string calID)
         {
             return _context.Events.Any((System.Linq.Expressions.Expression<Func<Models.Event, bool>>)(e => e.googleCalID == calID));
-        }*/
+        }
     }
 }
