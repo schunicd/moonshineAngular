@@ -140,6 +140,22 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
+        [HttpGet("EventsWithRes")]
+        public async Task<ActionResult<IEnumerable<Event>>> GetEventsWithReservations()
+        {
+            List<Event> events = await _context.Events.ToListAsync();
+            List<Event> eventsWithRes = new List<Event>();
+
+            foreach(Event e in events){
+                if(e.currentNumberOfSeats > 0)
+                {
+                    eventsWithRes.Add(e);
+                }
+            }
+
+            return eventsWithRes;
+        }
+
 /*
         // PUT: api/Events/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

@@ -195,6 +195,7 @@ export class ReservationsComponent implements OnInit {
       reservation.numberOfSeats = this.seats;
       reservation.resEventid = this.eventSeatsSold.id;
       reservation.timeResMade = reservationDate;
+      reservation.paypalId = data.id;
 
       //inserting the reservation into reservation DB
       this.data.postReservation(reservation);
@@ -211,7 +212,7 @@ export class ReservationsComponent implements OnInit {
         name: this.customer.name,
         paypalID: data.id,
         purchaseDate: reservationDate,
-        subject: "Order Confirmation: " + data.id,
+        subject: "Receipt # " + data.id,
         ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
         subtotal: data.purchase_units[0].amount.breakdown.item_total.value,
         taxes: data.purchase_units[0].amount.breakdown.tax_total.value,

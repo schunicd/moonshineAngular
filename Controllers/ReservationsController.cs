@@ -100,6 +100,23 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
+        [HttpGet("eId={eId}")]
+        public async Task<ActionResult<IEnumerable<Reservation>>> GetReservationByEventID(int eId)
+        {
+            List<Reservation> reservations = await _context.Reservations.ToListAsync();
+
+            foreach(Reservation r in reservations)
+            {
+                if(r.resEventid != eId)
+                {
+                    reservations.Remove(r);
+                }
+            }
+
+            return reservations;
+        }
+
+
         private bool ReservationExists(int id)
         {
             return _context.Reservations.Any(e => e.id == id);

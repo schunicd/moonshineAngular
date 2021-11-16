@@ -5,4 +5,5 @@ export class Reservation {
     customerid: number;
     numberOfSeats: number;
     resEventid: number;
+    paypalId: string;
 }

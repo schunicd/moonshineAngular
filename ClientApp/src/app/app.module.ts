@@ -8,6 +8,7 @@ import { MatGridListModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTableModule} from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -65,6 +66,7 @@ import { PaypalComponent } from './paypal/paypal.component';
     MatDialogModule,
     NgxPayPalModule,
     MatExpansionModule,
+    MatTableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'reservations', component: ReservationsComponent },

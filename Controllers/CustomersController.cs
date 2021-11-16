@@ -28,6 +28,20 @@ namespace TheMoonshineCafe.Controllers
             return await _context.Customers.ToListAsync();
         }
 
+        // GET: api/Customers/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Customer>> GetCustomer(int id)
+        {
+            var customer = await _context.Customers.FindAsync(id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return customer;
+        }
+
     /*
         // GET: api/Customers/email
         [HttpGet("{email}")]
@@ -44,19 +58,7 @@ namespace TheMoonshineCafe.Controllers
         }
 
 
-        // GET: api/Customers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int id)
-        {
-            var customer = await _context.Customers.FindAsync(id);
-
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            return customer;
-        }
+        
 */
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
