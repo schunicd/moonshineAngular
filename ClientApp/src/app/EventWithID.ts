@@ -10,4 +10,5 @@ export class EventWithID {
     currentNumberOfSeats: number;
     ticketPrice: number;
     description: String;
+    googleCalID: String;
   }

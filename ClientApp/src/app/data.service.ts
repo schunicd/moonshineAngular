@@ -81,9 +81,9 @@ export class DataService {
   }
 
 
-  deleteEvent(id: Number){
+  deleteEvent(calID: String){
     var callResult : any;
-    this.http.delete(this.baseUrl + 'api/Events/' + id).subscribe(result =>{
+    this.http.delete(this.baseUrl + 'api/Events/' + calID).subscribe(result =>{
       callResult = result;
       console.log(callResult);
     }, error => {console.error(error)});

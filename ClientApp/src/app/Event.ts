@@ -10,3 +10,4 @@ export class Event {
     ticketPrice: number;
     description: String;
   }
+//No googleCalID for the same reason no ID is present here 
