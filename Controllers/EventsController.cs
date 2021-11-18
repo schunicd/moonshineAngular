@@ -159,19 +159,24 @@ namespace TheMoonshineCafe.Controllers
         [HttpPost]
         public async Task<ActionResult<Models.Event>> PostEvent(Models.Event @event)
         {
+            string bandLink = "";
+            if (@event.bandLink != null)
+            {
+                bandLink = "<a href=\"" + @event.bandLink + "\"> "+ @event.bandName + "</a> \n";
+            }
             //creating new event object based off of the Google API Event type
-            Event newEvent = new Event(){
+            Event newEvent = new Event() {
                 //assigning values for events
-                Summary = @event.bandName + " " + @event.eventStart.Hour + " $" + @event.ticketPrice, 
+                Summary = (@event.bandName + " " + @event.eventStart.ToShortTimeString() + "-" + @event.eventEnd.ToShortTimeString() + " $" + @event.ticketPrice).ToUpper(), 
                 Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
-                Description = @event.bandName + " " + @event.bandLink + " " + @event.description,
+                Description = bandLink + " " + @event.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventStart.ToLongDateString())
+                    DateTime = DateTime.Parse(@event.eventStart.ToString())
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventEnd.ToLongDateString())
+                    DateTime = DateTime.Parse(@event.eventEnd.ToString())
                 },
             };
 
@@ -259,19 +264,28 @@ namespace TheMoonshineCafe.Controllers
                 return BadRequest();
             }
 
+            string bandLink = "";
+            if (model.bandLink != null)
+            {
+                bandLink = "<a href=\"" + model.bandLink + "\"> " + model.bandName + "</a> \n";
+            }
+
+            Console.WriteLine(model.eventStart.ToString());
+
             Event newEvent = new Event()
             {
                 //assigning values for events
-                Summary = model.bandName + " " + model.eventStart.Hour + " $" + model.ticketPrice,
+
+                Summary = (model.bandName + " " + model.eventStart.ToShortTimeString() + "-" + model.eventEnd.ToShortTimeString() + " $" + model.ticketPrice).ToUpper(),
                 Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
-                Description = model.bandName + " " + model.bandLink + " " + model.description,
+                Description = bandLink + " " + model.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventStart.ToLongDateString())
+                    DateTime = DateTime.Parse(model.eventStart.ToString())
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventEnd.ToLongDateString())
+                    DateTime = DateTime.Parse(model.eventEnd.ToString())
                 },
             };
 
