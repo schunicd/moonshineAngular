@@ -15,9 +15,10 @@
 .tableHeaders{
   text-align: center;
   padding-left: 20px;
+  padding-right: 20px;
 }
 
 #centerTable{
-  padding-left: auto;
-  padding-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, } from '@angular/common/http';
 import { EventWithID } from '../EventWithID';
 import { Reservation } from '../Reservation';
+import { Customer } from '../Customer';
 
 @Component({
   selector: 'app-admin-view-reservations',
@@ -15,6 +16,7 @@ export class AdminViewReservationsComponent implements OnInit {
   events: EventWithID[];
   selectedEvent: EventWithID;
   reservations: Reservation[];
+  customers: Customer[] = [];
   eventId: Number;
 
   displayedColumns: string[] = ['Reservation ID', 'Customer ID', 'Seats Reserved', 'Paid In Advance', 'Paypal ID', 'Event ID', 'Time Reservation was Made', 'Customer Name'];
@@ -29,14 +31,24 @@ export class AdminViewReservationsComponent implements OnInit {
   GetReservationsBySelectedEventID(id: Number){
     this.http.get<Reservation[]>(this.baseUrl + 'api/Reservations/eId=' + id).subscribe(result => {
       this.reservations = result;
+      this.reservations.forEach(r => {
+        this.GetAssociatedCustomer(r.customerid);
+      });
       console.log(this.reservations);
     }, error => console.error(error));
   }
 
   GetAssociatedCustomer(id: Number){
-    this.http.get<any>(this.baseUrl + 'api/Customers/' + id).subscribe(result => {
-      return result.name;
+    this.http.get<Customer>(this.baseUrl + 'api/Customers/' + id).subscribe(result => {
+      if(!this.customers.find(customer => customer = result))
+      this.customers.push(result);
+      console.log(result);
+      console.log(this.customers);
     }, error => console.error(error));
+  }
+
+  findSpecificCustomer(id: Number){
+    return (this.customers.filter(cust => {return cust.id == id}))[0].name;
   }
 
   formatEventDate(ed){
