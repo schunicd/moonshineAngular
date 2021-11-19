@@ -1,17 +1,31 @@
-.photoStyle{
-  height: 250px;
-  width: 400px;
-  margin-left: 100px;
-  margin-right: 70px;
-  margin-top: 50px;
-  float: left;
+@media screen and (max-width: 767px){
+  .photoStyle{
+    height: 250px;
+    width: 320px;
+    margin-left:15px;
+    margin-right: auto;
+    margin-top: 50px;
+  }
+
 }
 
-img {
-  transition:transform 0.25s ease;
-}
+@media screen and (min-width: 768px){
+  .photoStyle{
+    height: 250px;
+    width: 400px;
+    margin-left: 100px;
+    margin-right: 70px;
+    margin-top: 50px;
+    float: left;
+  }
 
-img:hover {
-  -webkit-transform:scale(1.5);
-  transform:scale(1.5);
+  img {
+    transition:transform 0.25s ease;
+  }
+
+  img:hover {
+    -webkit-transform:scale(1.5);
+    transform:scale(1.5);
+  }
+
 }

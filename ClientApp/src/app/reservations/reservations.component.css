@@ -6,10 +6,6 @@ mat-vertical-stepper{
   background-color: rgba(255, 255, 255, 0.7);
 }
 
-#reservationsBody{
-  margin: auto;
-}
-
 @media screen and (max-width: 768px){
 
   #calendar {
@@ -27,9 +23,11 @@ mat-vertical-stepper{
   }
 
   #moonshineCalendar{
-      width: 85vw !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
+    overflow-y: auto;
+    height: 500px;
+    width: 90vw !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   mat-vertical-stepper{
       width: 85vw;
@@ -37,6 +35,11 @@ mat-vertical-stepper{
 }
 
 @media screen and (min-width: 769px){
+
+  #formAndCalContainer{
+    margin-left: 20px;
+    margin-right: 20px;
+  }
 
   #reservationsBody{
     margin-left: 5%;
@@ -82,11 +85,6 @@ mat-vertical-stepper{
   background-color: rgb(131, 131, 131);
   border-radius: 10px;
   outline: 1px solid slategrey;
-}
-
-#formAndCalContainer{
-  margin-left: 20px;
-  margin-right: 20px;
 }
 
 #calendar {
