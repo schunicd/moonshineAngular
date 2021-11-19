@@ -73,6 +73,22 @@ export class ReservationsComponent implements OnInit {
 
   }
 
+  convertTime = (time24) => {
+    const [sHours, minutes] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
+    const period = +sHours < 12 ? 'AM' : 'PM';
+    const hours = +sHours % 12 || 12;
+
+    return `${hours}:${minutes} ${period}`;
+  }
+
+  convertCalendarDate = (dateNumbers) => {
+
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    let temp_date = dateNumbers.split("T")[0].split("-");
+  return months[Number(temp_date[1]) - 1] + " " + temp_date[2] + " " + temp_date[0];
+  }
+
   convertDate(date){
     return date.split(" ")[0] + " " + date.split(" ")[1] + " " + date.split(" ")[2] + " " + date.split(" ")[3];
   }

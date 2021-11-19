@@ -1,5 +1,5 @@
 
-#calendar{width: 900px;}
+#calendar{width: 800px;}
 
 .centerCalendar{
   display: flex;
@@ -7,16 +7,55 @@
   justify-content: center;
 }
 
-@media screen and (max-width: 767px){
+#title{
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  #calendar{width: 300px;}
+#description{
+  margin-left: auto;
+  float:right;
+}
+
+.alignText{
+  width: 100px;
+}
+
+#moonshineCalendar::-webkit-scrollbar {
+  width: 1em;
+}
+
+#moonshineCalendar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+#moonshineCalendar::-webkit-scrollbar-thumb {
+  background-color: rgb(131, 131, 131);
+  border-radius: 10px;
+  outline: 1px solid slategrey;
+}
+
+@media screen and (max-width: 767px){
+  #moonshineCalendar{
+    overflow-y: auto;
+    width: 320px !important;
+    height: 500px;
+    border-radius: 5px;
+  }
+  #calendarTitle{margin-left: none !important;}
   #calendarLarge{display: none !important;}
 
 }
 
 @media screen and (min-width: 768px){
-
-  #calendarLarge{width: 750px;}
+  #moonshineCalendar{
+    overflow-y: auto;
+    width: 1000px !important;
+    height: 600px;
+    border-radius: 5px;
+  }
+  #calendarTitle{margin-left:100px !important;}
   #calendarSmall{display: none !important;}
 
   }

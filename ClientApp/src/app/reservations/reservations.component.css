@@ -39,7 +39,7 @@ mat-vertical-stepper{
 @media screen and (min-width: 769px){
 
   #reservationsBody{
-    margin: 0%;
+    margin-left: 5%;
     width: 10vw;
     float: left;
   }
@@ -49,11 +49,39 @@ mat-vertical-stepper{
   }
 
   #moonshineCalendar{
-    margin-right: 10vw;
+    margin-right: 5%;
+    overflow-y: auto;
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
     float: right;
   }
 
+}
 
+#title{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#description{
+  margin-left: auto;
+  float:right;
+}
+
+#moonshineCalendar::-webkit-scrollbar {
+  width: 1em;
+}
+
+#moonshineCalendar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+#moonshineCalendar::-webkit-scrollbar-thumb {
+  background-color: rgb(131, 131, 131);
+  border-radius: 10px;
+  outline: 1px solid slategrey;
 }
 
 #formAndCalContainer{

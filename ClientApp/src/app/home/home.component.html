@@ -1,6 +1,6 @@
 <div id="homePage" class="grid-container">
 
-  <h3 id="leftTileHeader">Welcome to the <h3 id="leftMoonshineCafeColor">Moonshine Café</h3></h3>
+  <h3 id="leftTileHeader" class="centerText">Welcome to the <h3 id="leftMoonshineCafeColor">Moonshine Café</h3></h3>
 
   <div id="spotlightHeaderBackground">
     <h3 id="spotlightHeaderText">In The Spotlight</h3>
@@ -8,28 +8,28 @@
 
   <div id="spotlightOne" class="spotlightStyle">
     <img *ngIf="event[0].bandImagePath" src="{{event[0].bandImagePath}}" class="spotlightAlbumImage">
-    <h5 *ngIf="event[0].bandLink; else spt1"><a href="{{event[0].bandLink}}" target="_blank">{{event[0].bandName}}</a> : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5>
+    <h5 *ngIf="event[0].bandLink; else spt1"><a href="{{event[0].bandLink}}" class="spotlightLink" target="_blank">{{event[0].bandName}}</a> : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5>
     <ng-template #spt1><h5>{{event[0].bandName}} : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5></ng-template>
     <p>{{event[0].description}}</p>
   </div>
 
   <div id="spotlightTwo" class="spotlightStyle">
     <img *ngIf="event[1].bandImagePath" src="{{event[1].bandImagePath}}" class="spotlightAlbumImage">
-    <h5 *ngIf="event[1].bandLink; else spt2"><a href="{{event[1].bandLink}}" target="_blank">{{event[1].bandName}}</a> : {{convertDate(event[1].eventStart)}} {{convertTime(event[1].eventStart)}} ${{event[1].ticketPrice}}</h5>
+    <h5 *ngIf="event[1].bandLink; else spt2"><a href="{{event[1].bandLink}}" class="spotlightLink" target="_blank">{{event[1].bandName}}</a> : {{convertDate(event[1].eventStart)}} {{convertTime(event[1].eventStart)}} ${{event[1].ticketPrice}}</h5>
     <ng-template #spt2><h5>{{event[1].bandName}} : {{convertDate(event[1].eventStart)}} {{convertTime(event[1].eventStart)}} ${{event[1].ticketPrice}}</h5></ng-template>
     <p>{{event[1].description}}</p>
   </div>
 
   <div id="spotlightThree" class="spotlightStyle">
     <img *ngIf="event[2].bandImagePath" src="{{event[2].bandImagePath}}" class="spotlightAlbumImage">
-    <h5 *ngIf="event[2].bandLink; else spt3"><a href="{{event[2].bandLink}}" target="_blank">{{event[2].bandName}}</a> : {{convertDate(event[2].eventStart)}} {{convertTime(event[2].eventStart)}} ${{event[2].ticketPrice}}</h5>
+    <h5 *ngIf="event[2].bandLink; else spt3"><a href="{{event[2].bandLink}}" class="spotlightLink" target="_blank">{{event[2].bandName}}</a> : {{convertDate(event[2].eventStart)}} {{convertTime(event[2].eventStart)}} ${{event[2].ticketPrice}}</h5>
     <ng-template #spt3><h5>{{event[2].bandName}} : {{convertDate(event[2].eventStart)}} {{convertTime(event[2].eventStart)}} ${{event[2].ticketPrice}}</h5></ng-template>
     <p>{{event[2].description}}</p>
   </div>
 
   <div id="spotlightFour" class="spotlightStyle">
     <img *ngIf="event[3].bandImagePath" src="{{event[3].bandImagePath}}" class="spotlightAlbumImage">
-    <h5 *ngIf="event[3].bandLink; else spt4"><a href="{{event[3].bandLink}}" target="_blank">{{event[3].bandName}}</a> : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5>
+    <h5 *ngIf="event[3].bandLink; else spt4"><a href="{{event[3].bandLink}}" class="spotlightLink" target="_blank">{{event[3].bandName}}</a> : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5>
     <ng-template #spt4><h5>{{event[3].bandName}} : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5></ng-template>
     <p>{{event[3].description}}</p>
   </div>
@@ -46,7 +46,7 @@
     <iframe id="moonshineVideo" width="350" height="300" src="https://www.youtube.com/embed/pDOoidfERvQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
   </div>
 
-  <div id="moonshineCalendar" class="center">
+  <div id="moonshineCalendar">
     <!--
     <iframe id="calendarSize" src="https://calendar.google.com/calendar/embed?height=400&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FToronto&amp;src=c2NodW5pY2RAZ21haWwuY29t&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGhlbW9vbnNoaW5lY2FmZUBnbWFpbC5jb20&amp;color=%237986CB&amp;color=%233F51B5&amp;color=%23C0CA33&amp;color=%23E4C441&amp;mode=AGENDA&amp;showTitle=0" style="border:solid 1px #777" height="400" frameborder="0" scrolling="no"></iframe>
     -->
@@ -55,7 +55,7 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <h5>Future Events</h5>
+            <h5 id="title">Future Events</h5>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <p>Don't see an event on the day you want to visit? <a href="mailto:moonshinecafe@cogeco.net?subject=My Own Show">Contact us</a> to book your own event!</p>
@@ -63,12 +63,13 @@
       <mat-expansion-panel (opened)="panelOpenState = true"
                            (closed)="panelOpenState = false"
                            *ngFor = "let e of event">
-        <mat-expansion-panel-header [collapsedHeight]="'100px'" [expandedHeight]="'120px'">
+        <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
           <mat-panel-title>
-            {{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> {{e.bandName}}
+            <p>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+            <ng-template #plainName>{{e.bandName}}</ng-template>
           </mat-panel-title>
           <mat-panel-description>
-            <br>${{e.ticketPrice}} / ticket
+            <p id="description"><br>${{e.ticketPrice}} / ticket</p>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p>{{e.description}}</p>

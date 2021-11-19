@@ -1,8 +1,73 @@
 <div class="centerCalendar">
+  <!--
 <iframe id="calendarLarge" src="https://www.google.com/calendar/embed?showTitle=0&amp;showCalendars=0&amp;showTz=0&amp;height=650&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=themoonshinecafe%40gmail.com&amp;color=%23711616&amp;ctz=America%2FToronto"
 style=" border-width:0 " width="900" height="650" frameborder="0" scrolling="no"></iframe>
+-->
+  <div id="calendarLarge">
+    <div id="moonshineCalendar">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h5 id="title">Future Events</h5>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Don't see an event on the day you want to visit? <a href="mailto:moonshinecafe@cogeco.net?subject=My Own Show">Contact us</a> to book your own event!</p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false"
+                            *ngFor = "let e of event">
+          <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
+            <mat-panel-title>
+              <img *ngIf="e.bandImagePath; else alignText" src="{{e.bandImagePath}}"><p id="calendarTitle"><br>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+              <ng-template #alignText><p class="alignText"></p></ng-template>
+              <ng-template #plainName>{{e.bandName}}</ng-template>
+            </mat-panel-title>
+            <mat-panel-description>
+              <p id="description"><br><br><b>${{e.ticketPrice}} / ticket</b></p>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{e.description}}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
+  <div id="calendarSmall">
+    <div id="moonshineCalendar">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h5 id="title">Future Events</h5>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>Don't see an event on the day you want to visit? <a href="mailto:moonshinecafe@cogeco.net?subject=My Own Show">Contact us</a> to book your own event!</p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                            (closed)="panelOpenState = false"
+                            *ngFor = "let e of event">
+          <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
+            <mat-panel-title>
+              <p id="calendarTitle"><br>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+              <ng-template #plainName>{{e.bandName}}</ng-template>
+            </mat-panel-title>
+            <mat-panel-description>
+              <p id="description"><br><br><b>${{e.ticketPrice}} / ticket</b></p>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{e.description}}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
 </div>
 
 <div class="centerCalendar">
-<iframe id="calendarSmall" src="https://calendar.google.com/calendar/embed?height=400&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FToronto&amp;src=c2NodW5pY2RAZ21haWwuY29t&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGhlbW9vbnNoaW5lY2FmZUBnbWFpbC5jb20&amp;color=%237986CB&amp;color=%233F51B5&amp;color=%23C0CA33&amp;color=%23E4C441&amp;mode=AGENDA&amp;showTitle=0" style="border:solid 1px #777" height="500" frameborder="0" scrolling="no"></iframe>
+  <!--
+  <iframe id="calendarSmall" src="https://calendar.google.com/calendar/embed?height=400&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FToronto&amp;src=c2NodW5pY2RAZ21haWwuY29t&amp;src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;src=ZW4uY2FuYWRpYW4jaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&amp;src=dGhlbW9vbnNoaW5lY2FmZUBnbWFpbC5jb20&amp;color=%237986CB&amp;color=%233F51B5&amp;color=%23C0CA33&amp;color=%23E4C441&amp;mode=AGENDA&amp;showTitle=0" style="border:solid 1px #777" height="500" frameborder="0" scrolling="no"></iframe>
+  -->
+
+
 </div>

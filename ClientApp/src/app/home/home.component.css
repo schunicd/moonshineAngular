@@ -8,26 +8,38 @@
   padding-bottom: 20px;
 }
 
-a{
+.spotlightLink{
   color: maroon;
 }
 
-
+.centerText{
+  text-align: center;
+}
 
 @media screen and (max-width: 768px){
 
   #leftTileHeader{font-size: 18px;}
   #leftMoonshineCafeColor{font-size: 20px;}
-  #homePage{text-align: center;}
   #spotlightHeaderBackground{margin: auto;}
-  #moonshineCalendar{width:300px; height: 400px; overflow-y: auto;}
+  #moonshineCalendar{width:300px; height: 400px; overflow-y: auto; margin-left: auto; margin-right: auto;}
   #calendarSize{width: 300px;}
-  #moonshineVideo{width: 300px;}
+  #moonshineVideo{width: 300px; margin-top: 10px;}
   #emailText{padding-right: 0;}
   #joinButton{margin-left: 0; margin-top: 10px;}
+  #spotlightOne{border: 2px solid black; border-radius: 5px; margin: 2px; margin-bottom: 5px; padding: 5px;}
+  #spotlightTwo{border: 2px solid black; border-radius: 5px; margin: 2px; margin-bottom: 5px; padding: 5px;}
+  #spotlightThree{border: 2px solid black; border-radius: 5px; margin: 2px; margin-bottom: 5px; padding: 5px;}
+  #spotlightFour{border: 2px solid black; border-radius: 5px; margin: 2px; margin-bottom: 10px; padding: 5px;}
   #emailSubscription{
     width: 225px;
     height: 150px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    text-align: center;
+    margin: auto;
   }
 }
 
@@ -35,7 +47,6 @@ a{
 
   .grid-container{
     display: grid;
-    text-align: center;
     grid-template-areas:
     '. leftTitleGrid leftTitleGrid mailingList .'
     '. spotlightTitleGrid spotlightTitleGrid videoGrid .'
@@ -89,6 +100,11 @@ a{
     border-radius: 5px;
   }
 
+  #description{
+    margin-left: auto;
+    float:right;
+  }
+
   #moonshineCalendar::-webkit-scrollbar {
     width: 1em;
   }
@@ -120,6 +136,11 @@ a{
 
 }
 
+#title{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #leftTileHeader{padding-top: 20px;}
 
 .center{margin: auto;}
@@ -147,6 +168,10 @@ a{
 
 .spotlightText{
   grid-area: 'spotlightText';
+}
+
+.spotlightStyle{
+  text-align: center;
 }
 
 #spotlightHeaderBackground{
