@@ -12,10 +12,11 @@ export class AdminPhotoGaleryComponent implements OnInit {
 
   public progress: number;
   public message: string;
+  public albumName: string;
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
-  upload(files) {
+  upload(files, albumName) {
     if (files.length === 0)
       return;
 
@@ -26,7 +27,7 @@ export class AdminPhotoGaleryComponent implements OnInit {
     const formData = new FormData();
     for (let file of files)
       formData.append(file.name, file);
-    const uploadReq = new HttpRequest('POST', `api/imageUpload/AddFile`, formData, {
+    const uploadReq = new HttpRequest('POST', `api/imageUpload/AddFile/` + albumName, formData, {
       reportProgress: true,
     });
 

@@ -66,6 +66,40 @@ namespace TheMoonshineCafe.Services
             };
         }
 
+        public async Task<List<string>> GetAlbums()
+        {
+            AmazonS3Client client = new AmazonS3Client();
+            ListObjectsRequest request = new ListObjectsRequest
+            {
+                BucketName = "moonshinephotostest",
+                Prefix = "photoAlbums/"
+
+            };
+
+            
+            List<string> albums = new List<string>();
+            do
+            {
+                ListObjectsResponse response = await client.ListObjectsAsync(request);
+
+                IEnumerable<S3Object> folders = response.S3Objects.Where(x => x.Key.EndsWith(@"/"));
+
+                folders.ToList().ForEach(x => { Console.WriteLine("IN GET ALBUMS: " + x.Key); });
+
+                if (response.IsTruncated)
+                {
+                    request.Marker = response.NextMarker;
+                }
+                else
+                {
+                    request = null;
+                }
+
+            } while (request != null);
+
+            return albums;
+        }
+
         public async Task<List<string>> GetPhotos()
         {
             AmazonS3Client client = new AmazonS3Client();
@@ -92,8 +126,8 @@ namespace TheMoonshineCafe.Services
             return photos;
         }
 
-        private const string BucketName = "moonshinephotostest"; //declaring bucketname as a constant
-        public async Task UploadFileAsync(IFormFile file)
+        private const string BucketName = "moonshinephotostest/photoAlbums/"; //declaring bucketname as a constant
+        public async Task UploadFileAsync(IFormFile file, string albumName)
         {
             try
             {
@@ -101,7 +135,7 @@ namespace TheMoonshineCafe.Services
                 {
                     InputStream = file.OpenReadStream(),    //setting the selected file as the input stream
                     AutoCloseStream = false,                //
-                    BucketName = BucketName,                //setting bucket name to constant declared above
+                    BucketName = BucketName + albumName,                //setting bucket name to constant declared above
                     Key = file.FileName,                    //setting key as filename so we can get the files by their names from the bucket
                     StorageClass = S3StorageClass.Standard  //setting storage class as standard since it has high reliability
                 };

@@ -4,7 +4,9 @@
 <div id="adminPhotoGalleryBackground">
   <div id="welcomeMessage">
     <h1><span>Upload Photos Here</span></h1>
-    <input id="uploadPhoto" #file type="file" accept="image/*" (change)="upload(file.files)" />
+    <input [(ngModel)]="albumName" name="albumName" type="text"/>
+    <br>
+    <input id="uploadPhoto" #file type="file" accept="image/*" (change)="upload(file.files, albumName)" />
     <br />
     <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
       {{progress}}%

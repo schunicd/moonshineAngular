@@ -17,11 +17,17 @@ export class PhotosComponent implements OnInit {
   }
 
   photos: string[] = [];
+  albums: string[] = [];
 
   async ngOnInit() {
     this.http.get<any[]>(this.baseUrl + 'api/imageUpload/GetPhotos').subscribe(result => {
       this.photos = result;
       console.log(this.photos);
+    }, error => console.error(error));
+
+    this.http.get<any[]>(this.baseUrl + 'api/imageUpload/GetAlbums').subscribe(result => {
+      this.albums = result;
+      console.log(this.albums);
     }, error => console.error(error));
   }
 

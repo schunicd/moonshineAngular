@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Hosting;
 using TheMoonshineCafe.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Amazon.S3;
 using Amazon.S3.Model;
 
 namespace moonshineAngular.Controllers
@@ -36,8 +37,8 @@ namespace moonshineAngular.Controllers
         }
 
         [HttpPost]
-        [Route("AddFile")]
-        public async Task<IActionResult> AddFile()
+        [Route("AddFile/{albumName}")]
+        public async Task<IActionResult> AddFile([FromRoute] string albumName)
         {
             var file = Request.Form.Files[0];
 
@@ -47,7 +48,7 @@ namespace moonshineAngular.Controllers
 
             Console.WriteLine(fileName);
 
-            await _service.UploadFileAsync(file);
+            await _service.UploadFileAsync(file, albumName);
 
             return Ok();
         }
@@ -57,10 +58,19 @@ namespace moonshineAngular.Controllers
         public List<string> GetPhotos() 
         {
             List<string> photos = new List<string>();
-            Console.WriteLine("IMAGE UPLOAD CONTROLLER");
+            //Console.WriteLine("IMAGE UPLOAD CONTROLLER");
             //photos = _service.GetPhotos();
-            Console.WriteLine(_service.GetPhotos().Result.Count);
+            //Console.WriteLine(_service.GetPhotos().Result.Count);
             return _service.GetPhotos().Result;
+        }
+
+        [HttpGet]
+        [Route("GetAlbums")]
+        public List<string> GetAlbums()
+        {
+            Console.WriteLine("GET ALBUMS");
+            Console.WriteLine(_service.GetAlbums().Result.Count);
+            return _service.GetAlbums().Result;
         }
 
     }

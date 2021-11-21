@@ -8,7 +8,8 @@ namespace TheMoonshineCafe.Services
     public interface IS3Service
     {
         Task<S3Response> CreateBucketAsync(string bucketName);
-        Task UploadFileAsync(IFormFile file);
+        Task UploadFileAsync(IFormFile file, string albumName);
         Task<List<string>> GetPhotos();
+        Task<List<string>> GetAlbums();
     }
 }

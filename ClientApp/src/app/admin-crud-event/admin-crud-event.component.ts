@@ -110,7 +110,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.getEvents();
     this.clearForm();
     this.successSnackBar("Event Deleted!");
-    this.ngOnInit();
   }
 
   resetEventName(){
@@ -200,7 +199,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.eventEditDelete.maxNumberOfSeats = this.maxSeats;
     this.eventEditDelete.refundCutOffDate = this.refundCutoffDateTime;
     this.data.editEvent(this.eventID, this.eventEditDelete);
-    
+
     this.getEvents();
     this.clearForm();
     this.successSnackBar("Event Edited!");
