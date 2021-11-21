@@ -107,7 +107,6 @@ export class AdminCrudEventComponent implements OnInit {
 
     console.log(this.eventID);
     this.data.deleteEvent(this.googleCalID);
-    this.getEvents();
     this.clearForm();
     this.successSnackBar("Event Deleted!");
   }
@@ -117,7 +116,6 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   createEvent(){
-
     let event = {
       eventStart: this.startDateTime,
       eventEnd: this.endDateTime,
@@ -137,7 +135,6 @@ export class AdminCrudEventComponent implements OnInit {
 
         this.data.postEvent(event);
         console.log(event);
-        this.getEvents();
         this.clearForm();
         this.successSnackBar("Event Created!");
       }
@@ -148,7 +145,7 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   filterEvents(){
-
+    this.getEvents();
     let day = this.dateDelete.getDate().toString();
     let month = (this.dateDelete.getMonth() + 1).toString();
     if(parseInt(month) < 10)
@@ -188,7 +185,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
-    this.getEvents();
     this.eventEditDelete.bandName = this.eventTitle;
     this.eventEditDelete.bandImagePath = this.eventImage;
     this.eventEditDelete.bandLink = this.eventLink;
