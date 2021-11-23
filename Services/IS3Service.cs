@@ -12,5 +12,6 @@ namespace TheMoonshineCafe.Services
         Task UploadBandImageAsync(IFormFile file);
         Task<List<string>> GetPhotos();
         Task<List<string>> GetAlbums();
+        Task DeleteImage(string fileName);
     }
 }
