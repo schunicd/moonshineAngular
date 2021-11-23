@@ -115,7 +115,9 @@ namespace TheMoonshineCafe.Services
                 listResponse = await client.ListObjectsAsync(listRequest);
                 foreach (S3Object obj in listResponse.S3Objects)
                 {
+
                     photos.Add(obj.Key);
+
                     //Console.WriteLine(obj.Key);
                     //Console.WriteLine(" Size - " + obj.Size);
                 }
@@ -126,8 +128,38 @@ namespace TheMoonshineCafe.Services
             return photos;
         }
 
-        private const string BucketName = "moonshinephotostest/photoAlbums/"; //declaring bucketname as a constant
+        private const string GalleryBucketName = "moonshinephotostest/photoAlbums/"; //declaring bucketname as a constant
         public async Task UploadFileAsync(IFormFile file, string albumName)
+        {
+            try
+            {
+                var transferRequest = new TransferUtilityUploadRequest() //setting values for the request to transfer a file
+                {
+                    InputStream = file.OpenReadStream(),        //setting the selected file as the input stream
+                    AutoCloseStream = false,                    //
+                    BucketName = GalleryBucketName + albumName,  //setting bucket name to constant declared above
+                    Key = file.FileName,                        //setting key as filename so we can get the files by their names from the bucket
+                    StorageClass = S3StorageClass.Standard      //setting storage class as standard since it has high reliability
+                };
+
+                transferRequest.Metadata.Add("Date-UTC-Uploaded", DateTime.UtcNow.ToString()); //adding metadata of when the file was uploaded
+
+                await new TransferUtility(_client).UploadAsync(transferRequest);    //initiating transfer request
+
+            }
+            catch (AmazonS3Exception e)
+            {
+                Console.WriteLine("Error encountered on server. Message: '{0}' when writing an object", e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
+            }
+        }
+
+
+        private const string BandImageBucketName = "moonshinephotostest/bandImages"; //declaring bucketname as a constant
+        public async Task UploadBandImageAsync(IFormFile file)
         {
             try
             {
@@ -135,7 +167,7 @@ namespace TheMoonshineCafe.Services
                 {
                     InputStream = file.OpenReadStream(),    //setting the selected file as the input stream
                     AutoCloseStream = false,                //
-                    BucketName = BucketName + albumName,                //setting bucket name to constant declared above
+                    BucketName = BandImageBucketName,       //setting bucket name to constant declared above
                     Key = file.FileName,                    //setting key as filename so we can get the files by their names from the bucket
                     StorageClass = S3StorageClass.Standard  //setting storage class as standard since it has high reliability
                 };
@@ -154,7 +186,6 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
             }
         }
-
     }
 
 }

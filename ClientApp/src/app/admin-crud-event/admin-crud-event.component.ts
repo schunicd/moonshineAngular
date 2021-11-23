@@ -115,13 +115,13 @@ export class AdminCrudEventComponent implements OnInit {
     this.eventDelete = null;
   }
 
-  createEvent(){
+  createEvent(files){
     let event = {
       eventStart: this.startDateTime,
       eventEnd: this.endDateTime,
       refundCutOffDate: this.refundCutoffDateTime,
       bandName: this.eventTitle,
-      bandImagePath: this.eventImage,
+      bandImagePath: files[0].name,
       bandLink: this.eventLink,
       maxNumberOfSeats: this.maxSeats,
       currentNumberOfSeats: 0,
@@ -134,6 +134,7 @@ export class AdminCrudEventComponent implements OnInit {
       event.ticketPrice != null && event.refundCutOffDate != null){
 
         this.data.postEvent(event);
+        this.data.uploadBandImage(files[0]);
         console.log(event);
         this.clearForm();
         this.successSnackBar("Event Created!");

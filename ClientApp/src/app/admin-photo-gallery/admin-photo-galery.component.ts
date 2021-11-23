@@ -20,10 +20,6 @@ export class AdminPhotoGaleryComponent implements OnInit {
     if (files.length === 0)
       return;
 
-    var x = (<HTMLInputElement>document.getElementById("uploadPhoto")).value;
-
-    console.log(x);
-
     const formData = new FormData();
     for (let file of files)
       formData.append(file.name, file);

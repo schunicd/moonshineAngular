@@ -1,31 +1,64 @@
 @media screen and (max-width: 767px){
+  .thumbnailStyle{
+    height: 250px;
+    width: 320px;
+  }
+
+  #mobilePadding{
+    margin-bottom: 20px;
+  }
+
+  #albumArea{
+    text-align: center;
+  }
+
   .photoStyle{
     height: 250px;
     width: 320px;
-    margin-left:15px;
     margin-right: auto;
     margin-top: 50px;
   }
-
 }
 
 @media screen and (min-width: 768px){
+  .thumbnailStyle{
+    height: 250px;
+    width: 400px;
+
+  }
+
+  #albumArea{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    text-align: center;
+  }
+
   .photoStyle{
     height: 250px;
     width: 400px;
-    margin-left: 100px;
+    margin-left: 110px;
     margin-right: 70px;
     margin-top: 50px;
     float: left;
-  }
-
-  img {
     transition:transform 0.25s ease;
   }
 
-  img:hover {
+  .photoStyle:hover {
     -webkit-transform:scale(1.5);
     transform:scale(1.5);
   }
 
+}
+
+.box{
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid rgb(56, 56, 56, 0.349);
+  background-color: rgba(56, 56, 56, 0.4);
+  border-radius: 5px;
+}
+
+#centerPhotos{
+  text-align: center;
 }

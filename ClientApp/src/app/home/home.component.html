@@ -7,28 +7,28 @@
   </div>
 
   <div id="spotlightOne" class="spotlightStyle">
-    <img *ngIf="event[0].bandImagePath" src="{{event[0].bandImagePath}}" class="spotlightAlbumImage">
+    <img *ngIf="event[0].bandImagePath" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{event[0].bandImagePath}}" class="spotlightAlbumImage">
     <h5 *ngIf="event[0].bandLink; else spt1"><a href="{{event[0].bandLink}}" class="spotlightLink" target="_blank">{{event[0].bandName}}</a> : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5>
     <ng-template #spt1><h5>{{event[0].bandName}} : {{convertDate(event[0].eventStart)}} {{convertTime(event[0].eventStart)}} ${{event[0].ticketPrice}}</h5></ng-template>
     <p>{{event[0].description}}</p>
   </div>
 
   <div id="spotlightTwo" class="spotlightStyle">
-    <img *ngIf="event[1].bandImagePath" src="{{event[1].bandImagePath}}" class="spotlightAlbumImage">
+    <img *ngIf="event[1].bandImagePath" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{event[1].bandImagePath}}" class="spotlightAlbumImage">
     <h5 *ngIf="event[1].bandLink; else spt2"><a href="{{event[1].bandLink}}" class="spotlightLink" target="_blank">{{event[1].bandName}}</a> : {{convertDate(event[1].eventStart)}} {{convertTime(event[1].eventStart)}} ${{event[1].ticketPrice}}</h5>
     <ng-template #spt2><h5>{{event[1].bandName}} : {{convertDate(event[1].eventStart)}} {{convertTime(event[1].eventStart)}} ${{event[1].ticketPrice}}</h5></ng-template>
     <p>{{event[1].description}}</p>
   </div>
 
   <div id="spotlightThree" class="spotlightStyle">
-    <img *ngIf="event[2].bandImagePath" src="{{event[2].bandImagePath}}" class="spotlightAlbumImage">
+    <img *ngIf="event[2].bandImagePath" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{event[2].bandImagePath}}" class="spotlightAlbumImage">
     <h5 *ngIf="event[2].bandLink; else spt3"><a href="{{event[2].bandLink}}" class="spotlightLink" target="_blank">{{event[2].bandName}}</a> : {{convertDate(event[2].eventStart)}} {{convertTime(event[2].eventStart)}} ${{event[2].ticketPrice}}</h5>
     <ng-template #spt3><h5>{{event[2].bandName}} : {{convertDate(event[2].eventStart)}} {{convertTime(event[2].eventStart)}} ${{event[2].ticketPrice}}</h5></ng-template>
     <p>{{event[2].description}}</p>
   </div>
 
   <div id="spotlightFour" class="spotlightStyle">
-    <img *ngIf="event[3].bandImagePath" src="{{event[3].bandImagePath}}" class="spotlightAlbumImage">
+    <img *ngIf="event[3].bandImagePath" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{event[3].bandImagePath}}" class="spotlightAlbumImage">
     <h5 *ngIf="event[3].bandLink; else spt4"><a href="{{event[3].bandLink}}" class="spotlightLink" target="_blank">{{event[3].bandName}}</a> : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5>
     <ng-template #spt4><h5>{{event[3].bandName}} : {{convertDate(event[3].eventStart)}} {{convertTime(event[3].eventStart)}} ${{event[3].ticketPrice}}</h5></ng-template>
     <p>{{event[3].description}}</p>

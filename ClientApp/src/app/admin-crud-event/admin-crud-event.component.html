@@ -14,7 +14,7 @@
         </mat-form-field>
         <br>
         <div id="eventImage">
-          <input [(ngModel)]="eventImage" type="file" accept="image/*">
+          <input [(ngModel)]="eventImage" #file type="file" accept="image/*">
         </div>
         <br>
         <mat-form-field id="eventDescription">
@@ -48,7 +48,7 @@
         </mat-form-field>
         <br>
 
-        <button mat-raised-button *ngIf="createButton" (click)="createEvent()">Create Event</button>
+        <button mat-raised-button *ngIf="createButton" (click)="createEvent(file.files)">Create Event</button>
         <button mat-raised-button *ngIf="deleteButton" (click)="confirmDelete()">Confirm Delete</button>
         <button mat-raised-button *ngIf="editButton" (click)="confirmEdit()">Confirm Edit</button>
         <button mat-raised-button *ngIf="cancelButton" (click)="cancelEditDelete()" id="cancelButton">Cancel</button>

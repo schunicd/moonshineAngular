@@ -53,6 +53,23 @@ namespace moonshineAngular.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("AddBandImage")]
+        public async Task<IActionResult> AddBandImage()
+        {
+            var file = Request.Form.Files[0];
+
+            Console.WriteLine(file);
+
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+            Console.WriteLine(fileName);
+
+            await _service.UploadBandImageAsync(file);
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("GetPhotos")]
         public List<string> GetPhotos() 

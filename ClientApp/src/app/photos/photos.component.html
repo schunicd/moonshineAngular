@@ -1,7 +1,19 @@
+<div *ngIf="albums.length > 0 && albumPhotos.length == 0" id="albumArea">
+  <div *ngFor="let album of albums">
+    <div id="mobilePadding" class="box">
+      <img class="thumbnailStyle" src="https://moonshinephotostest.s3.amazonaws.com/{{getButtonImage(album)}}"/>
+      <br><br>
+      <button mat-raised-button (click)="getAlbumPhotos(album)">{{album}}</button>
+    </div>
+  </div>
+</div>
 
-<div *ngIf="photos.length > 0">
-    <div *ngFor="let photo of photos">
+
+<div *ngIf="albumPhotos.length > 0" id="centerPhotos">
+  <button mat-raised-button (click)="backToGallery()"><mat-icon aria-hidden="false" aria-label="arrow_back_ios">arrow_back_ios</mat-icon>Photo Gallery</button>
+    <div *ngFor="let photo of albumPhotos">
         <img class="photoStyle" src="https://moonshinephotostest.s3.amazonaws.com/{{photo}}"/>
+
     </div>
 </div>
 <br>

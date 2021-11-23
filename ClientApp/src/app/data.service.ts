@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import * as data from '../assets/data/events.json';
 import { Admin } from '../app/Admin';
 import { Event } from './Event';
@@ -47,6 +47,19 @@ export class DataService {
   postEvent(event: Event){
     var postData: any;
     this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);
+  }
+
+  uploadBandImage(file: File){
+    const formData = new FormData();
+
+    formData.append(file.name, file);
+    var postData: any;
+    const uploadReq = new HttpRequest('POST', `api/imageUpload/AddBandImage/`, formData, {
+      reportProgress: true,
+    });
+
+    this.http.request(uploadReq).subscribe(event => {});
+
   }
 
   getCustomers(){
