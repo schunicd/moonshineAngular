@@ -75,9 +75,6 @@ namespace moonshineAngular.Controllers
         public List<string> GetPhotos() 
         {
             List<string> photos = new List<string>();
-            //Console.WriteLine("IMAGE UPLOAD CONTROLLER");
-            //photos = _service.GetPhotos();
-            //Console.WriteLine(_service.GetPhotos().Result.Count);
             return _service.GetPhotos().Result;
         }
 
@@ -88,6 +85,15 @@ namespace moonshineAngular.Controllers
             Console.WriteLine("GET ALBUMS");
             Console.WriteLine(_service.GetAlbums().Result.Count);
             return _service.GetAlbums().Result;
+        }
+
+        [HttpDelete]
+        [Route("DeletePhoto/{fileName}")]
+        public async Task DeletePhoto([FromRoute] string fileName)
+        {
+
+            Console.WriteLine("Attempting Delete...");
+            await _service.DeleteImage(fileName);
         }
 
     }

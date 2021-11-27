@@ -186,6 +186,32 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
             }
         }
+
+        public async Task DeleteImage(string fileName)
+        {
+            string bucketname = "moonshinephotostest";
+            string key = "photoAlbums/test/" + fileName;
+            //switch (choice) { 
+            //    case 0:
+            //        bucketname = BandImageBucketName;
+            //        break;
+            //    case 1:
+            //        bucketname = GalleryBucketName;
+            //        break;
+            //}
+            
+            try
+            {
+                DeleteObjectResponse resp = await _client.DeleteObjectAsync(bucketname, key);
+
+                Console.WriteLine("Delete Successful!");
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Delete Failed!");
+            }
+        }
     }
 
 }
