@@ -70,41 +70,30 @@
         </mat-step>
       </ng-template>
 
-      <mat-step label="Number of Seats" *ngIf="!seats; else enteredSeats">
+      <mat-step label="Number of Seats" *ngIf="!eventName; else enteredSeats">
         <div *ngIf="eventName != null">
           <label>Number of seats:</label>
-          <input type="number" [(ngModel)]="seats" name="seats" min="1" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
+          <input type="number" id="seats" [(ngModel)]="seats" name="seats" min="1" onkeydown="return false;" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
           <p id="priceFormat"> * ${{this.eventSeatsSold.ticketPrice}} (+ Taxes)</p>
         </div>
-
-        <!--
-        <ng-template #seatsDisabled>
-          <label>Number of seats:</label>
-          <input type="number" disabled="true" style="margin-left: 10px;width: 70px;" max="100">
-        </ng-template>
-        -->
       </mat-step>
 
       <ng-template #enteredSeats>
         <mat-step label="Seats: {{seats}} * ${{this.eventSeatsSold.ticketPrice}} = ${{this.eventSeatsSold.ticketPrice * seats}} (+ Taxes)">
           <div *ngIf="eventName != null">
             <label>Number of seats:</label>
-            <input type="number" [(ngModel)]="seats" name="seats" min="1" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
+            <input type="number" [(ngModel)]="seats" name="seats" min="1" onkeydown="return false;" max="{{this.eventSeatsSold.maxNumberOfSeats - this.eventSeatsSold.currentNumberOfSeats}}" placeholder="1">
             <p id="priceFormat"> * ${{this.eventSeatsSold.ticketPrice}} = ${{this.eventSeatsSold.ticketPrice * seats}} (+ Taxes)</p>
           </div>
         </mat-step>
       </ng-template>
 
-      <mat-step label="Booking Type">
+      <mat-step label="Paypal Payment">
+        <!--
         <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>
-          <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
-          <br>
-          <br>
-          <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-          <!--
-          <button mat-raised-button (click)="paidBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && eventName != '' && !validateName() && !validateEmail(); else paidDisabled">Paid Booking</button>
-          <ng-template #paidDisabled><button mat-raised-button disabled="true">Paid Booking</button></ng-template>
-          -->
+        <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
+        -->
+        <ngx-paypal *ngIf="date && eventName && name && email && seats" [config]="payPalConfig"></ngx-paypal>
       </mat-step>
 
     </mat-vertical-stepper>
@@ -129,7 +118,7 @@
                            *ngFor = "let e of event">
         <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
           <mat-panel-title>
-            <p>{{convertCalendarDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+            <p>{{convertCalendarDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="{{e.bandLink}}" target="_blank">{{e.bandName}}</a></p>
             <ng-template #plainName>{{e.bandName}}</ng-template>
           </mat-panel-title>
           <mat-panel-description>

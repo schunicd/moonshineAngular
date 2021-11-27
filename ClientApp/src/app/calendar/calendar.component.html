@@ -19,9 +19,9 @@ style=" border-width:0 " width="900" height="650" frameborder="0" scrolling="no"
                             *ngFor = "let e of event">
           <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
             <mat-panel-title>
-              <img *ngIf="e.bandImagePath; else alignText" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{e.bandImagePath}}"><p id="calendarTitle"><br>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+              <img *ngIf="e.bandImagePath; else alignText" class="bandPhotoStyle" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{e.bandImagePath}}"><p id="calendarTitle"><br><b>{{convertDate(e.eventStart.split('T')[0])}}</b><br><b>{{convertTime(e.eventStart.split('T')[1])}}</b><br><a *ngIf="e.bandLink; else plainName" class="bigText" href="{{e.bandLink}}" target="_blank">{{e.bandName}}</a></p>
               <ng-template #alignText><p class="alignText"></p></ng-template>
-              <ng-template #plainName>{{e.bandName}}</ng-template>
+              <ng-template #plainName><p class="bigText">{{e.bandName}}</p></ng-template>
             </mat-panel-title>
             <mat-panel-description>
               <p id="description"><br><br><b>${{e.ticketPrice}} / ticket</b></p>

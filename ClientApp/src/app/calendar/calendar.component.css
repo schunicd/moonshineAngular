@@ -18,7 +18,7 @@
 }
 
 .alignText{
-  width: 100px;
+  width: 120px;
 }
 
 #moonshineCalendar::-webkit-scrollbar {
@@ -34,6 +34,10 @@
   background-color: rgb(131, 131, 131);
   border-radius: 10px;
   outline: 1px solid slategrey;
+}
+
+.bandPhotoStyle{
+  width: 120px;
 }
 
 @media screen and (max-width: 767px){
@@ -55,7 +59,8 @@
     height: 600px;
     border-radius: 5px;
   }
-  #calendarTitle{margin-left:100px !important;}
+  .bigText{font-size: 1.5em;}
+  #calendarTitle{margin-left:40px !important;}
   #calendarSmall{display: none !important;}
 
   }

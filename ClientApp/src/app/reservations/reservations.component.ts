@@ -8,6 +8,7 @@ import { Customer } from '../Customer';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { Reservation } from '../Reservation';
 import { DatePipe } from '@angular/common';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-reservations',
@@ -50,6 +51,7 @@ export class ReservationsComponent implements OnInit {
     this.eventName = null;
     this.name = "";
     this.email = "";
+    this.seats = 1;
     this.customer = new Customer();
     console.log("MIN DATE");
     console.log(this.minDate);

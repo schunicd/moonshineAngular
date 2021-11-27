@@ -65,7 +65,7 @@
                            *ngFor = "let e of event">
         <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
           <mat-panel-title>
-            <p>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="e.bandLink">{{e.bandName}}</a></p>
+            <p>{{convertDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="{{e.bandLink}}" target="_blank">{{e.bandName}}</a></p>
             <ng-template #plainName>{{e.bandName}}</ng-template>
           </mat-panel-title>
           <mat-panel-description>
