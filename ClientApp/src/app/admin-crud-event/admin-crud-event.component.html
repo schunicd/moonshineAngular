@@ -71,6 +71,7 @@
           <mat-step label="Select Event">
             <label id="warning" *ngIf="dateDelete == null;">Please Select a Date at the top first!</label>
             <select *ngIf="dateDelete != null" [(ngModel)]="eventID" name="eventID">
+              <option>Please Select an Event</option>
               <option *ngFor="let e of filterEvents()" value="{{e.id}}">{{e.bandName}}</option>
             </select>
           </mat-step>

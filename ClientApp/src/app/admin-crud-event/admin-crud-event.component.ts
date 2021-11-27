@@ -47,6 +47,7 @@ export class AdminCrudEventComponent implements OnInit {
   getEvents(){
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
+      console.log("GET EVENTS");
       console.log(this.event);
     }, error => console.error(error));
   }
@@ -83,11 +84,14 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   deleteEvent(){
+    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
+    if(this.eventEditDelete == null){
+      return;
+    }
     this.createButton = false;
     this.editButton = false;
     this.deleteButton = true;
     this.cancelButton = true;
-    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
     this.eventTitle = this.eventEditDelete.bandName;
     this.eventLink = this.eventEditDelete.bandLink;
     this.eventDescription = this.eventEditDelete.description;
@@ -112,26 +116,28 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   resetEventName(){
+    this.getEvents();
     this.eventDelete = null;
   }
 
   createEvent(files){
-    let event = {
-      eventStart: this.startDateTime,
-      eventEnd: this.endDateTime,
-      refundCutOffDate: this.refundCutoffDateTime,
-      bandName: this.eventTitle,
-      bandImagePath: files[0].name,
-      bandLink: this.eventLink,
-      maxNumberOfSeats: this.maxSeats,
-      currentNumberOfSeats: 0,
-      ticketPrice: this.ticketPrice,
-      description: this.eventDescription,
-    }
 
-    if(event.bandName != null && event.eventStart != null &&
-      event.eventEnd != null && event.maxNumberOfSeats != null &&
-      event.ticketPrice != null && event.refundCutOffDate != null){
+    if(this.eventTitle != null && this.startDateTime != null &&
+      this.endDateTime != null && this.maxSeats != null &&
+      this.ticketPrice != null && this.refundCutoffDateTime != null){
+
+        let event = {
+          eventStart: this.startDateTime,
+          eventEnd: this.endDateTime,
+          refundCutOffDate: this.refundCutoffDateTime,
+          bandName: this.eventTitle,
+          bandImagePath: files[0].name,
+          bandLink: this.eventLink,
+          maxNumberOfSeats: this.maxSeats,
+          currentNumberOfSeats: 0,
+          ticketPrice: this.ticketPrice,
+          description: this.eventDescription,
+        }
 
         this.data.postEvent(event);
         this.data.uploadBandImage(files[0]);
@@ -146,7 +152,7 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   filterEvents(){
-    this.getEvents();
+
     let day = this.dateDelete.getDate().toString();
     let month = (this.dateDelete.getMonth() + 1).toString();
     if(parseInt(month) < 10)
@@ -164,11 +170,14 @@ export class AdminCrudEventComponent implements OnInit {
   }
 
   editEvent(){
+    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
+    if(this.eventEditDelete == null){
+      return;
+    }
     this.createButton = false;
     this.editButton = true;
     this.deleteButton = false;
     this.cancelButton = true;
-    this.eventEditDelete = this.filterOneEvent(this.eventID)[0];
     this.eventTitle = this.eventEditDelete.bandName;
     this.eventImage = "";
     this.eventLink = this.eventEditDelete.bandLink;
@@ -197,7 +206,6 @@ export class AdminCrudEventComponent implements OnInit {
     this.eventEditDelete.refundCutOffDate = this.refundCutoffDateTime;
     this.data.editEvent(this.eventID, this.eventEditDelete);
 
-    this.getEvents();
     this.clearForm();
     this.successSnackBar("Event Edited!");
   }

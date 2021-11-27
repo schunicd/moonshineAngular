@@ -105,7 +105,7 @@ namespace TheMoonshineCafe.Controllers
         {
             List<Reservation> reservations = await _context.Reservations.ToListAsync();
 
-            foreach(Reservation r in reservations)
+            foreach(Reservation r in reservations.ToList())
             {
                 if(r.resEventid != eId)
                 {
