@@ -187,10 +187,10 @@ namespace TheMoonshineCafe.Services
             }
         }
 
-        public async Task DeleteImage(string fileName)
+        public async Task DeleteImage(string fileName, int bucketChoice)
         {
             string bucketname = "moonshinephotostest";
-            string key = "photoAlbums/test/" + fileName;
+            string key = "photoAlbums/" + fileName;
             //switch (choice) { 
             //    case 0:
             //        bucketname = BandImageBucketName;
@@ -207,6 +207,42 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine("Delete Successful!");
             }
             catch(Exception e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine("Delete Failed!");
+            }
+        }
+
+        public async Task DeleteFolder(string folderName, int bucketChoice)
+        {
+            string bucketname = "moonshinephotostest";
+            string key = "photoAlbums/" + folderName + "/";
+            List<KeyVersion> keys = new List<KeyVersion>();
+            KeyVersion newKey = new KeyVersion();
+            newKey.Key = key;
+            keys.Add(newKey);
+            //switch (choice) { 
+            //    case 0:
+            //        bucketname = BandImageBucketName;
+            //        break;
+            //    case 1:
+            //        bucketname = GalleryBucketName;
+            //        break;
+            //}
+
+            DeleteObjectsRequest request = new DeleteObjectsRequest
+            {
+                BucketName = bucketname,
+                Objects = keys
+            };
+
+            try
+            {
+                DeleteObjectsResponse resp = await _client.DeleteObjectsAsync(request);
+
+                Console.WriteLine("Deleted " + key + " Successfully!");
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e);
                 Console.WriteLine("Delete Failed!");

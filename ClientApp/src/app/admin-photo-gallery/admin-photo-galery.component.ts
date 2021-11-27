@@ -14,7 +14,7 @@ export class AdminPhotoGaleryComponent implements OnInit {
   public progress: number;
   public message: string;
   public albumName: string;
-  public fileName: string;
+  public fileName: string = "";
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -42,29 +42,26 @@ export class AdminPhotoGaleryComponent implements OnInit {
   deleteFromGallery(file, albumName){
     //Call api with choice 1
     const bucketChoice = 1;
-    var toDelete = albumName +"/"+ this.fileName;
-    console.log(toDelete);
-    // const formData = new FormData();
-    // formData.append(file[0].name, file[0])
-    const deleteReq = new HttpRequest('DELETE', 'api/imageUpload/DeletePhoto/' + this.fileName);
+
+    const deleteReq = new HttpRequest('DELETE', 'api/imageUpload/DeletePhoto/' + albumName + "/" + this.fileName
+            +"/" + bucketChoice);
 
     this.http.request(deleteReq).subscribe(event =>{
       this.message = "Photo Deleted";
     });
   }
 
-  // delete(files){
-  //   if(files.length === 0)
-  //     return;
-  //   const formData = new FormData();
-  //   for(let file of files)
-  //     formData.append(file.name, file);
-  //   const deleteReq = new HttpRequest('DELETE', `api/imageUpload/`, formData);
-  //   this.http.request(deleteReq).subscribe(event => {
-  //     console.log(event);
-  //   })
-  // }
+  deleteAlbum(albumName){
+    const bucketChoice = 1;
 
+    const deleteReq = new HttpRequest('DELETE', 'api/imageUpload/DeleteFolder/' + albumName +"/" + bucketChoice);
+
+    this.http.request(deleteReq).subscribe(event =>{
+      this.message = "Folder Deleted";
+    });
+
+    console.log(albumName)
+  }
 
   ngOnInit() {
   }
