@@ -18,24 +18,25 @@ export class HomeComponent {
 
   panelOpenState = false;
   event: EventWithID[];
+  currentEvents: EventWithID[];
 
   constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       this.event.sort((a, b) => (a.eventStart > b.eventStart) ? 1 : -1);
-      console.log(this.event);
+      this.currentEvents = this.data.currentEvents(this.event);
     }, error => console.error(error));
 
+
+
     this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
-      console.log(result);
     }, error => console.error(error));
 
    }
 
    getMailingListClients(){
     this.http.get<Customer[]>(this.baseUrl + "api/Customers").subscribe(result => {
-      //console.log(result);
       this.existingCustomers = result;
     }, error => {console.error(error)})
    }

@@ -44,6 +44,19 @@ export class DataService {
     }, error => {console.error(error)})
   }
 
+  currentEvents(events: EventWithID[]){
+    let today = new Date();
+    var currentEvents: EventWithID[] = [];
+    today.setHours(0,0,1,0);
+    events.forEach(e => {
+      if(e.eventStart.toString() >= today.toISOString())
+      {
+        currentEvents.push(e);
+      }
+    });
+    return currentEvents;
+  }
+
   postEvent(event: Event){
     var postData: any;
     this.http.post<Event[]>(this.baseUrl + "api/Events", event).subscribe(data => postData = data);

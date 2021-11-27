@@ -115,7 +115,7 @@
       </mat-expansion-panel>
       <mat-expansion-panel (opened)="panelOpenState = true"
                            (closed)="panelOpenState = false"
-                           *ngFor = "let e of event">
+                           *ngFor = "let e of currentEvents">
         <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
           <mat-panel-title>
             <p>{{convertCalendarDate(e.eventStart.split('T')[0])}} <br> {{convertTime(e.eventStart.split('T')[1])}} <br> <a *ngIf="e.bandLink; else plainName" href="{{e.bandLink}}" target="_blank">{{e.bandName}}</a></p>

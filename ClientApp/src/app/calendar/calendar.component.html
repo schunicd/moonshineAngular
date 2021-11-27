@@ -16,7 +16,7 @@ style=" border-width:0 " width="900" height="650" frameborder="0" scrolling="no"
         </mat-expansion-panel>
         <mat-expansion-panel (opened)="panelOpenState = true"
                             (closed)="panelOpenState = false"
-                            *ngFor = "let e of event">
+                            *ngFor = "let e of currentEvents">
           <mat-expansion-panel-header [collapsedHeight]="'120px'" [expandedHeight]="'120px'">
             <mat-panel-title>
               <img *ngIf="e.bandImagePath; else alignText" class="bandPhotoStyle" src="https://moonshinephotostest.s3.amazonaws.com/bandImages/{{e.bandImagePath}}"><p id="calendarTitle"><br><b>{{convertDate(e.eventStart.split('T')[0])}}</b><br><b>{{convertTime(e.eventStart.split('T')[1])}}</b><br><a *ngIf="e.bandLink; else plainName" class="bigText" href="{{e.bandLink}}" target="_blank">{{e.bandName}}</a></p>

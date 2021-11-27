@@ -36,6 +36,7 @@ export class ReservationsComponent implements OnInit {
   eventSeatsSold: EventWithID;
   customer: any;
   existingCustomers: any[];
+  currentEvents: EventWithID[];
 
   testEvents: any[];
 
@@ -53,8 +54,6 @@ export class ReservationsComponent implements OnInit {
     this.email = "";
     this.seats = 1;
     this.customer = new Customer();
-    console.log("MIN DATE");
-    console.log(this.minDate);
 
     this.myGroup = new FormGroup({
       firstName: new FormControl()
@@ -63,7 +62,8 @@ export class ReservationsComponent implements OnInit {
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       this.eventsNoTime = result;
-      console.log(this.event);
+      this.event.sort((a, b) => (a.eventStart > b.eventStart) ? 1 : -1);
+      this.currentEvents = this.data.currentEvents(this.event);
     }, error => console.error(error));
 
     this.http.get<Band[]>(this.baseUrl + 'api/Bands').subscribe(result => {

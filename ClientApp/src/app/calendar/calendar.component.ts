@@ -11,12 +11,13 @@ import { EventWithID } from '../EventWithID';
 export class CalendarComponent implements OnInit {
 
   event: EventWithID[];
+  currentEvents: EventWithID[];
 
   constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
       this.event.sort((a, b) => (a.eventStart > b.eventStart) ? 1 : -1);
-      console.log(this.event);
+      this.currentEvents = this.data.currentEvents(this.event);
     }, error => console.error(error));
   }
 
