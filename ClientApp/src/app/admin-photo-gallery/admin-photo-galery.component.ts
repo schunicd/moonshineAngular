@@ -15,6 +15,9 @@ export class AdminPhotoGaleryComponent implements OnInit {
   public message: string;
   public albumName: string;
   public fileName: string = "";
+  photos: string[] = [];
+  albums: string[] = [];
+  albumPhotos: string[] = [];
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -32,12 +35,46 @@ export class AdminPhotoGaleryComponent implements OnInit {
     });
 
     this.http.request(uploadReq).subscribe(event => {
-
         this.message = "Photo Uploaded Successfully!";
-
     });
 
+    this.photos.push("photoAlbums/" + albumName + "/" + files[0].name);
+    this.albumPhotos.push("photoAlbums/" + albumName + "/" + files[0].name);
+
   }
+
+  lockAlbumName(){
+    if(this.albumName == "Create New Album"){
+      (<HTMLInputElement> document.getElementById('newAlbum')).disabled = false;
+    }
+    else{
+      this.getAlbumPhotos(this.albumName);
+      (<HTMLInputElement> document.getElementById('newAlbum')).disabled = true;
+    }
+  }
+
+  deleteFromAlbum(photo: string, albumName: String){
+    console.log(photo.split("/")[1]);
+    console.log(albumName);
+
+    const deleteReq = new HttpRequest('DELETE', 'api/imageUpload/DeletePhoto/' + albumName + "/" + photo.split("/")[2]);
+    this.http.request(deleteReq).subscribe(event => {
+      this.message = "Photo Deleted";
+    });
+    this.photos = this.photos.filter(p => p != photo);
+    this.albumPhotos = this.albumPhotos.filter(p => p != photo);
+  }
+
+  getAlbumPhotos(album: string){
+    this.albumPhotos = [];
+    this.photos.forEach(photo => {
+      if(photo.includes(album + "/") && photo.split(album + "/")[1] != "")
+      {
+        this.albumPhotos.indexOf(album)
+        this.albumPhotos.push(photo);
+      }
+    });
+}
 
   deleteFromGallery(file, albumName){
     //Call api with choice 1
@@ -64,6 +101,31 @@ export class AdminPhotoGaleryComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getPhotos();
+  }
+
+  getPhotos(){
+    this.http.get<any[]>(this.baseUrl + 'api/imageUpload/GetPhotos').subscribe(result => {
+      result.forEach(res => {
+        if(res.includes("photoAlbums/") && res.split("/")[1] != "" && res.split("/")[2] != "")
+        {
+          this.photos.push(res);
+        }
+      });
+
+      console.log(result);
+      console.log(this.photos);
+      this.photos.forEach(photo => {
+        if(photo.includes("photoAlbums/"))
+        {
+          if(photo.split("/")[1] != "" && !this.albums.includes(photo.split("/")[1]))
+          {
+            this.albums.push(photo.split("/")[1]);
+            console.log(this.albums);
+          }
+        }
+      });
+    }, error => console.error(error));
   }
 
 

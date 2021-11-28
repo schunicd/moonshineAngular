@@ -88,12 +88,12 @@ namespace moonshineAngular.Controllers
         }
 
         [HttpDelete]
-        [Route("DeletePhoto/{folderName}/{fileName}/{bucketChoice}")]
-        public async Task DeletePhoto([FromRoute] string folderName, [FromRoute] string fileName, [FromRoute] int bucketChoice)
+        [Route("DeletePhoto/{albumName}/{photo}")]
+        public async Task DeletePhoto([FromRoute] string albumName, [FromRoute] string photo)
         {
-
+            int bucketChoice = 1;
             Console.WriteLine("Attempting Delete...");
-            string filePath = folderName + "/" + fileName;
+            string filePath = albumName + "/" + photo;
             await _service.DeleteImage(filePath, bucketChoice);
         }
 

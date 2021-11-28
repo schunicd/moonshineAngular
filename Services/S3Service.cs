@@ -217,10 +217,10 @@ namespace TheMoonshineCafe.Services
         {
             string bucketname = "moonshinephotostest";
             string key = "photoAlbums/" + folderName + "/";
-            List<KeyVersion> keys = new List<KeyVersion>();
-            KeyVersion newKey = new KeyVersion();
-            newKey.Key = key;
-            keys.Add(newKey);
+            //List<KeyVersion> keys = new List<KeyVersion>();
+            //KeyVersion newKey = new KeyVersion();
+            //newKey.Key = key;
+            //keys.Add(newKey);
             //switch (choice) { 
             //    case 0:
             //        bucketname = BandImageBucketName;
@@ -230,12 +230,26 @@ namespace TheMoonshineCafe.Services
             //        break;
             //}
 
-            DeleteObjectsRequest request = new DeleteObjectsRequest
+            DeleteObjectsRequest request2 = new DeleteObjectsRequest();
+            
+
+            ListObjectsRequest request = new ListObjectsRequest
             {
                 BucketName = bucketname,
-                Objects = keys
+                Prefix = key
             };
 
+            ListObjectsResponse response = await _client.ListObjectsAsync(request);
+
+            foreach(S3Object entry in response.S3Objects)
+            {
+                request2.AddKey(entry.Key);
+            }
+
+            request2.BucketName = bucketname;
+            DeleteObjectsResponse response2 = await _client.DeleteObjectsAsync(request2);
+
+            /*
             try
             {
                 DeleteObjectsResponse resp = await _client.DeleteObjectsAsync(request);
@@ -247,6 +261,7 @@ namespace TheMoonshineCafe.Services
                 Console.WriteLine(e);
                 Console.WriteLine("Delete Failed!");
             }
+            */
         }
     }
 

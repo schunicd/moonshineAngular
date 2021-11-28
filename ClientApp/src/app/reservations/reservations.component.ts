@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,8 +7,7 @@ import { EventWithID } from '../EventWithID';
 import { Customer } from '../Customer';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { Reservation } from '../Reservation';
-import { DatePipe } from '@angular/common';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { MatStepper } from '@angular/material';
 
 @Component({
   selector: 'app-reservations',
@@ -16,6 +15,7 @@ import { typeWithParameters } from '@angular/compiler/src/render3/util';
   styleUrls: ['./reservations.component.css']
 })
 export class ReservationsComponent implements OnInit {
+  @ViewChild("stepper", { static: false }) stepper: MatStepper;
 
   TAX_VALUE = 0.13;
 
@@ -244,6 +244,12 @@ export class ReservationsComponent implements OnInit {
 
       //Sending Reservation Confirmation Email to Client
       this.data.sendReservationEmail(reservationEmail);
+
+      this.date = null;
+      this.eventName = "";
+      this.name = "";
+      this.email = "";
+      this.seats = 1;
 
     },
     onCancel: (data, actions) => {
