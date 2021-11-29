@@ -97,7 +97,7 @@ namespace TheMoonshineCafe.Controllers
             _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpGet("eId={eId}")]

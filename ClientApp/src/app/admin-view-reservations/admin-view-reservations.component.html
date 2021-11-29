@@ -10,7 +10,12 @@
       <p>There are no reservations at this time. Please check back later.</p>
     </ng-template>
     <br><br>
-
+    <div *ngIf="totalSeatCount > 0">
+      Total Reservations: {{totalResCount}}
+      <br>
+      Total Seats: {{totalSeatCount}}
+    </div>
+     
     <table mat-table *ngIf="reservations" [dataSource]="reservations" id="centerTable">
 
       <ng-container matColumnDef="Customer Name">
@@ -35,7 +40,7 @@
 
       <ng-container matColumnDef="Delete">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Delete</th>
-        <td class="test" mat-cell *matCellDef="let element" class="tableData"><button *ngIf="delete" mat-raised-button>Delete</button></td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"><button *ngIf="delete" (click)="deleteRes(element.id)" mat-raised-button>Delete</button></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
