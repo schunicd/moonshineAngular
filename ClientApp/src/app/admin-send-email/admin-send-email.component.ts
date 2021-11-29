@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { StringLiteralLike } from 'typescript';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from '../data.service';
-
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-send-email',
@@ -10,7 +9,7 @@ import { DataService } from '../data.service';
 })
 export class AdminSendEmailComponent implements OnInit {
 
-  constructor(private data: DataService) { }
+  constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   emailSubject: String;
   emailBody: String;
@@ -24,10 +23,15 @@ export class AdminSendEmailComponent implements OnInit {
     //this.emailImage = event.target.files[0];
   }
 
-  sendEmail(){
+  sendEmail(files){
     console.log(this.emailSubject);
     console.log(this.emailBody);
-    console.log(this.emailImage);
+    console.log(files[0].name);
+
+    const formData = new FormData();
+    for (let file of files){
+      formData.append(file.name, file);
+    }
 
     let email = {
       subject: this.emailSubject,
@@ -35,7 +39,15 @@ export class AdminSendEmailComponent implements OnInit {
       image: ""
     }
 
-    this.data.sendEmail(email);
+    const uploadReq = new HttpRequest('POST', `api/AdminSendEmail/` + email, formData, {
+      reportProgress: true,
+    });
+
+    this.http.request(uploadReq).subscribe(event => {
+        console.log(event);
+    });
+
+    //this.data.sendEmail(email);
   }
 
 }

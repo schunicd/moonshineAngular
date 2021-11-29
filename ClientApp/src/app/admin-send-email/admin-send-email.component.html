@@ -14,13 +14,13 @@
         </mat-form-field>
         <br>
         <div id="emailImage">
-          <input [(ngModel)]="emailImage" name="emailImage" type="file" (change)="onFileSelected($event)">
+          <input [(ngModel)]="emailImage" name="emailImage" #file type="file" (change)="onFileSelected($event)">
         </div>
         <br>
 
       </div>
 
-      <button mat-raised-button (click)="sendEmail()">Send Email</button>
+      <button mat-raised-button (click)="sendEmail(file.files)">Send Email</button>
 
     </div>
   </div>

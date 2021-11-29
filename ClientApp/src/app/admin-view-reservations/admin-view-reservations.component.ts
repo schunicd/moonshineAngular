@@ -48,7 +48,7 @@ export class AdminViewReservationsComponent implements OnInit {
 
   GetAssociatedCustomer(id: Number){
     this.http.get<Customer>(this.baseUrl + 'api/Customers/' + id).subscribe(result => {
-      if(!this.customers.find(customer => customer = result))
+      if(!this.customers.find(customer => customer == result))
       this.customers.push(result);
       console.log(result);
       console.log(this.customers);
@@ -56,7 +56,8 @@ export class AdminViewReservationsComponent implements OnInit {
   }
 
   findSpecificCustomer(id: Number){
-    return (this.customers.filter(cust => {return cust.id == id}))[0].name;
+    let name = this.customers.filter(cust => {return cust.id == id})[0].name;
+    return name;
   }
 
   formatEventDate(ed){

@@ -80,14 +80,20 @@ namespace TheMoonshineCafe.Controllers
             return NoContent();
         }
 
-        // POST: api/AdminSendEmail
+        // POST: api/AdminSendEmail/email
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public  void PostCustomer(Email email)
+        [Route("{email}")]
+        public  void PostCustomer([FromRoute] Email email)
         {
             
             var customerEmails = _context.Customers.ToList();
+            var image = Request.Form.Files[0];
 
+            Console.WriteLine(email.subject);
+            Console.WriteLine(email.body);
+            Console.WriteLine(image.FileName);
+            Console.WriteLine(image.OpenReadStream());
              
             string from = "schunicd@gmail.com"; //From address    
             string to = "";
@@ -96,11 +102,11 @@ namespace TheMoonshineCafe.Controllers
             {
                 if(e.onMailingList){
                     to = e.email; //To address   
-                    MailMessage message = new MailMessage(from, to);  
+                    MailMessage message = new MailMessage(from, to);
                     message.Subject = email.subject;  
                     message.BodyEncoding = Encoding.UTF8;
                     message.IsBodyHtml = true;
-                    message.AlternateViews.Add(MailingList_Body(email));
+                    message.AlternateViews.Add(MailingList_Body(email, image));
                     SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
                     System.Net.NetworkCredential basicCredential1 = new  
                     System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
@@ -120,27 +126,6 @@ namespace TheMoonshineCafe.Controllers
                 }
             }
             
-        }
-
-        private AlternateView MailingList_Body(Email email){
-            //string path = ("C:\Users\derek\Desktop\\band.jpg");
-            //LinkedResource Img = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
-            //Img.ContentId = "MyImage";
-            string str = @"  
-            <table>  
-                <tr>  
-                    <td> '" + email.body + @"'  
-                    </td>  
-                </tr>  
-                <tr>  
-                    <td>  
-                      <img src=cid:MyImage  id='img' alt='' width='100px' height='100px'/>   
-                    </td>  
-                </tr></table>  
-            ";  
-        AlternateView AV = AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);  
-        //AV.LinkedResources.Add(Img);  
-        return AV;  
         }
 
         // POST: api/AdminSendEmail/Reservation
@@ -178,6 +163,287 @@ namespace TheMoonshineCafe.Controllers
                 throw ex;  
             }  
             
+        }
+
+        private AlternateView MailingList_Body(Email email, IFormFile image){
+            //string path = ("C:\Users\derek\Desktop\\band.jpg");
+            //LinkedResource Img = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
+            //Img.ContentId = "MyImage";
+            string str = @"  
+            <head>
+            <title></title>
+            <meta charset='utf-8'/>
+            <meta content='width=device-width, initial-scale=1.0' name='viewport'/>
+            <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]-->
+            <!--[if !mso]><!-->
+            <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'/>
+            <link href='https://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'/>
+            <link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'/>
+            <!--<![endif]-->
+            <style>
+                    * {
+                        box-sizing: border-box;
+                    }
+
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    a[x-apple-data-detectors] {
+                        color: inherit !important;
+                        text-decoration: inherit !important;
+                    }
+
+                    #MessageViewBody a {
+                        color: inherit;
+                        text-decoration: none;
+                    }
+
+                    p {
+                        line-height: inherit
+                    }
+
+                    @media (max-width:700px) {
+                        .icons-inner {
+                            text-align: center;
+                        }
+
+                        .icons-inner td {
+                            margin: 0 auto;
+                        }
+
+                        .row-content {
+                            width: 100% !important;
+                        }
+
+                        .image_block img.big {
+                            width: auto !important;
+                        }
+
+                        .stack .column {
+                            width: 100%;
+                            display: block;
+                        }
+                    }
+                </style>
+            </head>
+            <body style='background-color: #5f6571; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;'>
+            <table border='0' cellpadding='0' cellspacing='0' class='nl-container' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #5f6571;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-1' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #952121; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='10' cellspacing='0' class='divider_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td>
+            <div align='center'>
+            <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td class='divider_inner' style='font-size: 1px; line-height: 1px; border-top: 1px solid #000000;'><span> </span></td>
+            </tr>
+            </table>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-2' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #26282c; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='0' cellspacing='0' class='image_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td style='width:100%;padding-right:0px;padding-left:0px;padding-top:55px;'>
+            <div align='center' style='line-height:10px'><img class='big' src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/navMenu_MoonshineLogo.jpg' style='display: block; height: auto; border: 0; width: 680px; max-width: 100%;' width='680'/></div>
+            </td>
+            </tr>
+            </table>
+            <table border='0' cellpadding='0' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+            <tr>
+            <td style='padding-top:65px;padding-right:10px;padding-bottom:50px;padding-left:10px;'>
+            <div style='font-family: sans-serif'>
+            <div style='font-size: 14px; mso-line-height-alt: 16.8px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+            <p style='margin: 0; font-size: 14px; text-align: justify;'><span style='color:#ffffff;'>" + email.body + @"</span></p>
+            </div>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-3' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #26282c; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='0' cellspacing='0' class='image_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td style='width:100%;padding-right:0px;padding-left:0px;padding-bottom:30px;'>
+            <div align='center' style='line-height:10px'><img src='" + image.OpenReadStream() + @"' style='display: block; height: auto; border: 0; width: 550px; max-width: 100%;' width='550'/></div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-4' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #26282c; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='15' cellspacing='0' class='social_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='social-table' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='184px'>
+            <tr>
+            <td style='padding:0 7px 0 7px;'><a href='https://www.facebook.com/themoonshinecafe/' target='_blank'><img alt='Facebook' height='32' src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/facebook.png' style='display: block; height: auto; border: 0;' title='Facebook' width='32'/></a></td>
+            <td style='padding:0 7px 0 7px;'><a href='https://twitter.com/moonshinecafe' target='_blank'><img alt='Twitter' height='32' src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/twitter.png' style='display: block; height: auto; border: 0;' title='Twitter' width='32'/></a></td>
+            <td style='padding:0 7px 0 7px;'><a href='https://www.instagram.com/moonshinecafe_oakville/' target='_blank'><img alt='Instagram' height='32' src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/instagram.png' style='display: block; height: auto; border: 0;' title='Instagram' width='32'/></a></td>
+            <td style='padding:0 7px 0 7px;'><a href='https://www.patreon.com/themoonshinecafe' target='_blank'><img alt='Patreon' height='32' src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/Patreon.png' style='display: block; height: auto; border: 0;' title='Patreon' width='32'/></a></td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            <table border='0' cellpadding='5' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+            <tr>
+            <td>
+            <div style='font-family: sans-serif'>
+            <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+            <p style='margin: 0; font-size: 14px; text-align: center;'><span style='color:#b6becf;'>© 2021 The Moonshine Café | All rights reserved.</span></p>
+            </div>
+            </div>
+            </td>
+            </tr>
+            </table>
+            <table border='0' cellpadding='0' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+            <tr>
+            <td style='padding-bottom:65px;padding-left:5px;padding-right:5px;padding-top:5px;'>
+            <div style='font-family: sans-serif'>
+            <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+            <p style='margin: 0; font-size: 14px; text-align: center;'><span style='color:#b6becf;'>137 KERR St. Oakville, ON, L6Z 3A6</span></p>
+            </div>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-5' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-position: top center;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #952121; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='10' cellspacing='0' class='divider_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td>
+            <div align='center'>
+            <table border='0' cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td class='divider_inner' style='font-size: 1px; line-height: 1px; border-top: 1px solid #000000;'><span> </span></td>
+            </tr>
+            </table>
+            </div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row row-6' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tbody>
+            <tr>
+            <td>
+            <table align='center' border='0' cellpadding='0' cellspacing='0' class='row-content stack' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 680px;' width='680'>
+            <tbody>
+            <tr>
+            <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+            <table border='0' cellpadding='0' cellspacing='0' class='icons_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td style='color:#9d9d9d;font-family:inherit;font-size:15px;padding-bottom:5px;padding-top:5px;text-align:center;'>
+            <table cellpadding='0' cellspacing='0' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td style='text-align:center;'>
+            <!--[if vml]><table align='left' cellpadding='0' cellspacing='0' role='presentation' style='display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;'><![endif]-->
+            <!--[if !vml]><!-->
+            <table cellpadding='0' cellspacing='0' class='icons-inner' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;'>
+            <!--<![endif]-->
+            <tr>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+            </tr>
+            </tbody>
+            </table><!-- End -->
+            </body>  
+            ";  
+        AlternateView AV = AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);  
+        //AV.LinkedResources.Add(Img);  
+        return AV;  
         }
 
         private AlternateView ReservationEmail_Body(ReservationEmail email){
@@ -940,47 +1206,6 @@ namespace TheMoonshineCafe.Controllers
 </body>
             ";
 
-            /*
-            string str = @" 
-            <style>
-                table, th, td {
-                    border: 1px solid black;
-                    border-collapse: collapse;
-                }
-            </style>
-            <img src='https://moonshinephotos.s3.amazonaws.com/ReceiptPhotos/Receipt_Thankyou.jpg' alt='' width='100%'/> 
-            <table>  
-                <tr>  
-                    <th>Event Name: </th>
-                    <td>" + email.eventName + @"</td>  
-                </tr>
-                <tr>  
-                    <th>Event Date: </th>
-                    <td>" + email.eventDate + @"</td>  
-                </tr> 
-                <tr>  
-                    <th>Purchased By: </th>
-                    <td>" + email.name + @"</td>  
-                </tr> 
-                <tr>  
-                    <th>Date Purchased: </th>
-                    <td>" + email.purchaseDate + @"</td>  
-                </tr> 
-                <tr>  
-                    <th>Total Seats: </th>
-                    <td>" + email.totalSeats + @"</td>  
-                </tr> 
-                <tr>  
-                    <th>Total Cost: </th>
-                    <td>" + email.totalCost + @"</td>  
-                </tr> 
-                <tr>  
-                    <th>Transaction ID: </th>
-                    <td>" + email.paypalID + @"</td>  
-                </tr> 
-            </table>  
-            ";  
-            */
         AlternateView AV = AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);
         return AV;  
         }

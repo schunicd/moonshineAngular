@@ -1,7 +1,7 @@
 
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { HttpClient, HttpRequest, HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpRequest} from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-photo-galery',
