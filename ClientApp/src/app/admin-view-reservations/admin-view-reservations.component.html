@@ -40,7 +40,7 @@
 
       <ng-container matColumnDef="Delete">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Delete</th>
-        <td class="test" mat-cell *matCellDef="let element" class="tableData"><button *ngIf="delete" (click)="deleteRes(element.id)" mat-raised-button>Delete</button></td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"><button *ngIf="delete" (click)="deleteRes(element.id, element.numberOfSeats)" mat-raised-button>Delete</button></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

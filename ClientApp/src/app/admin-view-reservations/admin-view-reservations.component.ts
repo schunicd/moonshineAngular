@@ -53,10 +53,13 @@ export class AdminViewReservationsComponent implements OnInit {
       this.delete = true;
   }
 
-  deleteRes(id: Number){
+  deleteRes(id: Number, seats: number){
+    
     this.http.delete(this.baseUrl + 'api/Reservations/' + id).subscribe(result => {
       console.log("Delete Successful")
     }, error => console.log(error))
+    --this.totalResCount;
+    this.totalSeatCount -= seats;
     this.reservations = this.reservations.filter(r => r.id != id);
   }
 
