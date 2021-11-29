@@ -1,54 +1,41 @@
 <div id="viewReservationsBackground">
   <div id="welcomeMessage">
     <h1><span>View Reservations Here</span></h1>
-    <select *ngIf="events; else noEvents" [(ngModel)]="eventId" name="eventId" (change)="GetReservationsBySelectedEventID(eventId)">
+    <select *ngIf="events; else noEvents" id="eventSelector" [(ngModel)]="eventId" name="eventId" (change)="GetReservationsBySelectedEventID(eventId)">
       <option *ngFor="let e of events" value="{{e.id}}">{{formatEventDate(e.eventStart)}} {{e.bandName}}  ${{e.ticketPrice}}</option>
     </select>
+    <br class="mobileDelete"><br class="mobileDelete">
+    <button mat-raised-button id="toggleDelete" (click)="toggleDelete()">Toggle Delete</button>
     <ng-template #noEvents>
       <p>There are no reservations at this time. Please check back later.</p>
     </ng-template>
     <br><br>
 
-    <table mat-table *ngIf="reservations" [dataSource]="reservations" id="centerTable" class="mat-elevation-z8">
-
-      <ng-container matColumnDef="Reservation ID">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaders">Reservation ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Customer ID">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaders">Customer ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.customerid}} </td>
-      </ng-container>
+    <table mat-table *ngIf="reservations" [dataSource]="reservations" id="centerTable">
 
       <ng-container matColumnDef="Customer Name">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Customer Name</th>
-        <td mat-cell *matCellDef="let element">{{findSpecificCustomer(element.customerid)}}</td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData">{{findSpecificCustomer(element.customerid)}}</td>
       </ng-container>
 
       <ng-container matColumnDef="Seats Reserved">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Seats Reserved</th>
-        <td mat-cell *matCellDef="let element"> {{element.numberOfSeats}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Paid In Advance">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaders">Paid In Advance</th>
-        <td mat-cell *matCellDef="let element"> {{element.paidInAdvance}} </td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"> {{element.numberOfSeats}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Paypal ID">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Paypal ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.paypalID}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="Event ID">
-        <th mat-header-cell *matHeaderCellDef class="tableHeaders">Event ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.resEventid}} </td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"> {{element.paypalID}} </td>
       </ng-container>
 
       <ng-container matColumnDef="Time Reservation was Made">
         <th mat-header-cell *matHeaderCellDef class="tableHeaders">Time Reservation was Made</th>
-        <td mat-cell *matCellDef="let element"> {{element.timeResMade}} </td>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"> {{formatEventDate(element.timeResMade)}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Delete">
+        <th mat-header-cell *matHeaderCellDef class="tableHeaders">Delete</th>
+        <td class="test" mat-cell *matCellDef="let element" class="tableData"><button *ngIf="delete" mat-raised-button>Delete</button></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -57,4 +44,5 @@
 
     <br><br>
   </div>
+  <br><br>
 </div>

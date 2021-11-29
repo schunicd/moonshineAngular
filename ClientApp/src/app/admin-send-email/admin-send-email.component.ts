@@ -29,8 +29,6 @@ export class AdminSendEmailComponent implements OnInit {
     console.log(this.emailBody);
     console.log(this.emailImage);
 
-
-
     let email = {
       subject: this.emailSubject,
       body: this.emailBody,

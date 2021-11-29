@@ -18,8 +18,9 @@ export class AdminViewReservationsComponent implements OnInit {
   reservations: Reservation[];
   customers: Customer[] = [];
   eventId: Number;
+  delete: Boolean = false;
 
-  displayedColumns: string[] = ['Reservation ID', 'Customer ID', 'Seats Reserved', 'Paid In Advance', 'Paypal ID', 'Event ID', 'Time Reservation was Made', 'Customer Name'];
+  displayedColumns: string[] = ['Customer Name', 'Seats Reserved', 'Paypal ID', 'Time Reservation was Made', 'Delete'];
 
   ngOnInit() {
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events/EventsWithRes').subscribe(result => {
@@ -36,6 +37,13 @@ export class AdminViewReservationsComponent implements OnInit {
       });
       console.log(this.reservations);
     }, error => console.error(error));
+  }
+
+  toggleDelete(){
+    if(this.delete)
+      this.delete = false;
+    else
+      this.delete = true;
   }
 
   GetAssociatedCustomer(id: Number){
@@ -57,6 +65,7 @@ export class AdminViewReservationsComponent implements OnInit {
     let h = t.split(":")[0];
     let m = t.split(":")[1];
     let s = t.split(":")[2];
+    s = s.split(".")[0];
 
     let suffix = h >= 12 ? "PM" : "AM";
 

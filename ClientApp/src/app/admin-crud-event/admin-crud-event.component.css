@@ -1,10 +1,54 @@
+@media screen and (max-width: 768px){
+
+  #eventDescription{
+    width: 300px;
+  }
+
+  #eventTitle{
+    width: 300px;
+  }
+
+  fieldset{
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  legend{
+    width: 130px;
+  }
+
+  #container{
+    padding: 5px;
+  }
+
+}
+
+@media screen and (min-width: 768px){
+
+  #container{
+    display: grid;
+    grid-template-areas: '. . . . create editDelete . . .';
+  }
+
+  #eventTitle{
+    width: 400px;
+  }
+
+  #eventDescription{
+    width: 400px;
+  }
+
+  legend{
+    display: none;
+  }
+
+}
+
 #container{
   background-color: rgba(255, 255, 255, 0.7);
   margin-left: 20px;
   margin-right: 20px;
   text-align: center;
-  display: grid;
-  grid-template-areas: '. . . . create editDelete . . .';
 }
 
 #adminCrudBackground{
@@ -30,16 +74,8 @@
   margin-left: 10px;
 }
 
-#eventTitle{
-  width: 400px;
-}
-
 #create{
   grid-area: create;
-}
-
-.startEndWidth{
-  width: 800px;
 }
 
 mat-vertical-stepper{
@@ -53,5 +89,4 @@ mat-vertical-stepper{
 
 #eventDescription{
   background-color: rgba(255, 255, 255, 0.2);
-  width: 400px;
 }

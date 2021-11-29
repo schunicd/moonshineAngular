@@ -19,12 +19,12 @@
         <br>
         <mat-form-field id="eventDescription">
           <mat-label>Description</mat-label>
-          <textarea [(ngModel)]="eventDescription" matInput placeholder="Event Description"></textarea>
+          <textarea id="descriptionSize" [(ngModel)]="eventDescription" matInput placeholder="Event Description"></textarea>
         </mat-form-field>
-        <br>
+        <br><br>
         <mat-form-field>
           <mat-label>Start Date & Time<p class="astrix">*</p></mat-label>
-          <input [(ngModel)]="startDateTime" type="datetime-local" class="startEndWidth" matNativeControl>
+          <input [(ngModel)]="startDateTime" type="datetime-local" matNativeControl>
         </mat-form-field>
         <br>
         <mat-form-field>
@@ -59,8 +59,10 @@
 
 
       <div id="editDelete">
+      <fieldset>
+        <legend>Edit/Delete</legend>
         <mat-vertical-stepper [selectedIndex]="stepperIndex">
-          <mat-step label="Select Date" >
+          <mat-step label="Select Date">
             <mat-form-field>
               <input matInput name="dateDelete" [(ngModel)]="dateDelete" (dateChange)="resetEventName()" [matDatepicker]="picker" placeholder="Please Pick a Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -80,8 +82,11 @@
         <button mat-raised-button (click)="editEvent()">Edit Event</button>
         <br><br>
         <button mat-raised-button (click)="deleteEvent()">Delete Event</button>
+        <br><br>
+      </fieldset>
       </div>
 
     </div>
+    <br><br>
   </div>
 </div>

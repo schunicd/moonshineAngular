@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheMoonshineCafe.Data;
-using TheMoonshineCafe.Models;
-using System.Text;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
-using Microsoft.AspNetCore.Authorization;
 using Event = Google.Apis.Calendar.v3.Data.Event;
 
 namespace TheMoonshineCafe.Controllers

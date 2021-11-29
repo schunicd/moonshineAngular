@@ -1,3 +1,38 @@
+@media screen and (max-width: 768px){
+
+  #eventSelector{
+    width: 280px;
+  }
+
+  .tableHeaders{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  table{
+    overflow-x: auto;
+    display: block;
+  }
+
+}
+
+@media screen and (min-width: 768px){
+
+  .mobileDelete{
+    display: none;
+  }
+
+  #toggleDelete{
+    margin-left: 30px;
+  }
+
+  .tableHeaders{
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+}
+
 #viewReservationsBackground{
   margin-top: -16px;
   background-image: url("../../assets/Images/admin_background.jpg") !important;
@@ -10,12 +45,16 @@
 
 #welcomeMessage{
   background-color: rgba(255, 255, 255, 0.7);
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.tableData{
+  padding-left: 9px;
 }
 
 .tableHeaders{
   text-align: center;
-  padding-left: 20px;
-  padding-right: 20px;
 }
 
 #centerTable{
