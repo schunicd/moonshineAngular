@@ -21,6 +21,7 @@
     </span>
 
     <button mat-raised-button (click)="deleteAlbum(albumName)">Delete Folder</button>
+    <button mat-raised-button (click)="getAlbumPhotos(albumName);">Update Album</button> 
 
     <div id="albumArea">
       <div *ngFor="let photo of albumPhotos" >

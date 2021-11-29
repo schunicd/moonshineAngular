@@ -1,8 +1,5 @@
-
-
 import { Component, Inject, OnInit } from '@angular/core';
-import { HttpClient, HttpRequest} from '@angular/common/http';
-
+import { HttpClient, HttpRequest } from '@angular/common/http';
 @Component({
   selector: 'app-admin-photo-galery',
   templateUrl: './admin-photo-galery.component.html',
@@ -18,6 +15,7 @@ export class AdminPhotoGaleryComponent implements OnInit {
   photos: string[] = [];
   albums: string[] = [];
   albumPhotos: string[] = [];
+  newFiles: string[] = [];
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -38,8 +36,7 @@ export class AdminPhotoGaleryComponent implements OnInit {
         this.message = "Photo Uploaded Successfully!";
     });
 
-    this.photos.push("photoAlbums/" + albumName + "/" + files[0].name);
-    this.albumPhotos.push("photoAlbums/" + albumName + "/" + files[0].name);
+    this.photos.push("photoAlbums/" + this.albumName + "/" + this.fileName);
 
   }
 
@@ -66,6 +63,9 @@ export class AdminPhotoGaleryComponent implements OnInit {
   }
 
   getAlbumPhotos(album: string){
+    if(album == null){
+      return;
+    }
     this.albumPhotos = [];
     this.photos.forEach(photo => {
       if(photo.includes(album + "/") && photo.split(album + "/")[1] != "")
@@ -104,6 +104,11 @@ export class AdminPhotoGaleryComponent implements OnInit {
     this.getPhotos();
   }
 
+  updatePhotoArray(){
+
+    this.albumPhotos.push("photoAlbums/" + this.albumName + "/" + this.fileName);
+  }
+
   getPhotos(){
     this.http.get<any[]>(this.baseUrl + 'api/imageUpload/GetPhotos').subscribe(result => {
       result.forEach(res => {
@@ -111,7 +116,8 @@ export class AdminPhotoGaleryComponent implements OnInit {
         {
           this.photos.push(res);
         }
-      });
+      }, error => console.log(error));
+
 
       console.log(result);
       console.log(this.photos);

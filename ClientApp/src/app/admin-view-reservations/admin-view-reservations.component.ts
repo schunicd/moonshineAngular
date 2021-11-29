@@ -19,6 +19,9 @@ export class AdminViewReservationsComponent implements OnInit {
   customers: Customer[] = [];
   eventId: Number;
   delete: Boolean = false;
+  totalResCount: number = 0;
+  totalSeatCount: number = 0;
+
 
   displayedColumns: string[] = ['Customer Name', 'Seats Reserved', 'Paypal ID', 'Time Reservation was Made', 'Delete'];
 
@@ -30,10 +33,14 @@ export class AdminViewReservationsComponent implements OnInit {
   }
 
   GetReservationsBySelectedEventID(id: Number){
+    this.totalResCount = 0;
+    this.totalSeatCount = 0;
     this.http.get<Reservation[]>(this.baseUrl + 'api/Reservations/eId=' + id).subscribe(result => {
       this.reservations = result;
       this.reservations.forEach(r => {
+        ++this.totalResCount;
         this.GetAssociatedCustomer(r.customerid);
+        this.totalSeatCount += r.numberOfSeats;
       });
       console.log(this.reservations);
     }, error => console.error(error));
@@ -44,6 +51,13 @@ export class AdminViewReservationsComponent implements OnInit {
       this.delete = false;
     else
       this.delete = true;
+  }
+
+  deleteRes(id: Number){
+    this.http.delete(this.baseUrl + 'api/Reservations/' + id).subscribe(result => {
+      console.log("Delete Successful")
+    }, error => console.log(error))
+    this.reservations = this.reservations.filter(r => r.id != id);
   }
 
   GetAssociatedCustomer(id: Number){
