@@ -35,9 +35,13 @@ export class PhotosComponent implements OnInit {
 
   getButtonImage(album: string){
     this.photos.forEach(ap => {
-      if(ap.includes(album))
-      {
-        this.buttonImage = ap;
+      // if(ap.includes(album))
+      // {
+      //   this.buttonImage = ap;
+      // }
+      if(ap.split("/")[1] == album){
+        console.log(ap.split("/")[0])
+        this.buttonImage = ap
       }
     });
     return this.buttonImage;
@@ -69,13 +73,6 @@ export class PhotosComponent implements OnInit {
         }
       });
     }, error => console.error(error));
-
-    /*
-    this.http.get<any[]>(this.baseUrl + 'api/imageUpload/GetAlbums').subscribe(result => {
-      this.albums = result;
-      console.log(this.albums);
-    }, error => console.error(error));
-    */
   }
 
 }
