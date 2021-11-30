@@ -82,9 +82,9 @@ export class DataService {
     }, error => {console.error(error)})
   }
 
-  postCustomer(customer: Customer){
+  async postCustomer(customer: Customer){
     var postData: any;
-    this.http.post<Customer>(this.baseUrl + "api/Customers", customer).subscribe(data => {
+    await this.http.post<Customer>(this.baseUrl + "api/Customers", customer).subscribe(data => {
       console.log(data);
     }, error => {console.error(error)});
   }

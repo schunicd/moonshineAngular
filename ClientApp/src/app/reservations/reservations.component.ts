@@ -110,22 +110,6 @@ export class ReservationsComponent implements OnInit {
     this.eventSeatsSold = this.filterTime();
   }
 
-  tentativeBooking(){
-    this.filterTime();
-    if(confirm("Confirm Tentative Booking On: " + this.eventName)){
-      console.log("Tentative Booking Confirmed!");
-      this.name = "";
-      this.date = this.resetDate;
-      this.email = "";
-      this.seats = 0;
-      this.eventName = null;
-
-      return;
-    }
-    console.log("Tentative Booking Cancelled!");
-
-  }
-
   toFixed(num){
     return (+(Math.round(+(num + 'e' + 2)) + 'e' + -2)).toFixed(2);
   }
@@ -194,62 +178,79 @@ export class ReservationsComponent implements OnInit {
       //and then refresh the list of customers so we can find their ID in the next step.
       if(!this.existingCustomers.find(c => c.email == this.customer.email)){
         this.data.postCustomer(this.customer);
+
+      }
+
+      this.waitUpdatingDatabase().then(() => {
         this.getCustomers();
-      }
+        console.log("UPDATING EXISTING CUSTOMERS");
+        console.log(this.existingCustomers);
 
-      //getting the customers ID from the list of existing customers
-      let customerId = this.existingCustomers.find(c => c.email == this.customer.email).id;
+        this.waitUpdatingCustomer().then(() => {
+          //getting the customers ID from the list of existing customers
+          let customerId = this.existingCustomers.find(c => c.email == this.customer.email).id;
 
-      //creating a new reservation object and getting the date/time when the client is placing the order
-      var reservation = new Reservation();
-      let reservationDate = new Date();
+          //creating a new reservation object and getting the date/time when the client is placing the order
+          var reservation = new Reservation();
+          let reservationDate = new Date();
 
-      console.log("RESERVATION DATE");
-      console.log(reservationDate);
+          console.log("RESERVATION DATE");
+          console.log(reservationDate);
 
-      //setting the values for the reservation before we post it to reservations DB
-      reservation.customerid = customerId;
-      reservation.paidInAdvance = true;
-      reservation.numberOfSeats = this.seats;
-      reservation.resEventid = this.eventSeatsSold.id;
-      reservation.timeResMade = reservationDate;
-      reservation.paypalId = data.id;
+          //setting the values for the reservation before we post it to reservations DB
+          reservation.customerid = customerId;
+          reservation.paidInAdvance = true;
+          reservation.numberOfSeats = this.seats;
+          reservation.resEventid = this.eventSeatsSold.id;
+          reservation.timeResMade = reservationDate;
+          reservation.paypalId = data.id;
 
-      //inserting the reservation into reservation DB
-      this.data.postReservation(reservation);
+          //inserting the reservation into reservation DB
+          this.data.postReservation(reservation);
 
-      //adding seats sold to the current number of seats and then updating
-      //the event in the event DB
-      this.eventSeatsSold.currentNumberOfSeats += this.seats;
-      this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
+          //adding seats sold to the current number of seats and then updating
+          //the event in the event DB
+          this.eventSeatsSold.currentNumberOfSeats += this.seats;
+          this.data.editEvent(this.eventSeatsSold.id, this.eventSeatsSold);
 
-      let reservationEmail = {
-        email: this.email,
-        eventDate: this.formatEventDate(this.eventSeatsSold.eventStart),
-        eventName: this.eventSeatsSold.bandName + " $" + this.eventSeatsSold.ticketPrice,
-        name: this.customer.name,
-        paypalID: data.id,
-        purchaseDate: reservationDate,
-        subject: "Receipt # " + data.id,
-        ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
-        subtotal: data.purchase_units[0].amount.breakdown.item_total.value,
-        taxes: data.purchase_units[0].amount.breakdown.tax_total.value,
-        totalCost: data.purchase_units[0].amount.value,
-        totalSeats: this.seats
-      }
+          let reservationEmail = {
+            email: this.email,
+            eventDate: this.formatEventDate(this.eventSeatsSold.eventStart),
+            eventName: this.eventSeatsSold.bandName + " $" + this.eventSeatsSold.ticketPrice,
+            name: this.customer.name,
+            paypalID: data.id,
+            purchaseDate: reservationDate,
+            subject: "Receipt # " + data.id,
+            ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
+            subtotal: data.purchase_units[0].amount.breakdown.item_total.value,
+            taxes: data.purchase_units[0].amount.breakdown.tax_total.value,
+            totalCost: data.purchase_units[0].amount.value,
+            totalSeats: this.seats
+          }
 
-      console.log("EVENT SEATS SOLD START TIME");
-      console.log(this.eventSeatsSold.eventStart);
-      this.formatEventDate(this.eventSeatsSold.eventStart);
+          console.log("EVENT SEATS SOLD START TIME");
+          console.log(this.eventSeatsSold.eventStart);
+          this.formatEventDate(this.eventSeatsSold.eventStart);
 
-      //Sending Reservation Confirmation Email to Client
-      this.data.sendReservationEmail(reservationEmail);
+          //Sending Reservation Confirmation Email to Client
+          this.data.sendReservationEmail(reservationEmail);
 
-      this.date = null;
-      this.eventName = "";
-      this.name = "";
-      this.email = "";
-      this.seats = 1;
+          this.date = null;
+          this.eventName = "";
+          this.name = "";
+          this.email = "";
+          this.seats = 1;
+        });
+
+
+
+
+
+      });
+
+
+
+
 
     },
     onCancel: (data, actions) => {
@@ -262,6 +263,14 @@ export class ReservationsComponent implements OnInit {
       console.log('onClick', data, actions);
     },
   };
+  }
+
+  waitUpdatingDatabase(){
+    return new Promise(vars => setTimeout(vars, 5000))
+  }
+
+  waitUpdatingCustomer(){
+    return new Promise(vars => setTimeout(vars, 5000))
   }
 
   formatEventDate(ed){
