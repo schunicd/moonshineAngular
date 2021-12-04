@@ -54,6 +54,7 @@ export class ReservationsComponent implements OnInit {
     this.name = "";
     this.email = "";
     this.seats = 1;
+    this.paymentProcessing = false;
     this.customer = new Customer();
 
     this.myGroup = new FormGroup({
@@ -174,6 +175,7 @@ export class ReservationsComponent implements OnInit {
       this.customer.name = this.name;
       this.customer.email = this.email;
       this.customer.onMailingList = false;
+      this.paymentProcessing = true;
 
       //if the customer is not an existing customer, add them to the list of customers,
       //and then refresh the list of customers so we can find their ID in the next step.
@@ -241,17 +243,10 @@ export class ReservationsComponent implements OnInit {
           this.name = "";
           this.email = "";
           this.seats = 1;
+          this.paymentProcessing = false;
         });
 
-
-
-
-
       });
-
-
-
-
 
     },
     onCancel: (data, actions) => {
@@ -267,11 +262,11 @@ export class ReservationsComponent implements OnInit {
   }
 
   waitUpdatingDatabase(){
-    return new Promise(vars => setTimeout(vars, 5000))
+    return new Promise(vars => setTimeout(vars, 2500))
   }
 
   waitUpdatingCustomer(){
-    return new Promise(vars => setTimeout(vars, 5000))
+    return new Promise(vars => setTimeout(vars, 2500))
   }
 
   formatEventDate(ed){

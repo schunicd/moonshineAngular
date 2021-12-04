@@ -93,7 +93,8 @@
         <button mat-raised-button (click)="tentativeBooking()" *ngIf="name != '' && email != '' && seats != 0 && eventName != '' && !validateName() && !validateEmail(); else tentativeDisabled">Tentative Booking</button>
         <ng-template #tentativeDisabled><button mat-raised-button disabled="true">Tentative Booking</button></ng-template>
         -->
-        <ngx-paypal *ngIf="date && eventName && name && email && seats" [config]="payPalConfig"></ngx-paypal>
+        <ngx-paypal *ngIf="date && eventName && name && email && seats && !paymentProcessing" [config]="payPalConfig"></ngx-paypal>
+        <mat-spinner id="paymentProcessing" *ngIf="paymentProcessing"></mat-spinner>
       </mat-step>
 
     </mat-vertical-stepper>

@@ -6,6 +6,11 @@ mat-vertical-stepper{
   background-color: rgba(255, 255, 255, 0.7);
 }
 
+#paymentProcessing{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media screen and (max-width: 768px){
 
   #calendar {
