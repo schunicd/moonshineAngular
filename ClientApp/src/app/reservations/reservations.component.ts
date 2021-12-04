@@ -37,6 +37,7 @@ export class ReservationsComponent implements OnInit {
   customer: any;
   existingCustomers: any[];
   currentEvents: EventWithID[];
+  paymentProcessing: Boolean;
 
   testEvents: any[];
 
@@ -219,7 +220,7 @@ export class ReservationsComponent implements OnInit {
             eventName: this.eventSeatsSold.bandName + " $" + this.eventSeatsSold.ticketPrice,
             name: this.customer.name,
             paypalID: data.id,
-            purchaseDate: reservationDate,
+            purchaseDate: reservationDate.toLocaleString('en-us', {timeZone: 'America/Toronto'}),
             subject: "Receipt # " + data.id,
             ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
             subtotal: data.purchase_units[0].amount.breakdown.item_total.value,

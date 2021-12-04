@@ -727,7 +727,7 @@ namespace TheMoonshineCafe.Controllers
 <td style='padding-bottom:35px;padding-top:35px;'>
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + email.purchaseDate.ToLocalTime() + @"</p>
+<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + email.purchaseDate + @"</p>
 </div>
 </div>
 </td>
