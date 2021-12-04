@@ -1,8 +1,8 @@
 <div  id="adminCrudBackground">
   <div id="adminBackgroundOpacity">
-    
+
     <div id="container">
-      
+
       <div id="create">
         <h1><span>Event Editor</span></h1><br>
         <mat-form-field id="eventTitle">
@@ -52,7 +52,7 @@
 
         <button mat-raised-button *ngIf="createButton" (click)="createEvent(file.files)">Create Event</button>
         <button mat-raised-button *ngIf="deleteButton" (click)="confirmDelete()">Confirm Delete</button>
-        <button mat-raised-button *ngIf="editButton" (click)="confirmEdit()">Confirm Edit</button>
+        <button mat-raised-button *ngIf="editButton" (click)="confirmEdit(file.files)">Confirm Edit</button>
         <button mat-raised-button *ngIf="cancelButton" (click)="cancelEditDelete()" id="cancelButton">Cancel</button>
 
         <br><br>

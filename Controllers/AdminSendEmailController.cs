@@ -107,9 +107,9 @@ namespace TheMoonshineCafe.Controllers
                     message.BodyEncoding = Encoding.UTF8;
                     message.IsBodyHtml = true;
                     message.AlternateViews.Add(MailingList_Body(email, image));
-                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+                    SmtpClient client = new SmtpClient("smtp.gmail.com", 587);   
                     System.Net.NetworkCredential basicCredential1 = new  
-                    System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
+                    System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers!");  
                     client.EnableSsl = true;  
                     client.UseDefaultCredentials = false;
                     client.Credentials = basicCredential1;
@@ -147,9 +147,9 @@ namespace TheMoonshineCafe.Controllers
             message.BodyEncoding = Encoding.UTF8;
             message.IsBodyHtml = true;
             message.AlternateViews.Add(ReservationEmail_Body(email));
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
+            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);    
             System.Net.NetworkCredential basicCredential1 = new  
-            System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
+            System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers!");  
             client.EnableSsl = true;  
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
@@ -727,7 +727,7 @@ namespace TheMoonshineCafe.Controllers
 <td style='padding-bottom:35px;padding-top:35px;'>
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + email.purchaseDate.ToLocalTime() + @"</p>
+<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + email.purchaseDate + @"</p>
 </div>
 </div>
 </td>

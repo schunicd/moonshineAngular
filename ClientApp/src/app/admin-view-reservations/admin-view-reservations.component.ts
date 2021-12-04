@@ -54,7 +54,7 @@ export class AdminViewReservationsComponent implements OnInit {
   }
 
   deleteRes(id: Number, seats: number){
-    
+
     this.http.delete(this.baseUrl + 'api/Reservations/' + id).subscribe(result => {
       console.log("Delete Successful")
     }, error => console.log(error))
@@ -87,7 +87,15 @@ export class AdminViewReservationsComponent implements OnInit {
 
     let suffix = h >= 12 ? "PM" : "AM";
 
-    return d + " " + ((parseInt(h) + 11) % 12 + 1) + ":" + m + ":" + s + " " + suffix;
+    if(h >= 5){
+      h -= 5;
+    }
+    else{
+      let diff = 5 - h;
+      h = 24 - diff
+    }
+
+    return (d + " " + ((parseInt(h) + 11) % 12 + 1) + ":" + m + ":" + s + " ") + suffix;
   }
 
 }

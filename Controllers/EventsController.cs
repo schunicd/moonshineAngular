@@ -159,20 +159,22 @@ namespace TheMoonshineCafe.Controllers
             {
                 bandLink = "<a href=\"" + @event.bandLink + "\"> "+ @event.bandName + "</a> \n";
             }
+
             //creating new event object based off of the Google API Event type
             Event newEvent = new Event() {
                 //assigning values for events
-                Summary = (@event.bandName + " " + @event.eventStart.ToShortTimeString() + "-" + @event.eventEnd.ToShortTimeString() + " $" + @event.ticketPrice).ToUpper(), 
+                Summary = (@event.bandName + " " + @event.eventStart.ToShortTimeString() + "-" + @event.eventEnd.ToShortTimeString() + " $" + @event.ticketPrice).ToUpper(),
                 Location = "137 Kerr St., Oakville, Ontario L6Z 3A6",
                 Description = bandLink + " " + @event.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventStart.ToString())
+                    DateTime = @event.eventStart
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventEnd.ToString())
+                    DateTime = @event.eventEnd
                 },
+                
             };
 
             //Building request to insert the new event in the primary (default) calendar
@@ -276,11 +278,11 @@ namespace TheMoonshineCafe.Controllers
                 Description = bandLink + " " + model.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventStart.ToString())
+                    DateTime = model.eventStart
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventEnd.ToString())
+                    DateTime = model.eventEnd
                 },
             };
 

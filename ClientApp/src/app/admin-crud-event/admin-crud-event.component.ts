@@ -122,6 +122,8 @@ export class AdminCrudEventComponent implements OnInit {
 
   createEvent(files){
 
+    console.log(files[0].name);
+
     if(this.eventTitle != null && this.startDateTime != null &&
       this.endDateTime != null && this.maxSeats != null &&
       this.ticketPrice != null && this.refundCutoffDateTime != null){
@@ -179,7 +181,7 @@ export class AdminCrudEventComponent implements OnInit {
     this.deleteButton = false;
     this.cancelButton = true;
     this.eventTitle = this.eventEditDelete.bandName;
-    this.eventImage = "";
+    this.eventImage = this.eventEditDelete.bandImagePath;
     this.eventLink = this.eventEditDelete.bandLink;
     this.eventDescription = this.eventEditDelete.description;
     this.startDateTime = this.eventEditDelete.eventStart;
@@ -190,13 +192,13 @@ export class AdminCrudEventComponent implements OnInit {
     this.googleCalID = this.eventEditDelete.googleCalID;
   }
 
-  confirmEdit(){
+  confirmEdit(files){
     this.createButton = true;
     this.editButton = false;
     this.deleteButton = false;
     this.cancelButton = false;
     this.eventEditDelete.bandName = this.eventTitle;
-    this.eventEditDelete.bandImagePath = this.eventImage;
+    this.eventEditDelete.bandImagePath = files[0].name;
     this.eventEditDelete.bandLink = this.eventLink;
     this.eventEditDelete.description = this.eventDescription;
     this.eventEditDelete.eventStart = this.startDateTime;
@@ -205,6 +207,8 @@ export class AdminCrudEventComponent implements OnInit {
     this.eventEditDelete.maxNumberOfSeats = this.maxSeats;
     this.eventEditDelete.refundCutOffDate = this.refundCutoffDateTime;
     this.data.editEvent(this.eventID, this.eventEditDelete);
+
+    this.data.uploadBandImage(files[0]);
 
     this.clearForm();
     this.successSnackBar("Event Edited!");

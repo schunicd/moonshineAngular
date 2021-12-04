@@ -9,12 +9,13 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTableModule} from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { ReservationsComponent } from './reservations/reservations.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -67,6 +68,7 @@ import { PaypalComponent } from './paypal/paypal.component';
     NgxPayPalModule,
     MatExpansionModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'reservations', component: ReservationsComponent },
@@ -84,7 +86,7 @@ import { PaypalComponent } from './paypal/paypal.component';
       { path: 'paypal', component: PaypalComponent },
       { path: '**', redirectTo: '', pathMatch: 'full' } /*DO NOT MOVE FROM END OF PATHS*/
     ]),
-    NoopAnimationsModule,
+    BrowserAnimationsModule,
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule
