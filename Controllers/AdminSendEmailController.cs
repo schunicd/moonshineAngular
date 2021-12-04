@@ -109,7 +109,7 @@ namespace TheMoonshineCafe.Controllers
                     message.AlternateViews.Add(MailingList_Body(email, image));
                     SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
                     System.Net.NetworkCredential basicCredential1 = new  
-                    System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
+                    System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers!");  
                     client.EnableSsl = true;  
                     client.UseDefaultCredentials = false;
                     client.Credentials = basicCredential1;
@@ -149,7 +149,7 @@ namespace TheMoonshineCafe.Controllers
             message.AlternateViews.Add(ReservationEmail_Body(email));
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
             System.Net.NetworkCredential basicCredential1 = new  
-            System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers");  
+            System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers!");  
             client.EnableSsl = true;  
             client.UseDefaultCredentials = false;
             client.Credentials = basicCredential1;
