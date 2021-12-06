@@ -14,7 +14,9 @@ namespace moonshineAngular.Models
         
         public string email { get; set; }
 
-        public string purchaseDate { get; set; }
+        public DateTime purchaseDate { get; set; }
+
+        public String refundCutoff { get; set; }
   
         public int totalSeats { get; set; }
 

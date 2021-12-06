@@ -78,6 +78,13 @@ namespace TheMoonshineCafe.Controllers
         [HttpPost]
         public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
         {
+            reservation.timeResMade = DateTime.Parse("" + reservation.timeResMade.Year + "-" + 
+                                                        ((reservation.timeResMade.Month < 10) ? ("0" + reservation.timeResMade.Month) : reservation.timeResMade.Month) + "-" + 
+                                                        ((reservation.timeResMade.Day < 10) ? ("0" + reservation.timeResMade.Day) : reservation.timeResMade.Day) + "T" + 
+                                                        ((reservation.timeResMade.Hour < 10) ? ("0" + reservation.timeResMade.Hour) : reservation.timeResMade.Hour) + ":" + 
+                                                        ((reservation.timeResMade.Minute < 10) ? ("0" + reservation.timeResMade.Minute) : reservation.timeResMade.Minute) + ":" + 
+                                                        ((reservation.timeResMade.Second < 10) ? ("0" + reservation.timeResMade.Second) : reservation.timeResMade.Second) + "+5:00");
+
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 

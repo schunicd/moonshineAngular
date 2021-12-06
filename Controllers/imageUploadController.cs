@@ -70,6 +70,23 @@ namespace moonshineAngular.Controllers
             return Ok();
         }
 
+        [HttpPost]
+        [Route("EmailImage")]
+        public async Task<IActionResult> EmailImage()
+        {
+            var file = Request.Form.Files[0];
+
+            Console.WriteLine(file);
+
+            var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+            Console.WriteLine(fileName);
+
+            await _service.UploadEmailImageAsync(file);
+
+            return Ok();
+        }
+
         [HttpGet]
         [Route("GetPhotos")]
         public List<string> GetPhotos() 

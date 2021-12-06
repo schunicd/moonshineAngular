@@ -8,6 +8,7 @@ import { Customer } from '../Customer';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { Reservation } from '../Reservation';
 import { MatStepper } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-reservations',
@@ -47,7 +48,7 @@ export class ReservationsComponent implements OnInit {
   private payPalID = 'AeEiO1jzqkISYf1_qru9moGMmr_QxY6eCZJf3Pgh80jTHWRwxBpO7VNQWdreA9DRZqSk-N0DmX_vgiru';
   showSuccess: boolean;
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
+  constructor(private _snackBar: MatSnackBar, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private data: DataService) {
 
     this.minDate = new Date();
     this.eventName = null;
@@ -197,9 +198,6 @@ export class ReservationsComponent implements OnInit {
           var reservation = new Reservation();
           let reservationDate = new Date();
 
-          console.log("RESERVATION DATE");
-          console.log(reservationDate);
-
           //setting the values for the reservation before we post it to reservations DB
           reservation.customerid = customerId;
           reservation.paidInAdvance = true;
@@ -222,7 +220,8 @@ export class ReservationsComponent implements OnInit {
             eventName: this.eventSeatsSold.bandName + " $" + this.eventSeatsSold.ticketPrice,
             name: this.customer.name,
             paypalID: data.id,
-            purchaseDate: reservationDate.toLocaleString('en-us', {timeZone: 'America/Toronto'}),
+            purchaseDate: reservationDate,
+            refundCutoff: this.formatEventDate(this.eventSeatsSold.refundCutOffDate),
             subject: "Receipt # " + data.id,
             ticketPrice: this.eventSeatsSold.ticketPrice.toString(),
             subtotal: data.purchase_units[0].amount.breakdown.item_total.value,
@@ -243,6 +242,7 @@ export class ReservationsComponent implements OnInit {
           this.name = "";
           this.email = "";
           this.seats = 1;
+          this.paymentCompleteSnackBar();
           this.paymentProcessing = false;
         });
 
@@ -259,6 +259,10 @@ export class ReservationsComponent implements OnInit {
       console.log('onClick', data, actions);
     },
   };
+  }
+
+  paymentCompleteSnackBar() {
+    this._snackBar.open("Thank you! Your receipt will be emailed to you shortly.", "Close", {duration: 5000});
   }
 
   waitUpdatingDatabase(){
@@ -304,10 +308,11 @@ export class ReservationsComponent implements OnInit {
   }
 
   validateName(){
-    if(this.name.replace(/[a-zA-Z]+[a-zA-Z- ]*[a-zA-Z]+/g,'').length == 0)
-      return false;
+    if(this.name.replace(/[a-zA-Z]+[a-zA-Z- ]*[a-zA-Z]+/g,'').length == 0){
+      return true;
+    }
 
-    return true;
+    return false;
   }
 
   validateEmail(){

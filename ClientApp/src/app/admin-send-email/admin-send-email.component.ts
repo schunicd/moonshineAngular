@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpClient, HttpRequest } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-admin-send-email',
@@ -9,7 +10,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 })
 export class AdminSendEmailComponent implements OnInit {
 
-  constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
+  constructor(private _snackBar: MatSnackBar, private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
   emailSubject: String;
   emailBody: String;
@@ -28,26 +29,37 @@ export class AdminSendEmailComponent implements OnInit {
     console.log(this.emailBody);
     console.log(files[0].name);
 
+    let email = {
+      subject: this.emailSubject,
+      body: this.emailBody,
+      image: files[0].name
+    }
+
+    this.data.sendEmail(email);
+
+    this.emailSubject = "";
+    this.emailBody = "";
+    this.emailImage = null;
+    this.sentEmailSnackBar();
+  }
+
+  sentEmailSnackBar() {
+    this._snackBar.open("Email Sent!", "Close", {duration: 5000});
+  }
+
+  uploadEmailImage(files){
     const formData = new FormData();
     for (let file of files){
       formData.append(file.name, file);
     }
 
-    let email = {
-      subject: this.emailSubject,
-      body: this.emailBody,
-      image: ""
-    }
-
-    const uploadReq = new HttpRequest('POST', `api/AdminSendEmail/` + email, formData, {
+    const uploadReq = new HttpRequest('POST', `api/imageUpload/EmailImage/`, formData, {
       reportProgress: true,
     });
 
     this.http.request(uploadReq).subscribe(event => {
-        console.log(event);
-    });
 
-    //this.data.sendEmail(email);
+    });
   }
 
 }

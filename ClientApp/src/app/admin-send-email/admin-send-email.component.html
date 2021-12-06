@@ -5,23 +5,25 @@
       <div id="create">
         <mat-form-field id="emailSubject">
           <mat-label>Email Subject<p class="astrix">*</p></mat-label>
-          <input [(ngModel)]="emailSubject" name="emailSubject" matNativeControl>
+          <input id="emailSubject" [(ngModel)]="emailSubject" name="emailSubject" matNativeControl>
         </mat-form-field>
         <br>
         <mat-form-field id="emailBody">
           <mat-label>Email Body<p class="astrix">*</p></mat-label>
-          <textarea [(ngModel)]="emailBody" name="emailBody" matNativeControl></textarea>
+          <textarea id="emailBody" [(ngModel)]="emailBody" name="emailBody" matNativeControl></textarea>
         </mat-form-field>
-        <br>
+        <br><br>
         <div id="emailImage">
-          <input [(ngModel)]="emailImage" name="emailImage" #file type="file" (change)="onFileSelected($event)">
+          <input [(ngModel)]="emailImage" name="emailImage" #file type="file" (change)="uploadEmailImage(file.files)">
         </div>
         <br>
 
       </div>
 
       <button mat-raised-button (click)="sendEmail(file.files)">Send Email</button>
-
+      <br><br>
     </div>
   </div>
+  <br><br>
 </div>
+

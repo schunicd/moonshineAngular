@@ -175,7 +175,8 @@ interface ReservationEmail {
   eventName: String;
   name: String;
   email: String;
-  purchaseDate: string;
+  purchaseDate: Date;
+  refundCutoff: String;
   totalSeats: Number;
   ticketPrice: String;
   subtotal: String;

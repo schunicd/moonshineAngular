@@ -42,31 +42,31 @@
         <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
           <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
           <br>
-          <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+          <label class="nameWarning" *ngIf="!validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
       </mat-step>
 
       <ng-template #enteredName>
         <mat-step label="Name: {{name}}">
-          <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35">
+          <input class="nameInput" style="margin-left: 10px;" type="text" [(ngModel)]="name" name="name" placeholder="Full Name" *ngIf="eventName != null; else nameDisabled" maxlength="35" autofocus>
             <ng-template #nameDisabled><input class="nameInput" disabled="true" style="margin-left: 10px;" type="text" placeholder="Full Name"></ng-template>
             <br>
-            <label class="nameWarning" *ngIf="validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
+            <label class="nameWarning" *ngIf="!validateName()">INVALID NAME. Please only use letters a-z for Name. Must be 2 letters minimum.</label>
         </mat-step>
       </ng-template>
 
       <mat-step label="Enter Email" *ngIf="!email; else enteredEmail">
-        <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
+        <input style="margin-left: 10px;" type="text" id="emailInput" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
         <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
         <br>
-        <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+        <span *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</span>
       </mat-step>
 
       <ng-template #enteredEmail>
         <mat-step label="Email: {{email}}">
-          <input style="margin-left: 10px;" type="email" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50">
+          <input style="margin-left: 10px;" type="text" id="emailInput" [(ngModel)]="email" name="email" placeholder="Email" *ngIf="eventName != null; else emailDisabled" maxlength="50" autofocus>
           <ng-template #emailDisabled><input disabled="true" style="margin-left: 10px;" type="text" placeholder="Email"></ng-template>
           <br>
-          <label *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</label>
+          <span *ngIf="validateEmail()">INVALID EMAIL. Please check and re-enter.</span>
         </mat-step>
       </ng-template>
 

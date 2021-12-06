@@ -140,7 +140,10 @@ export class AdminCrudEventComponent implements OnInit {
         }
 
         this.data.postEvent(event);
+
         this.data.uploadBandImage(files[0]);
+        console.log(event.eventStart.toString().split(" ")[5]);
+        console.log(this.startDateTime);
         console.log(event);
         this.clearForm();
         this.successSnackBar("Event Created!");

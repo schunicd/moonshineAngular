@@ -10,6 +10,7 @@ namespace TheMoonshineCafe.Services
         Task<S3Response> CreateBucketAsync(string bucketName);
         Task UploadFileAsync(IFormFile file, string albumName);
         Task UploadBandImageAsync(IFormFile file);
+        Task UploadEmailImageAsync(IFormFile file);
         Task<List<string>> GetPhotos();
         Task<List<string>> GetAlbums();
         Task DeleteImage(string fileName, int bucketChoice);

@@ -18,6 +18,30 @@
   text-align: center;
 }
 
+@media screen and (max-width: 768px){
+  #emailSubject{
+    width: 300px;
+  }
+
+  #emailBody{
+    width: 300px;
+    height: 150px;
+  }
+}
+
+@media screen and (min-width: 769px){
+  #emailSubject{
+    width: 600px;
+  }
+
+  #emailBody{
+    width: 600px;
+    height: 300px;
+  }
+}
+
+
+
 .astrix{
   display: inline;
   color: red;

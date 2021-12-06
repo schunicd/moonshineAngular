@@ -187,6 +187,35 @@ namespace TheMoonshineCafe.Services
             }
         }
 
+        private const string EmailImageBucketName = "moonshinephotostest/emailImages"; //declaring bucketname as a constant
+        public async Task UploadEmailImageAsync(IFormFile file)
+        {
+            try
+            {
+                var transferRequest = new TransferUtilityUploadRequest() //setting values for the request to transfer a file
+                {
+                    InputStream = file.OpenReadStream(),    //setting the selected file as the input stream
+                    AutoCloseStream = false,                //
+                    BucketName = EmailImageBucketName,       //setting bucket name to constant declared above
+                    Key = file.FileName,                    //setting key as filename so we can get the files by their names from the bucket
+                    StorageClass = S3StorageClass.Standard  //setting storage class as standard since it has high reliability
+                };
+
+                transferRequest.Metadata.Add("Date-UTC-Uploaded", DateTime.UtcNow.ToString()); //adding metadata of when the file was uploaded
+
+                await new TransferUtility(_client).UploadAsync(transferRequest);    //initiating transfer request
+
+            }
+            catch (AmazonS3Exception e)
+            {
+                Console.WriteLine("Error encountered on server. Message: '{0}' when writing an object", e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown encountered on server. Message: '{0}' when writing an object", e.Message);
+            }
+        }
+
         public async Task DeleteImage(string fileName, int bucketChoice)
         {
             string bucketname = "moonshinephotostest";

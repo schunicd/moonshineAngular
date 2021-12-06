@@ -83,17 +83,15 @@ namespace TheMoonshineCafe.Controllers
         // POST: api/AdminSendEmail/email
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Route("{email}")]
-        public  void PostCustomer([FromRoute] Email email)
+        public  void PostCustomer(Email email)
         {
             
             var customerEmails = _context.Customers.ToList();
-            var image = Request.Form.Files[0];
+
 
             Console.WriteLine(email.subject);
             Console.WriteLine(email.body);
-            Console.WriteLine(image.FileName);
-            Console.WriteLine(image.OpenReadStream());
+            Console.WriteLine(email.image);
              
             string from = "schunicd@gmail.com"; //From address    
             string to = "";
@@ -106,7 +104,7 @@ namespace TheMoonshineCafe.Controllers
                     message.Subject = email.subject;  
                     message.BodyEncoding = Encoding.UTF8;
                     message.IsBodyHtml = true;
-                    message.AlternateViews.Add(MailingList_Body(email, image));
+                    message.AlternateViews.Add(MailingList_Body(email));
                     SmtpClient client = new SmtpClient("smtp.gmail.com", 587); //Gmail smtp    
                     System.Net.NetworkCredential basicCredential1 = new  
                     System.Net.NetworkCredential("schunicd@gmail.com", "B00tleggers!");  
@@ -165,7 +163,7 @@ namespace TheMoonshineCafe.Controllers
             
         }
 
-        private AlternateView MailingList_Body(Email email, IFormFile image){
+        private AlternateView MailingList_Body(Email email){
             //string path = ("C:\Users\derek\Desktop\\band.jpg");
             //LinkedResource Img = new LinkedResource(path, MediaTypeNames.Image.Jpeg);
             //Img.ContentId = "MyImage";
@@ -188,11 +186,6 @@ namespace TheMoonshineCafe.Controllers
                     body {
                         margin: 0;
                         padding: 0;
-                    }
-
-                    a[x-apple-data-detectors] {
-                        color: inherit !important;
-                        text-decoration: inherit !important;
                     }
 
                     #MessageViewBody a {
@@ -282,7 +275,7 @@ namespace TheMoonshineCafe.Controllers
             <td style='padding-top:65px;padding-right:10px;padding-bottom:50px;padding-left:10px;'>
             <div style='font-family: sans-serif'>
             <div style='font-size: 14px; mso-line-height-alt: 16.8px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-            <p style='margin: 0; font-size: 14px; text-align: justify;'><span style='color:#ffffff;'>" + email.body + @"</span></p>
+            <p style='margin: 0; font-size: 14px; text-align: center;'><span style='color:#ffffff;'>" + email.body + @"</span></p>
             </div>
             </div>
             </td>
@@ -307,7 +300,7 @@ namespace TheMoonshineCafe.Controllers
             <table border='0' cellpadding='0' cellspacing='0' class='image_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
             <tr>
             <td style='width:100%;padding-right:0px;padding-left:0px;padding-bottom:30px;'>
-            <div align='center' style='line-height:10px'><img src='" + image.OpenReadStream() + @"' style='display: block; height: auto; border: 0; width: 550px; max-width: 100%;' width='550'/></div>
+            <div align='center' style='line-height:10px'><img src='https://moonshinephotostest.s3.amazonaws.com/emailImages/" + email.image + @"' style='display: block; height: auto; border: 0; width: 550px; max-width: 100%;' width='550'/></div>
             </td>
             </tr>
             </table>
@@ -327,6 +320,19 @@ namespace TheMoonshineCafe.Controllers
             <tbody>
             <tr>
             <td class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+             <table border='0' cellpadding='15' cellspacing='0' class='social_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td>
+            <table border='0' cellpadding='0' cellspacing='0' class='html_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
+            <tr>
+            <td style='padding-top:30px;'>
+            <div align='center' style='font-family:Merriwheater, Georgia, serif;'><div class='our-class'> <a href='http://themoonshinecafeproject.com/' style='color:white;'>www.TheMoonshineCafeProject.com</a> </div></div>
+            </td>
+            </tr>
+            </table>
+            </td>
+            </tr>
+            </table>
             <table border='0' cellpadding='15' cellspacing='0' class='social_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt;' width='100%'>
             <tr>
             <td>
@@ -441,12 +447,24 @@ namespace TheMoonshineCafe.Controllers
             </table><!-- End -->
             </body>  
             ";  
+
         AlternateView AV = AlternateView.CreateAlternateViewFromString(str, null, MediaTypeNames.Text.Html);  
         //AV.LinkedResources.Add(Img);  
         return AV;  
         }
 
         private AlternateView ReservationEmail_Body(ReservationEmail email){
+
+            DateTime datePurchased = DateTime.Parse("" + email.purchaseDate.Year + "-" + 
+                                                        ((email.purchaseDate.Month < 10) ? ("0" + email.purchaseDate.Month) : email.purchaseDate.Month) + "-" + 
+                                                        ((email.purchaseDate.Day < 10) ? ("0" + email.purchaseDate.Day) : email.purchaseDate.Day) + "T" + 
+                                                        ((email.purchaseDate.Hour < 10) ? ("0" + email.purchaseDate.Hour) : email.purchaseDate.Hour) + ":" + 
+                                                        ((email.purchaseDate.Minute < 10) ? ("0" + email.purchaseDate.Minute) : email.purchaseDate.Minute) + ":" + 
+                                                        ((email.purchaseDate.Second < 10) ? ("0" + email.purchaseDate.Second) : email.purchaseDate.Second) + "+5:00");
+
+            string resDate = "" + datePurchased.Year + "-" + ((datePurchased.Month < 10) ? ("0" + datePurchased.Month) : datePurchased.Month) + "-" + ((datePurchased.Day < 10) ? ("0" + datePurchased.Day) : datePurchased.Day);
+
+            string time = datePurchased.ToLongTimeString();
 
             string str = @" 
             <head>
@@ -727,7 +745,7 @@ namespace TheMoonshineCafe.Controllers
 <td style='padding-bottom:35px;padding-top:35px;'>
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
-<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + email.purchaseDate + @"</p>
+<p style='color:#ffffff;margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 14.399999999999999px;'>" + resDate + " " + time + @"</p>
 </div>
 </div>
 </td>
@@ -1088,6 +1106,18 @@ namespace TheMoonshineCafe.Controllers
 <div style='font-family: sans-serif'>
 <div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
 <p style='margin: 0; font-size: 14px; text-align: center;'><span style='color:#b6becf;'>Receipt # " + email.paypalID + @"</span></p>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<th class='column' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;' width='100%'>
+<table border='0' cellpadding='0' cellspacing='0' class='text_block' role='presentation' style='mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;' width='100%'>
+<tr>
+<td style='padding-bottom:15px;padding-left:30px;padding-right:30px;padding-top:25px;'>
+<div style='font-family: sans-serif'>
+<div style='font-size: 12px; mso-line-height-alt: 14.399999999999999px; color: #393d47; line-height: 1.2; font-family: Merriwheater, Georgia, serif;'>
+<p style='margin: 0; font-size: 14px; text-align: center;'><span style='color:#b6becf;'>To request a refund, please reply to this email before: " + email.refundCutoff + @"</span></p>
 </div>
 </div>
 </td>

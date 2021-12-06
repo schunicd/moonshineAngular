@@ -167,13 +167,26 @@ namespace TheMoonshineCafe.Controllers
                 Description = bandLink + " " + @event.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventStart.ToString())
+                    DateTime = DateTime.Parse( "" + @event.eventStart.Year + "-" + ((@event.eventStart.Month < 10) ? ("0" + @event.eventStart.Month) : @event.eventStart.Month) + "-" + 
+                                                                                    ((@event.eventStart.Day < 10) ? ("0" + @event.eventStart.Day) : @event.eventStart.Day) + "T" + 
+                                                                                    ((@event.eventStart.Hour < 10) ? ("0" + @event.eventStart.Hour) : @event.eventStart.Hour) + ":" + 
+                                                                                    ((@event.eventStart.Minute < 10) ? ("0" + @event.eventStart.Minute) : @event.eventStart.Minute) + ":" + 
+                                                                                    ((@event.eventStart.Second < 10) ? ("0" + @event.eventStart.Second) : @event.eventStart.Second) + "-5:00"),
+                    TimeZone = "America/Toronto"
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(@event.eventEnd.ToString())
+                    DateTime = DateTime.Parse( "" + @event.eventEnd.Year + "-" + ((@event.eventEnd.Month < 10) ? ("0" + @event.eventEnd.Month) : @event.eventEnd.Month) + "-" + 
+                                                                                    ((@event.eventEnd.Day < 10) ? ("0" + @event.eventEnd.Day) : @event.eventEnd.Day) + "T" + 
+                                                                                    ((@event.eventEnd.Hour < 10) ? ("0" + @event.eventEnd.Hour) : @event.eventEnd.Hour) + ":" + 
+                                                                                    ((@event.eventEnd.Minute < 10) ? ("0" + @event.eventEnd.Minute) : @event.eventEnd.Minute) + ":" + 
+                                                                                    ((@event.eventEnd.Second < 10) ? ("0" + @event.eventEnd.Second) : @event.eventEnd.Second) + "-5:00"),
+                    TimeZone = "America/Toronto"
                 },
             };
+
+            Console.WriteLine("EVENT START TIME GOOGLE CALENDAR");
+            Console.WriteLine(newEvent.Start.DateTimeRaw);
 
             //Building request to insert the new event in the primary (default) calendar
             EventsResource.InsertRequest request = service.Events.Insert(newEvent, calendarId);
@@ -276,11 +289,21 @@ namespace TheMoonshineCafe.Controllers
                 Description = bandLink + " " + model.description,
                 Start = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventStart.ToString())
+                    DateTime = DateTime.Parse( "" + model.eventStart.Year + "-" + ((model.eventStart.Month < 10) ? ("0" + model.eventStart.Month) : model.eventStart.Month) + "-" + 
+                                                                                    ((model.eventStart.Day < 10) ? ("0" + model.eventStart.Day) : model.eventStart.Day) + "T" + 
+                                                                                    ((model.eventStart.Hour < 10) ? ("0" + model.eventStart.Hour) : model.eventStart.Hour) + ":" + 
+                                                                                    ((model.eventStart.Minute < 10) ? ("0" + model.eventStart.Minute) : model.eventStart.Minute) + ":" + 
+                                                                                    ((model.eventStart.Second < 10) ? ("0" + model.eventStart.Second) : model.eventStart.Second) + "-5:00"),
+                    TimeZone = "America/Toronto"
                 },
                 End = new EventDateTime()
                 {
-                    DateTime = DateTime.Parse(model.eventEnd.ToString())
+                    DateTime = DateTime.Parse( "" + model.eventEnd.Year + "-" + ((model.eventEnd.Month < 10) ? ("0" + model.eventEnd.Month) : model.eventEnd.Month) + "-" + 
+                                                                                    ((model.eventEnd.Day < 10) ? ("0" + model.eventEnd.Day) : model.eventEnd.Day) + "T" + 
+                                                                                    ((model.eventEnd.Hour < 10) ? ("0" + model.eventEnd.Hour) : model.eventEnd.Hour) + ":" + 
+                                                                                    ((model.eventEnd.Minute < 10) ? ("0" + model.eventEnd.Minute) : model.eventEnd.Minute) + ":" + 
+                                                                                    ((model.eventEnd.Second < 10) ? ("0" + model.eventEnd.Second) : model.eventEnd.Second) + "-5:00"),
+                    TimeZone = "America/Toronto"
                 },
             };
 
