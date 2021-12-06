@@ -3,33 +3,35 @@
 
 <div id="adminPhotoGalleryBackground">
   <div id="welcomeMessage">
-    <h1><span>Upload Photos Here</span></h1>
+    <h1><span>Upload Photos</span></h1>
+    <br><br>
+    <label>Choose an option:</label>
     <select [(ngModel)]="albumName" name="albumName" (change)="lockAlbumName()">
       <option>Create New Album</option>
       <option *ngFor="let a of albums" value="{{a}}">{{a}}</option>
     </select>
-    <br>
+    <br><br>
+    <label>Album Name:</label>
     <input id="newAlbum" [(ngModel)]="albumName" name="albumName" type="text">
-    <br>
-    <input id="uploadPhoto" #file type="file" accept="image/*" (change)="upload(file.files, albumName)">
-    <br>
-    <span style="font-weight:bold;color:green;" *ngIf="progress > 0 && progress < 100">
-      {{progress}}%
-    </span>
+    <br><br>
+    <input *ngIf="albumName" id="uploadPhoto" #file type="file" accept="image/*" (change)="upload(file.files, albumName)">
+    <br><br>
     <span style="font-weight:bold;color:green;" *ngIf="message">
       {{message}}
     </span>
-
-    <button mat-raised-button (click)="deleteAlbum(albumName)">Delete Folder</button>
-    <button mat-raised-button (click)="getAlbumPhotos(albumName);">Update Album</button> 
+    <br><br>
+    <button mat-raised-button id="updateDeleteSpace" *ngIf="albumName" (click)="getAlbumPhotos(albumName);">Update Album</button>
+    <button mat-raised-button *ngIf="albumName" (click)="deleteAlbum(albumName)">Delete Album</button>
 
     <div id="albumArea">
-      <div *ngFor="let photo of albumPhotos" >
+      <div *ngFor="let photo of albumPhotos">
         <img class="photoStyle" src="https://moonshinephotostest.s3.amazonaws.com/{{photo}}">
-        <br>
-        <button mat-raised-button (click)="deleteFromAlbum(photo, albumName)">Delete Photo</button>
+        <div>
+          <button mat-raised-button (click)="deleteFromAlbum(photo, albumName)">Delete Photo</button>
+        </div>
       </div>
     </div>
   </div>
+  <br><br>
 
 </div>

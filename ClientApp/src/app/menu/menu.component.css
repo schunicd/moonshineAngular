@@ -9,3 +9,55 @@
 #title{
   font-size: 30px;
 }
+
+@media screen and (max-width: 789px){
+  #chickenWings{
+    display: none;
+  }
+  #mocktail{
+    display: none;
+  }
+  #beer{
+    display: none;
+  }
+  #veggieBurger{
+    display: none;
+  }
+  #hotChocolate{
+    display: none;
+  }
+  #wine{
+    display: none;
+  }
+}
+
+
+@media screen and (min-width: 769px){
+
+  .grid-container{
+    display: grid;
+    grid-template-areas:
+    'leftPhotos menuGrid rightPhotos'
+    ;
+    grid-gap: 10px;
+  }
+
+  #menuGrid{grid-area: menuGrid;}
+  .leftPhotos{grid-area: leftPhotos;}
+  .rightPhotos{grid-area: rightPhotos;}
+
+  .foodImageStyle{
+    height: auto;
+    width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+  }
+
+  #chickenWings{margin-top: 30px; margin-bottom: 20px;}
+  #mocktail{margin-bottom: 20px;}
+  #veggieBurger{margin-top: 30px; margin-bottom: 45px;}
+  #hotChocolate{margin-bottom: 45px;}
+
+}

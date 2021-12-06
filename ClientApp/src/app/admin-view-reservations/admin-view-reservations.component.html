@@ -13,9 +13,11 @@
     <div *ngIf="totalSeatCount > 0">
       Total Reservations: {{totalResCount}}
       <br>
-      Total Seats: {{totalSeatCount}}
+      Total Seats Reserved: {{totalSeatCount}}
+      <br>
+      Available Seats: {{maxSeats - totalSeatCount}}
     </div>
-     
+
     <table mat-table *ngIf="reservations" [dataSource]="reservations" id="centerTable">
 
       <ng-container matColumnDef="Customer Name">

@@ -21,6 +21,7 @@ export class AdminViewReservationsComponent implements OnInit {
   delete: Boolean = false;
   totalResCount: number = 0;
   totalSeatCount: number = 0;
+  maxSeats: number = 0;
 
 
   displayedColumns: string[] = ['Customer Name', 'Seats Reserved', 'Paypal ID', 'Time Reservation was Made', 'Delete'];
@@ -35,6 +36,7 @@ export class AdminViewReservationsComponent implements OnInit {
   GetReservationsBySelectedEventID(id: Number){
     this.totalResCount = 0;
     this.totalSeatCount = 0;
+    this.maxSeats = this.events.find(e => e.id == id).maxNumberOfSeats;
     this.http.get<Reservation[]>(this.baseUrl + 'api/Reservations/eId=' + id).subscribe(result => {
       this.reservations = result;
       this.reservations.forEach(r => {
@@ -54,7 +56,7 @@ export class AdminViewReservationsComponent implements OnInit {
   }
 
   deleteRes(id: Number, seats: number){
-    
+
     this.http.delete(this.baseUrl + 'api/Reservations/' + id).subscribe(result => {
       console.log("Delete Successful")
     }, error => console.log(error))

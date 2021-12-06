@@ -63,7 +63,8 @@ export class AdminPhotoGaleryComponent implements OnInit {
   }
 
   getAlbumPhotos(album: string){
-    if(album == null){
+    if(album == null || this.albumName == "Create new Album"){
+      this.albumPhotos = [];
       return;
     }
     this.albumPhotos = [];

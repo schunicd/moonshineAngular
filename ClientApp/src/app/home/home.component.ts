@@ -3,6 +3,7 @@ import { DataService } from '../data.service';
 import { Customer } from '../Customer';
 import { HttpClient } from '@angular/common/http';
 import { EventWithID } from '../EventWithID';
+import { MatSnackBar } from '@angular/material';
 
 export interface Tile {
   cols: number;
@@ -20,7 +21,7 @@ export class HomeComponent {
   event: EventWithID[];
   currentEvents: EventWithID[];
 
-  constructor(private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private _snackBar: MatSnackBar, private data: DataService, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     this.http.get<EventWithID[]>(this.baseUrl + 'api/Events').subscribe(result => {
       this.event = result;
@@ -32,6 +33,8 @@ export class HomeComponent {
 
     this.http.get<any[]>(this.baseUrl + 'api/Events/Calendar').subscribe(result => {
     }, error => console.error(error));
+
+    this.getMailingListClients();
 
    }
 
@@ -55,8 +58,8 @@ export class HomeComponent {
 
   joinMailingList(){
 
-    this.getMailingListClients();
-
+    if(!this.validateEmail()){
+      this.getMailingListClients();
     console.log(this.clientEmail);
     console.log(this.existingCustomers);
 
@@ -76,6 +79,27 @@ export class HomeComponent {
       this.data.editCustomer(customerCheck[0].id, customerCheck[0]);
     }
 
+    this.clientEmail = "";
+    this.emailListSnackBar();
+    }
+    else{
+      this.checkEmailListSnackBar();
+    }
+  }
+
+  validateEmail(){
+    if(this.clientEmail.replace(/\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi, '').length == 0)
+      return false;
+
+    return true;
+  }
+
+  emailListSnackBar() {
+    this._snackBar.open("You are now subscribed to our mailing list!", "Close", {duration: 5000});
+  }
+
+  checkEmailListSnackBar() {
+    this._snackBar.open("Invalid Email! Please check and try again.", "Close", {duration: 5000});
   }
 
   convertTime = (time24) => {
