@@ -9,11 +9,13 @@
 </div>
 
 
-<div *ngIf="albumPhotos.length > 0" id="centerPhotos">
+<div *ngIf="albumPhotos.length > 0" id="centerGalleryButton">
   <button mat-raised-button (click)="backToGallery()"><mat-icon aria-hidden="false" aria-label="arrow_back_ios">arrow_back_ios</mat-icon>Photo Gallery</button>
+  <div id="centerPhotos">
     <div *ngFor="let photo of albumPhotos">
         <img class="photoStyle" src="https://moonshinephotostest.s3.amazonaws.com/{{photo}}"/>
     </div>
+  </div>
 </div>
 <br>
 <br>

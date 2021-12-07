@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, } from '@angular/common/http';
+import { reverse } from 'dns';
 
 const BUCKET_PATH = "https://moonshinephotostest.s3.amazonaws.com/";
 
